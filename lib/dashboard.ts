@@ -4,7 +4,7 @@ import { buildAssistantSuggestion } from "@/lib/ai-assistant";
 import { AUTH_COOKIE_NAME, decodeSession, getUserById } from "@/lib/auth";
 import { conversationStatusLabelMap } from "@/lib/dashboard-constants";
 import { listConversationsByUserId } from "@/lib/conversations";
-import { listProductsByUserId } from "@/lib/products";
+import { getSampleProductsForUser, listProductsByUserId } from "@/lib/products";
 
 export async function getDashboardData() {
   const cookieStore = await cookies();
@@ -15,7 +15,11 @@ export async function getDashboardData() {
   }
 
   const currentUser = await getUserById(session.userId);
-  const products = await listProductsByUserId(session.userId);
+  const savedProducts = await listProductsByUserId(session.userId);
+  const products =
+    savedProducts.length > 0
+      ? savedProducts
+      : getSampleProductsForUser(session.userId);
   const conversations = await listConversationsByUserId(session.userId);
   const onboardingCompleted = Boolean(currentUser?.onboardingCompleted);
   const activeProductsCount = products.filter((product) => product.active).length;

@@ -147,7 +147,7 @@ export function ConversationsWorkspace({
           })}
         </div>
 
-        <div className="grid gap-3 lg:grid-cols-[1.1fr_0.9fr_0.9fr]">
+        <div className="hidden gap-3 lg:grid lg:grid-cols-[1.1fr_0.9fr_0.9fr]">
           <input
             type="text"
             value={search}
@@ -181,7 +181,7 @@ export function ConversationsWorkspace({
           </select>
         </div>
 
-        <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-[#5f7766]">
+        <div className="mt-3 hidden flex-wrap items-center gap-3 text-sm text-[#5f7766] lg:flex">
           <span>{filteredConversations.length} conversa(s) exibida(s)</span>
           {(search || statusFilter !== "todas" || segmentFilter !== "todas") && (
             <button

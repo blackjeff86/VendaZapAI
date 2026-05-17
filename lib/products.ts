@@ -36,6 +36,49 @@ export type StoredProduct = {
   userId: string;
 };
 
+const sampleMotorcycleProducts = [
+  {
+    category: "Freios",
+    compatibility: "Honda CG 160 2022 a 2024",
+    description:
+      "Pastilha dianteira com boa durabilidade para uso urbano e entrega rápida na oficina.",
+    name: "Pastilha de Freio Cobreq N-932",
+    price: 49.9,
+    sku: "FREIO-932-CG160",
+    stockQuantity: 18,
+  },
+  {
+    category: "Transmissão",
+    compatibility: "Honda XRE 300 2019 a 2023",
+    description:
+      "Kit com corrente, coroa e pinhão para reposição completa da transmissão.",
+    name: "Kit Relação DID XRE 300",
+    price: 219.9,
+    sku: "REL-DID-XRE300",
+    stockQuantity: 7,
+  },
+  {
+    category: "Lubrificantes",
+    compatibility: "Motos 4T",
+    description:
+      "Óleo mineral 20W50 para revisões periódicas, muito procurado no balcão e no WhatsApp.",
+    name: "Óleo Motul 3000 20W50 1L",
+    price: 39.9,
+    sku: "OLEO-MOTUL-20W50",
+    stockQuantity: 24,
+  },
+  {
+    category: "Filtros",
+    compatibility: "Yamaha Fazer 250 2018 a 2024",
+    description:
+      "Filtro de ar de reposição para manter bom rendimento e proteger o motor no uso diário.",
+    name: "Filtro de Ar Vedamotors Fazer 250",
+    price: 34.9,
+    sku: "FILTRO-FAZER250",
+    stockQuantity: 9,
+  },
+] as const;
+
 function resolveProductsFilePath() {
   return resolveDataFilePath(process.env.PRODUCTS_FILE_PATH, "products.json");
 }
@@ -140,6 +183,19 @@ export async function listProductsByUserId(userId: string) {
   return products
     .filter((product) => product.userId === userId)
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+}
+
+export function getSampleProductsForUser(userId: string): StoredProduct[] {
+  const timestamp = new Date("2026-05-01T10:00:00.000Z").toISOString();
+
+  return sampleMotorcycleProducts.map((product, index) => ({
+    ...product,
+    active: true,
+    createdAt: timestamp,
+    id: `sample-product-${index + 1}`,
+    updatedAt: timestamp,
+    userId,
+  }));
 }
 
 export async function getProductById(productId: string, userId: string) {
