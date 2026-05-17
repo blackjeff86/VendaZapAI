@@ -163,6 +163,21 @@ Status sugeridos:
 - fallback para humano
 - limitar resposta em casos ambiguos
 
+### P1 - Funil comercial e automacoes
+
+- definir estagios comerciais da conversa
+- refletir estagio no painel
+- definir urgencia e foco operacional
+- criar transicoes basicas por status
+- preparar follow-up de conversas paradas
+
+### P1 - Preparacao para audio
+
+- aceitar conversa iniciada por audio
+- aceitar conversa mista com texto e audio
+- registrar origem da mensagem
+- preparar fluxo de transcricao para usar a mesma logica da IA
+
 ## Bloco 6 - Reserva e Fluxo Comercial
 
 ### P0 - Criacao de reserva

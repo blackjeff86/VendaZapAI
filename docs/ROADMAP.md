@@ -236,6 +236,8 @@ Entregas prioritarias:
 - indicadores operacionais basicos;
 - multiplos vendedores;
 - melhorias na qualidade da IA;
+- funil comercial por conversa;
+- automacoes por status operacional;
 - mais controle de regras de atendimento.
 
 Resultado esperado:

@@ -8,7 +8,10 @@ import { ConversationReplyForm } from "@/components/conversation-reply-form";
 import { ConversationTimeline } from "@/components/conversation-timeline";
 import type { AssistantSuggestion } from "@/lib/ai-assistant";
 import type { StoredConversation } from "@/lib/conversations";
-import { conversationStatusLabelMap } from "@/lib/dashboard-constants";
+import {
+  conversationDealStageLabelMap,
+  conversationStatusLabelMap,
+} from "@/lib/dashboard-constants";
 
 type ConversationsWorkspaceProps = {
   aiSuggestions: Array<{
@@ -269,6 +272,16 @@ export function ConversationsWorkspace({
                       <span className="rounded-md bg-[#e6e8e9] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-[#3c4a3f]">
                         {conversationStatusLabelMap[conversation.status]}
                       </span>
+                      {conversation.dealStage ? (
+                        <span className="rounded-md bg-[#edf9ff] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-[#00668a]">
+                          {conversationDealStageLabelMap[conversation.dealStage]}
+                        </span>
+                      ) : null}
+                      {lastMessage?.inputType === "audio" ? (
+                        <span className="rounded-md bg-[#fff7e8] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-[#99751b]">
+                          Áudio
+                        </span>
+                      ) : null}
                     </div>
                     </div>
                   </div>
@@ -346,9 +359,26 @@ export function ConversationsWorkspace({
                     </div>
                   </>
                 ) : lastMessage ? (
-                  <p className="mt-3 line-clamp-2 text-sm leading-6 text-[#6a8170]">
-                    {lastMessage.content}
-                  </p>
+                  <>
+                    <p className="mt-3 line-clamp-2 text-sm leading-6 text-[#6a8170]">
+                      {lastMessage.content}
+                    </p>
+                    {conversationSuggestion ? (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <span className="rounded-full bg-[#eefaf0] px-3 py-1 text-[11px] font-semibold text-[#2d8a4b]">
+                          {conversation.dealStage
+                            ? conversationDealStageLabelMap[conversation.dealStage]
+                            : "Em andamento"}
+                        </span>
+                        <span className="rounded-full bg-[#f4f8ff] px-3 py-1 text-[11px] font-semibold text-[#1e355d]">
+                          {conversationSuggestion.urgencyLabel}
+                        </span>
+                        <span className="rounded-full bg-[#fff7e8] px-3 py-1 text-[11px] font-semibold text-[#99751b]">
+                          {conversationSuggestion.operationalFocusLabel}
+                        </span>
+                      </div>
+                    ) : null}
+                  </>
                 ) : null}
               </div>
             );

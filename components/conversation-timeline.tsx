@@ -73,9 +73,16 @@ export function ConversationTimeline({
               className={`flex-1 rounded-[1.1rem] border p-3 sm:rounded-[1.2rem] sm:p-4 ${bubbleClassMap[message.author]}`}
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <span className="text-xs font-semibold uppercase tracking-[0.16em]">
-                  {authorLabelMap[message.author]}
-                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.16em]">
+                    {authorLabelMap[message.author]}
+                  </span>
+                  {message.inputType === "audio" ? (
+                    <span className="rounded-full bg-[#fff7e8] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#99751b]">
+                      Áudio
+                    </span>
+                  ) : null}
+                </div>
                 <span className="text-xs opacity-80">
                   {new Date(message.timestamp).toLocaleString("pt-BR", {
                     day: "2-digit",

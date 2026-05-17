@@ -23,19 +23,25 @@ export async function POST(
       author?: MessageAuthor;
       autoReply?: boolean;
       content?: string;
+      inputType?: "texto" | "audio";
     };
     const author = body.author ?? "cliente";
 
     const conversation = await appendConversationMessage(id, {
       author,
       content: body.content ?? "",
+      inputType: body.inputType ?? "texto",
       userId: session.userId,
     });
+    const humanHandoffActive =
+      conversation.status === "em_atendimento_humano" ||
+      conversation.status === "aguardando_humano" ||
+      conversation.dealStage === "negociacao";
 
     let suggestion = null;
     let autoReplyApplied = false;
 
-    if (body.autoReply && author === "cliente") {
+    if (body.autoReply && author === "cliente" && !humanHandoffActive) {
       const products = await listProductsByUserId(session.userId);
       suggestion = buildAssistantSuggestion(conversation, products);
 
@@ -56,6 +62,8 @@ export async function POST(
         conversation: updatedConversation,
         message: autoReplyApplied
           ? "Mensagem simulada e resposta da IA aplicada."
+          : humanHandoffActive && author === "cliente"
+            ? "Mensagem simulada com IA pausada para atendimento humano."
           : author === "humano"
             ? "Resposta manual enviada com sucesso."
             : "Mensagem simulada com sucesso.",

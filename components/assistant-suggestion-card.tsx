@@ -21,6 +21,14 @@ const intentMap: Record<AssistantSuggestion["intent"], string> = {
   reserva: "Reserva",
 };
 
+const dealStageMap: Record<AssistantSuggestion["dealStage"], string> = {
+  descoberta: "Descoberta",
+  negociacao: "Negociação",
+  oferta: "Oferta",
+  reserva: "Reserva",
+  suporte: "Suporte",
+};
+
 export function AssistantSuggestionCard({
   conversationId,
   suggestion,
@@ -40,6 +48,9 @@ export function AssistantSuggestionCard({
             Sugestão da IA
           </span>
           <span className="rounded-full bg-[rgba(255,255,255,0.72)] px-3 py-1 text-xs font-semibold text-[#617664]">
+            {dealStageMap[suggestion.dealStage]}
+          </span>
+          <span className="rounded-full bg-[rgba(255,255,255,0.72)] px-3 py-1 text-xs font-semibold text-[#617664]">
             {intentMap[suggestion.intent]}
           </span>
           <span className="rounded-full bg-[rgba(255,255,255,0.72)] px-3 py-1 text-xs font-semibold text-[#617664]">
@@ -56,6 +67,9 @@ export function AssistantSuggestionCard({
         </span>
         <span className="rounded-full bg-[#fff7e8] px-3 py-1 text-xs font-semibold text-[#99751b]">
           Próxima ação: {suggestion.nextStepLabel}
+        </span>
+        <span className="rounded-full bg-[#f4f8ff] px-3 py-1 text-xs font-semibold text-[#1e355d]">
+          Urgência: {suggestion.urgencyLabel}
         </span>
       </div>
 
@@ -83,6 +97,15 @@ export function AssistantSuggestionCard({
             Ação operacional
           </p>
           <p className="mt-2 text-sm font-medium text-[#173424]">{operationalLabel}</p>
+        </div>
+
+        <div className="dashboard-card rounded-[1.2rem] p-4 sm:col-span-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6a7f6d]">
+            Foco da conversa
+          </p>
+          <p className="mt-2 text-sm font-medium text-[#173424]">
+            {suggestion.operationalFocusLabel}
+          </p>
         </div>
       </div>
 

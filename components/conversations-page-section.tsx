@@ -60,6 +60,9 @@ export function ConversationsPageSection({
   const hotConversationsCount = conversations.filter(
     (conversation) => conversation.priorityLabel === "Quente",
   ).length;
+  const qualificationCount = conversations.filter(
+    (conversation) => conversation.dealStage === "qualificacao",
+  ).length;
 
   return (
     <div className="space-y-6 md:space-y-5">
@@ -77,7 +80,7 @@ export function ConversationsPageSection({
           ["Conversas", String(conversations.length)],
           ["Reservas", String(reservedConversationsCount)],
           ["Atendimento humano", String(humanConversationsCount)],
-          ["Prioridade quente", String(hotConversationsCount)],
+          ["Qualificação", String(qualificationCount)],
         ].map(([title, value]) => (
           <div
             key={title}
@@ -130,13 +133,13 @@ export function ConversationsPageSection({
 
           <div className="col-span-3 rounded-2xl bg-[#006d2f] p-6 text-white shadow-md">
             <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-white/80">
-              Prioridade quente
+              Qualificação ativa
             </p>
             <h3 className="mt-2 text-3xl font-bold tracking-[-0.03em]">
-              {hotConversationsCount}
+              {qualificationCount}
             </h3>
             <p className="mt-2 text-sm text-white/80">
-              Conversas com maior chance de virar venda agora.
+              Conversas que ainda dependem de mais contexto para virar oferta.
             </p>
           </div>
 
@@ -173,7 +176,7 @@ export function ConversationsPageSection({
                 <div className="border-l-2 border-[#006b5f] pl-4">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#006b5f]">Fila quente</p>
                   <p className="mt-1 text-sm leading-6 text-[#3c4a3d]">
-                    Dê prioridade para clientes prontos para reservar ou fechar a compra.
+                    {hotConversationsCount} conversa(s) estão mais próximas de reservar ou fechar a compra.
                   </p>
                 </div>
               </div>

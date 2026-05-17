@@ -11,6 +11,7 @@ export type AssistantIntent =
 export type AssistantSuggestion = {
   confidenceLabel: "Alta" | "Media" | "Baixa";
   conversationId: string;
+  dealStage: "descoberta" | "oferta" | "negociacao" | "reserva" | "suporte";
   intent: AssistantIntent;
   matchedProducts: Array<{
     id: string;
@@ -20,11 +21,13 @@ export type AssistantSuggestion = {
   }>;
   missingData: string[];
   nextStepLabel: string;
+  operationalFocusLabel: string;
   shouldEscalateToHuman: boolean;
   shouldOfferReservation: boolean;
   stockStatus: "em_estoque" | "baixo_estoque" | "sem_correspondencia" | "sem_estoque";
   suggestedReply: string;
   summary: string;
+  urgencyLabel: "Agora" | "Hoje" | "Baixa";
 };
 
 function normalizeText(value: string) {
@@ -40,6 +43,13 @@ function getLatestClientMessage(conversation: StoredConversation) {
   );
 
   return clientMessages[clientMessages.length - 1];
+}
+
+function getClientConversationContext(conversation: StoredConversation) {
+  return conversation.messages
+    .filter((message) => message.author === "cliente")
+    .map((message) => message.content)
+    .join(" ");
 }
 
 function inferIntent(message: string): AssistantIntent {
@@ -81,6 +91,32 @@ function inferIntent(message: string): AssistantIntent {
   }
 
   return "duvida_geral";
+}
+
+function inferNeedsVehicleYear(message: string) {
+  const normalized = normalizeText(message);
+
+  return (
+    normalized.includes("xre") ||
+    normalized.includes("titan") ||
+    normalized.includes("fan") ||
+    normalized.includes("cg") ||
+    normalized.includes("fazer") ||
+    normalized.includes("bros")
+  );
+}
+
+function inferNeedsHumanSupport(message: string) {
+  const normalized = normalizeText(message);
+
+  return (
+    normalized.includes("boleto") ||
+    normalized.includes("nota fiscal") ||
+    normalized.includes("entrega") ||
+    normalized.includes("motoboy") ||
+    normalized.includes("garantia") ||
+    normalized.includes("desconto")
+  );
 }
 
 function extractYear(message: string) {
@@ -149,15 +185,96 @@ function buildProductReply(product: StoredProduct, year: string | null) {
     .join(" ");
 }
 
+function buildOutOfStockReply(product: StoredProduct) {
+  return [
+    `No momento ${product.name} está sem estoque por aqui.`,
+    `O último valor trabalhado foi ${formatCurrency(product.price)}.`,
+    "Se quiser, posso te orientar em uma alternativa parecida ou registrar para retorno assim que chegar.",
+  ].join(" ");
+}
+
+function inferDealStage(
+  conversation: StoredConversation,
+  intent: AssistantIntent,
+  missingData: string[],
+) {
+  if (conversation.status === "reservada" || intent === "reserva") {
+    return "reserva" as const;
+  }
+
+  if (intent === "negociacao") {
+    return "negociacao" as const;
+  }
+
+  if (intent === "atendimento_humano") {
+    return "suporte" as const;
+  }
+
+  if (missingData.length > 0 || conversation.status === "aguardando_dados") {
+    return "descoberta" as const;
+  }
+
+  return "oferta" as const;
+}
+
+function inferUrgencyLabel(
+  conversation: StoredConversation,
+  intent: AssistantIntent,
+  stockStatus: AssistantSuggestion["stockStatus"],
+) {
+  if (
+    conversation.priorityLabel === "Quente" ||
+    intent === "reserva" ||
+    stockStatus === "baixo_estoque"
+  ) {
+    return "Agora" as const;
+  }
+
+  if (
+    intent === "negociacao" ||
+    conversation.status === "nova" ||
+    conversation.status === "aguardando_dados"
+  ) {
+    return "Hoje" as const;
+  }
+
+  return "Baixa" as const;
+}
+
+function inferOperationalFocusLabel(
+  dealStage: AssistantSuggestion["dealStage"],
+  shouldEscalateToHuman: boolean,
+  shouldOfferReservation: boolean,
+) {
+  if (shouldEscalateToHuman) {
+    return "Assumir o atendimento";
+  }
+
+  if (shouldOfferReservation) {
+    return "Fechar a reserva";
+  }
+
+  if (dealStage === "descoberta") {
+    return "Coletar contexto";
+  }
+
+  if (dealStage === "oferta") {
+    return "Apresentar a melhor opção";
+  }
+
+  return "Conduzir a conversa";
+}
+
 export function buildAssistantSuggestion(
   conversation: StoredConversation,
   products: StoredProduct[],
 ): AssistantSuggestion {
   const latestClientMessage = getLatestClientMessage(conversation);
   const messageContent = latestClientMessage?.content ?? "";
-  const normalizedMessage = normalizeText(messageContent);
-  const intent = inferIntent(messageContent);
-  const year = extractYear(messageContent);
+  const conversationContext = getClientConversationContext(conversation);
+  const normalizedMessage = normalizeText(conversationContext || messageContent);
+  const intent = inferIntent(conversationContext || messageContent);
+  const year = extractYear(conversationContext || messageContent);
   const activeProducts = products.filter((product) => product.active);
   const matchedProducts = activeProducts
     .map((product) => ({
@@ -174,10 +291,7 @@ export function buildAssistantSuggestion(
   if (
     intent === "busca_produto" &&
     !year &&
-    (normalizedMessage.includes("xre") ||
-      normalizedMessage.includes("titan") ||
-      normalizedMessage.includes("fan") ||
-      normalizedMessage.includes("cg"))
+    inferNeedsVehicleYear(conversationContext || messageContent)
   ) {
     missingData.push("ano do veículo");
   }
@@ -187,27 +301,40 @@ export function buildAssistantSuggestion(
   }
 
   if (intent === "busca_produto" && matchedProducts.length === 0) {
+    const shouldEscalateToHuman = inferNeedsHumanSupport(conversationContext);
+    const dealStage = inferDealStage(conversation, intent, missingData);
+    const stockStatus = "sem_correspondencia" as const;
     return {
       conversationId: conversation.id,
       confidenceLabel: "Baixa",
+      dealStage,
       intent,
       matchedProducts: [],
       missingData,
       nextStepLabel: "Pedir mais contexto ou revisar catálogo",
-      shouldEscalateToHuman: false,
+      operationalFocusLabel: inferOperationalFocusLabel(
+        dealStage,
+        shouldEscalateToHuman,
+        false,
+      ),
+      shouldEscalateToHuman,
       shouldOfferReservation: false,
-      stockStatus: "sem_correspondencia",
+      stockStatus,
       suggestedReply:
         "Quero te ajudar certo por aqui. Me confirma o modelo completo, o ano e, se tiver, a marca da peça que você procura para eu validar no estoque.",
       summary:
         "Nenhum produto correspondente foi encontrado no catálogo local para esta conversa.",
+      urgencyLabel: inferUrgencyLabel(conversation, intent, stockStatus),
     };
   }
 
   if (intent === "atendimento_humano") {
+    const dealStage = inferDealStage(conversation, intent, missingData);
+    const stockStatus = "sem_correspondencia" as const;
     return {
       conversationId: conversation.id,
       confidenceLabel: "Alta",
+      dealStage,
       intent,
       matchedProducts: matchedProducts.map((product) => ({
         id: product.id,
@@ -217,19 +344,29 @@ export function buildAssistantSuggestion(
       })),
       missingData,
       nextStepLabel: "Transferir para humano",
+      operationalFocusLabel: inferOperationalFocusLabel(dealStage, true, false),
       shouldEscalateToHuman: true,
       shouldOfferReservation: false,
-      stockStatus: "sem_correspondencia",
+      stockStatus,
       suggestedReply:
         "Perfeito. Vou te encaminhar para um vendedor continuar daqui e te atender da melhor forma.",
       summary: "O cliente demonstrou preferência por atendimento humano.",
+      urgencyLabel: inferUrgencyLabel(conversation, intent, stockStatus),
     };
   }
 
   if (intent === "negociacao") {
+    const shouldOfferReservation = matchedProducts.some(
+      (product) => product.stockQuantity > 0,
+    );
+    const dealStage = inferDealStage(conversation, intent, missingData);
+    const stockStatus = shouldOfferReservation
+      ? ("em_estoque" as const)
+      : ("sem_correspondencia" as const);
     return {
       conversationId: conversation.id,
       confidenceLabel: matchedProducts.length > 0 ? "Media" : "Baixa",
+      dealStage,
       intent,
       matchedProducts: matchedProducts.map((product) => ({
         id: product.id,
@@ -239,22 +376,31 @@ export function buildAssistantSuggestion(
       })),
       missingData,
       nextStepLabel: "Levar para aprovacao comercial",
+      operationalFocusLabel: inferOperationalFocusLabel(
+        dealStage,
+        true,
+        shouldOfferReservation,
+      ),
       shouldEscalateToHuman: true,
-      shouldOfferReservation: matchedProducts.some((product) => product.stockQuantity > 0),
-      stockStatus: matchedProducts.some((product) => product.stockQuantity > 0)
-        ? "em_estoque"
-        : "sem_correspondencia",
+      shouldOfferReservation,
+      stockStatus,
       suggestedReply:
         "Consigo verificar isso para você. Vou encaminhar aqui para validar a melhor condição e já te responder.",
       summary:
         "Pedido com viés de negociação. Melhor levar para atendimento humano ou regra comercial.",
+      urgencyLabel: inferUrgencyLabel(conversation, intent, stockStatus),
     };
   }
 
   if (intent === "reserva" || conversation.status === "reservada") {
+    const dealStage = inferDealStage(conversation, intent, missingData);
+    const stockStatus = matchedProducts.some((product) => product.stockQuantity > 0)
+      ? ("em_estoque" as const)
+      : ("sem_correspondencia" as const);
     return {
       conversationId: conversation.id,
       confidenceLabel: "Alta",
+      dealStage,
       intent,
       matchedProducts: matchedProducts.map((product) => ({
         id: product.id,
@@ -264,22 +410,27 @@ export function buildAssistantSuggestion(
       })),
       missingData,
       nextStepLabel: "Confirmar dados da retirada",
+      operationalFocusLabel: inferOperationalFocusLabel(dealStage, false, false),
       shouldEscalateToHuman: false,
       shouldOfferReservation: false,
-      stockStatus: matchedProducts.some((product) => product.stockQuantity > 0)
-        ? "em_estoque"
-        : "sem_correspondencia",
+      stockStatus,
       suggestedReply:
         "Perfeito 😊 Posso deixar separado. Me confirma no nome de quem fica a retirada e o melhor horario para passar aqui.",
       summary:
         "A conversa entrou em momento de reserva e precisa coletar dados operacionais finais.",
+      urgencyLabel: inferUrgencyLabel(conversation, intent, stockStatus),
     };
   }
 
   if (missingData.length > 0) {
+    const dealStage = inferDealStage(conversation, intent, missingData);
+    const stockStatus = matchedProducts.some((product) => product.stockQuantity > 0)
+      ? ("em_estoque" as const)
+      : ("sem_correspondencia" as const);
     return {
       conversationId: conversation.id,
       confidenceLabel: "Alta",
+      dealStage,
       intent,
       matchedProducts: matchedProducts.map((product) => ({
         id: product.id,
@@ -289,35 +440,40 @@ export function buildAssistantSuggestion(
       })),
       missingData,
       nextStepLabel: "Coletar dado faltante",
+      operationalFocusLabel: inferOperationalFocusLabel(dealStage, false, false),
       shouldEscalateToHuman: false,
       shouldOfferReservation: false,
-      stockStatus: matchedProducts.some((product) => product.stockQuantity > 0)
-        ? "em_estoque"
-        : "sem_correspondencia",
+      stockStatus,
       suggestedReply:
         "Tenho algumas opções compatíveis por aqui 😊 Para te passar certo, você consegue me confirmar o ano do veículo?",
       summary:
         "A intenção foi entendida, mas ainda falta contexto mínimo para responder com segurança.",
+      urgencyLabel: inferUrgencyLabel(conversation, intent, stockStatus),
     };
   }
 
   const topProduct = matchedProducts[0];
 
   if (!topProduct) {
+    const dealStage = inferDealStage(conversation, intent, missingData);
+    const stockStatus = "sem_correspondencia" as const;
     return {
       conversationId: conversation.id,
       confidenceLabel: "Baixa",
+      dealStage,
       intent,
       matchedProducts: [],
       missingData,
       nextStepLabel: "Pedir mais detalhes",
+      operationalFocusLabel: inferOperationalFocusLabel(dealStage, false, false),
       shouldEscalateToHuman: false,
       shouldOfferReservation: false,
-      stockStatus: "sem_correspondencia",
+      stockStatus,
       suggestedReply:
         "Consigo verificar para você. Me manda o modelo completo ou uma referência da peça para eu localizar certinho no estoque.",
       summary:
         "Não houve correspondência suficiente para montar uma oferta comercial segura.",
+      urgencyLabel: inferUrgencyLabel(conversation, intent, stockStatus),
     };
   }
 
@@ -327,10 +483,14 @@ export function buildAssistantSuggestion(
       : topProduct.stockQuantity <= 2
         ? "baixo_estoque"
         : "em_estoque";
+  const shouldEscalateToHuman = inferNeedsHumanSupport(conversationContext);
+  const shouldOfferReservation = topProduct.stockQuantity > 0;
+  const dealStage = inferDealStage(conversation, intent, missingData);
 
   return {
     conversationId: conversation.id,
     confidenceLabel: topProduct.stockQuantity > 0 ? "Alta" : "Media",
+    dealStage,
     intent,
     matchedProducts: matchedProducts.map((product) => ({
       id: product.id,
@@ -341,13 +501,22 @@ export function buildAssistantSuggestion(
     missingData,
     nextStepLabel:
       topProduct.stockQuantity > 0 ? "Responder e oferecer reserva" : "Informar indisponibilidade",
-    shouldEscalateToHuman: false,
-    shouldOfferReservation: topProduct.stockQuantity > 0,
+    operationalFocusLabel: inferOperationalFocusLabel(
+      dealStage,
+      shouldEscalateToHuman,
+      shouldOfferReservation,
+    ),
+    shouldEscalateToHuman,
+    shouldOfferReservation,
     stockStatus,
-    suggestedReply: buildProductReply(topProduct, year),
+    suggestedReply:
+      topProduct.stockQuantity > 0
+        ? buildProductReply(topProduct, year)
+        : buildOutOfStockReply(topProduct),
     summary:
       topProduct.stockQuantity > 0
         ? "A conversa já tem contexto suficiente para uma resposta comercial objetiva."
         : "Produto identificado, mas sem saldo no estoque local.",
+    urgencyLabel: inferUrgencyLabel(conversation, intent, stockStatus),
   };
 }
