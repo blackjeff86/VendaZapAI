@@ -192,6 +192,14 @@ Para manter foco, estes itens nao devem ser objetivo principal desta sprint:
 - decidir campos obrigatorios;
 - validar mensagem de sucesso no formulario.
 
+## To Do Imediato da Sprint
+
+- resolver o bloqueio atual do Supabase, pois o limite de projetos do plano free foi atingido;
+- definir se o projeto vai reutilizar um projeto existente ou criar um novo quando houver disponibilidade;
+- depois disso, conectar a captura de leads da landing ao Supabase;
+- estruturar a tabela de leads no banco;
+- validar persistencia real dos leads fora do ambiente local.
+
 ## Frente 2 - Produto
 
 - validar escopo real do MVP;
@@ -225,6 +233,13 @@ Mitigacao:
 Mitigacao:
 
 - alinhar autenticacao e tenant antes de sair criando telas do MVP.
+
+### Risco 4 - bloqueio de infraestrutura no Supabase
+
+Mitigacao:
+
+- resolver o limite de projetos no plano free antes de depender de persistencia real no banco;
+- enquanto isso, manter a conexao com Supabase como tarefa pendente da sprint.
 
 ## Criterios de Sucesso da Sprint
 

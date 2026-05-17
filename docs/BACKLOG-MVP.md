@@ -43,6 +43,9 @@ Status sugeridos:
 - formulario conectado a banco ou ferramenta
 - armazenamento de nome, email, loja e nicho
 - mensagem de confirmacao
+- resolver bloqueio atual do Supabase antes da persistencia real
+- criar tabela de leads no Supabase
+- conectar o formulario da landing ao banco quando a infraestrutura estiver liberada
 
 ### P1 - Estrutura comercial inicial
 

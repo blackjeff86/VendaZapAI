@@ -1,3 +1,5 @@
+import { LeadCaptureForm } from "@/components/lead-capture-form";
+
 const benefits = [
   {
     title: "Responda antes da venda esfriar",
@@ -430,29 +432,7 @@ export default function Home() {
             </div>
           </div>
 
-          <form className="mt-8 grid gap-3 sm:max-w-4xl sm:grid-cols-[1fr_1fr_1fr_auto]">
-            <input
-              type="text"
-              placeholder="Nome"
-              className="rounded-full border border-white/10 bg-black/20 px-5 py-3 text-sm text-white outline-none placeholder:text-white/35"
-            />
-            <input
-              type="text"
-              placeholder="Nome da loja"
-              className="rounded-full border border-white/10 bg-black/20 px-5 py-3 text-sm text-white outline-none placeholder:text-white/35"
-            />
-            <input
-              type="email"
-              placeholder="Seu melhor e-mail"
-              className="rounded-full border border-white/10 bg-black/20 px-5 py-3 text-sm text-white outline-none placeholder:text-white/35"
-            />
-            <button
-              type="submit"
-              className="rounded-full bg-whatsapp px-6 py-3 text-sm font-semibold text-[#041108] transition hover:bg-mint"
-            >
-              Quero meu acesso
-            </button>
-          </form>
+          <LeadCaptureForm />
         </div>
       </section>
 
