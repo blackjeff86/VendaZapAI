@@ -29,10 +29,16 @@ export default async function DashboardPage() {
             "/painel/whatsapp",
             "Abrir canal",
           ],
-        ].map(([title, copy, href, cta]) => (
+        ].map(([title, copy, href, cta], index) => (
           <div
             key={title}
-            className="rounded-[1.8rem] border border-[#d9e6da] bg-[linear-gradient(180deg,#ffffff_0%,#fbfefb_100%)] p-5 shadow-[0_16px_34px_rgba(26,74,43,0.05)]"
+            className={`rounded-[1.8rem] border p-5 shadow-[0_16px_34px_rgba(26,74,43,0.05)] ${
+              index === 0
+                ? "border-[#bfe5c7] bg-[linear-gradient(180deg,#f0fcf2_0%,#e6f8ea_100%)]"
+                : index === 2
+                  ? "border-[#cae2df] bg-[linear-gradient(180deg,#f2fbfb_0%,#ebf5f5_100%)]"
+                  : "border-[#d9e6da] bg-[linear-gradient(180deg,#ffffff_0%,#fbfefb_100%)]"
+            }`}
           >
             <p className="display-font text-xl font-semibold text-[#173424]">{title}</p>
             <p className="mt-3 text-sm leading-7 text-[#5f7766]">{copy}</p>

@@ -210,12 +210,12 @@ export function ConversationsWorkspace({
             return (
               <div
                 key={conversation.id}
-                className="rounded-[1.6rem] border border-[#dbe7dc] bg-[linear-gradient(180deg,#ffffff_0%,#fbfefb_100%)] p-4 shadow-[0_14px_32px_rgba(26,74,43,0.04)] sm:p-5"
+                className="rounded-[1.45rem] border border-[#dbe7dc] bg-[linear-gradient(180deg,#ffffff_0%,#fbfefb_100%)] p-4 shadow-[0_14px_32px_rgba(26,74,43,0.04)]"
               >
-                <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                  <div className="max-w-2xl">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="display-font text-xl font-semibold text-[#173424]">
+                      <p className="display-font text-lg font-semibold text-[#173424]">
                         {conversation.clientName}
                       </p>
                       <span className="rounded-full bg-[#e4f6e8] px-3 py-1 text-xs font-semibold text-[#2d8a4b]">
@@ -228,16 +228,30 @@ export function ConversationsWorkspace({
                     <p className="mt-2 text-sm text-[#5b7362]">
                       {conversation.clientPhone}
                     </p>
+                  </div>
+
+                  <div className="flex shrink-0 flex-col items-end gap-2">
+                    <span className="rounded-full bg-[#eff5ef] px-3 py-1 text-[11px] font-medium text-[#5f7766]">
+                      {new Date(conversation.updatedAt).toLocaleTimeString("pt-BR", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => toggleConversation(conversation.id)}
+                      className="rounded-full border border-[#cfe0d0] bg-white px-4 py-2 text-sm font-semibold text-[#1d3a29] transition hover:border-[#8abf93] hover:bg-[#f4fbf4]"
+                    >
+                      {isExpanded ? "Recolher" : "Expandir"}
+                    </button>
+                  </div>
+                </div>
+
+                {isExpanded ? (
+                  <>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <span className="rounded-full bg-[#eff5ef] px-3 py-1 text-xs font-medium text-[#5f7766]">
                         {conversation.messages.length} mensagem(ns)
-                      </span>
-                      <span className="rounded-full bg-[#eff5ef] px-3 py-1 text-xs font-medium text-[#5f7766]">
-                        Atualizada em{" "}
-                        {new Date(conversation.updatedAt).toLocaleTimeString("pt-BR", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
                       </span>
                     </div>
                     <p className="mt-4 text-sm leading-7 text-[#5f7766]">
@@ -269,46 +283,18 @@ export function ConversationsWorkspace({
                         ) : null}
                       </div>
                     ) : null}
-                  </div>
-
-                  <div className="min-w-full rounded-[1.4rem] border border-[#dce7dd] bg-[#fbfefb] p-4 lg:min-w-[20rem]">
-                    <div className="mb-4 rounded-[1rem] border border-[#dce8dd] bg-white p-3 text-sm text-[#5f7766]">
-                      <p className="font-semibold text-[#173424]">Ação rápida</p>
-                      <p className="mt-1 leading-6">
-                        Assuma quando a IA travar ou mantenha com a automação enquanto a conversa está fluindo.
-                      </p>
+                    <div className="mt-4">
+                      <ConversationHandoffButton
+                        conversationId={conversation.id}
+                        humanActive={conversation.status === "em_atendimento_humano"}
+                      />
                     </div>
-
-                    <button
-                      type="button"
-                      onClick={() => toggleConversation(conversation.id)}
-                      className="mb-3 w-full rounded-full border border-[#cfe0d0] bg-white px-4 py-2 text-sm font-semibold text-[#1d3a29] transition hover:border-[#8abf93] hover:bg-[#f4fbf4]"
-                    >
-                      {isExpanded ? "Recolher detalhes" : "Expandir detalhes"}
-                    </button>
-
-                    <ConversationHandoffButton
-                      conversationId={conversation.id}
-                      humanActive={conversation.status === "em_atendimento_humano"}
-                    />
-                  </div>
-                </div>
-
-                {!isExpanded ? (
-                  <div className="mt-4 rounded-[1.2rem] border border-[#dce8dd] bg-[#f8fcf8] p-4 text-sm leading-6 text-[#58705f]">
-                    Visualização resumida para o celular. Expanda para ver a sugestão da IA, a timeline completa e os formulários da conversa.
-                  </div>
-                ) : null}
-
-                {isExpanded && conversationSuggestion ? (
-                  <AssistantSuggestionCard
-                    conversationId={conversation.id}
-                    suggestion={conversationSuggestion}
-                  />
-                ) : null}
-
-                {isExpanded ? (
-                  <>
+                    {conversationSuggestion ? (
+                      <AssistantSuggestionCard
+                        conversationId={conversation.id}
+                        suggestion={conversationSuggestion}
+                      />
+                    ) : null}
                     <ConversationTimeline messages={conversation.messages} />
 
                     <div className="mt-4 grid gap-4 lg:grid-cols-2">

@@ -63,16 +63,24 @@ export function DashboardOverviewSection({
             onboardingCompleted
               ? "Dados mínimos preenchidos para seguir operando."
               : "Ainda faltam dados básicos para ativar a rotina.",
+            onboardingCompleted
+              ? "border-[#bfe5c7] bg-[linear-gradient(135deg,#effcf1_0%,#e2f8e7_100%)]"
+              : "border-[#f0d9a6] bg-[linear-gradient(135deg,#fff9ec_0%,#fff3d8_100%)]",
           ],
-          ["Uso mobile", "Navegação e blocos redesenhados para leitura rápida no celular."],
+          [
+            "Uso mobile",
+            "Navegação e blocos redesenhados para leitura rápida no celular.",
+            "border-[#cae2df] bg-[linear-gradient(135deg,#f0fbfb_0%,#e8f5f4_100%)]",
+          ],
           [
             "Próxima meta",
             "Responder mais rápido, deixar o catálogo confiável e ativar o canal.",
+            "border-[#cfe0d0] bg-white",
           ],
-        ].map(([title, copy]) => (
+        ].map(([title, copy, tone]) => (
           <div
             key={title}
-            className="rounded-[1.6rem] border border-[#d9e6da] bg-white p-5 shadow-[0_16px_40px_rgba(26,74,43,0.05)]"
+            className={`rounded-[1.6rem] border p-5 shadow-[0_16px_40px_rgba(26,74,43,0.05)] ${tone}`}
           >
             <p className="display-font text-lg font-semibold text-[#173424]">{title}</p>
             <p className="mt-3 text-sm leading-7 text-[#5f7766]">{copy}</p>

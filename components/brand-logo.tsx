@@ -8,19 +8,22 @@ type BrandLogoProps = {
 
 const sizeMap = {
   lg: {
-    mark: 56,
-    wordmark: 182,
+    gap: "gap-4",
+    markWidth: "w-[6.9rem]",
     subtitle: "text-sm",
+    wordmarkWidth: "w-[13.4rem]",
   },
   md: {
-    mark: 44,
-    wordmark: 156,
-    subtitle: "text-xs",
+    gap: "gap-3",
+    markWidth: "w-[6rem]",
+    subtitle: "text-[13px]",
+    wordmarkWidth: "w-[12.1rem]",
   },
   sm: {
-    mark: 36,
-    wordmark: 132,
-    subtitle: "text-[11px]",
+    gap: "gap-3",
+    markWidth: "w-[5.2rem]",
+    subtitle: "text-xs",
+    wordmarkWidth: "w-[10.8rem]",
   },
 } as const;
 
@@ -41,33 +44,33 @@ export function BrandLogo({
   const sizes = sizeMap[size];
 
   return (
-    <div className="flex items-center gap-3">
+    <div className={`flex items-center ${sizes.gap}`}>
       <Image
-        src="/brand/vendazap-mark.svg"
-        alt="VendaZap AI"
-        width={sizes.mark}
-        height={sizes.mark}
-        className="h-auto w-auto rounded-full"
+        src={theme === "dark" ? "/brand/vendazap-mark.svg" : "/brand/vendazap-mark-light.svg"}
+        alt="Selo VendaZap AI"
+        width={108}
+        height={72}
+        className={`h-auto ${sizes.markWidth}`}
         priority
       />
 
       {markOnly ? null : (
         <div className="min-w-0">
           <Image
-            src="/brand/vendazap-wordmark.svg"
+            src={
+              theme === "dark"
+                ? "/brand/vendazap-wordmark.svg"
+                : "/brand/vendazap-wordmark-light.svg"
+            }
             alt="VendaZap AI"
-            width={sizes.wordmark}
-            height={41}
-            className={`h-auto w-auto max-w-full ${
-              theme === "dark" ? "drop-shadow-[0_10px_30px_rgba(0,0,0,0.28)]" : ""
-            }`}
+            width={260}
+            height={64}
+            className={`h-auto ${sizes.wordmarkWidth}`}
             priority
           />
-          <div className="mt-1 flex items-center gap-2">
-            <p className={`${sizes.subtitle} leading-5 ${palette.muted}`}>
-              Vendedor inteligente para WhatsApp
-            </p>
-          </div>
+          <p className={`mt-1 ${sizes.subtitle} leading-5 ${palette.muted}`}>
+            Vendedor inteligente para WhatsApp
+          </p>
         </div>
       )}
     </div>

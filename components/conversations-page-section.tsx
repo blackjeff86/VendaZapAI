@@ -47,14 +47,30 @@ export function ConversationsPageSection({
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
           {[
-            ["Conversas", String(conversations.length)],
-            ["Reservas", String(reservedConversationsCount)],
-            ["Atendimento humano", String(humanConversationsCount)],
-            ["Prioridade quente", String(hotConversationsCount)],
-          ].map(([title, value]) => (
+            [
+              "Conversas",
+              String(conversations.length),
+              "border-[#d9e6da] bg-[#fbfefb]",
+            ],
+            [
+              "Reservas",
+              String(reservedConversationsCount),
+              "border-[#bfe5c7] bg-[linear-gradient(135deg,#effcf1_0%,#e3f8e8_100%)]",
+            ],
+            [
+              "Atendimento humano",
+              String(humanConversationsCount),
+              "border-[#cae2df] bg-[linear-gradient(135deg,#f0fbfb_0%,#e8f5f4_100%)]",
+            ],
+            [
+              "Prioridade quente",
+              String(hotConversationsCount),
+              "border-[#f0d9a6] bg-[linear-gradient(135deg,#fff9ec_0%,#fff3d8_100%)]",
+            ],
+          ].map(([title, value, tone]) => (
             <div
               key={title}
-              className="rounded-[1.6rem] border border-[#d9e6da] bg-[#fbfefb] p-5 shadow-[0_14px_32px_rgba(26,74,43,0.04)]"
+              className={`rounded-[1.6rem] border p-5 shadow-[0_14px_32px_rgba(26,74,43,0.04)] ${tone}`}
             >
               <p className="display-font text-lg font-semibold text-[#173424]">{title}</p>
               <p className="mt-3 text-2xl font-semibold text-[#2d8a4b]">{value}</p>

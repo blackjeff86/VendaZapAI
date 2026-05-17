@@ -46,7 +46,7 @@ export default async function DashboardLayout({
         </div>
       </header>
 
-      <main className="container-shell py-5 sm:py-8">
+      <main className="container-shell py-5 pb-28 sm:py-8 sm:pb-8">
         <div className="space-y-5 sm:space-y-6">
           <PainelNav />
           {children}
