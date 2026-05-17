@@ -1,4 +1,3 @@
-<svg width="260" height="64" viewBox="0 0 260 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <text x="0" y="43" fill="#173424" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="-1.8">VendaZap</text>
-  <text x="176" y="43" fill="#25C95B" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="-1.8">AI</text>
+<svg width="620" height="140" viewBox="0 0 620 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <text x="2" y="98" fill="#1A1A1A" style="font-family:'Plus Jakarta Sans', sans-serif; font-size:88px; font-weight:800; letter-spacing:-2px;">VendaZap<tspan fill="#25D366"> AI</tspan></text>
 </svg>

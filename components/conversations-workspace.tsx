@@ -117,6 +117,9 @@ export function ConversationsWorkspace({
     );
   }
 
+  const filtersActive =
+    Boolean(search) || statusFilter !== "todas" || segmentFilter !== "todas";
+
   return (
     <section className="space-y-4">
       <div className="sticky top-[4.6rem] z-10 rounded-xl border border-[#bacbbc]/30 bg-[rgba(248,250,251,0.95)] p-4 shadow-[0_8px_20px_rgba(0,0,0,0.04)] backdrop-blur-xl lg:static lg:bg-transparent lg:p-0 lg:shadow-none">
@@ -135,10 +138,10 @@ export function ConversationsWorkspace({
                 key={segment.value}
                 type="button"
                 onClick={() => setSegmentFilter(segment.value)}
-                className={`min-w-fit rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                className={`min-w-fit rounded-full border px-4 py-2 text-sm font-semibold transition duration-200 ${
                   isActive
-                    ? "border-[#006d3e] bg-[#006d3e] text-white"
-                    : "border-[#e1e3e4] bg-[#e6e8e9] text-[#3c4a3f]"
+                    ? "border-[#006d3e] bg-[#006d3e] text-white shadow-[0_10px_20px_rgba(0,109,62,0.18)]"
+                    : "border-[#e1e3e4] bg-[#e6e8e9] text-[#3c4a3f] hover:bg-white"
                 }`}
               >
                 {segment.label} ({segment.count})
@@ -183,7 +186,7 @@ export function ConversationsWorkspace({
 
         <div className="mt-3 hidden flex-wrap items-center gap-3 text-sm text-[#5f7766] lg:flex">
           <span>{filteredConversations.length} conversa(s) exibida(s)</span>
-          {(search || statusFilter !== "todas" || segmentFilter !== "todas") && (
+          {filtersActive && (
             <button
               type="button"
               onClick={() => {
@@ -191,7 +194,7 @@ export function ConversationsWorkspace({
                 setStatusFilter("todas");
                 setSegmentFilter("todas");
               }}
-              className="rounded-full border border-[#bacbbc]/30 bg-white px-3 py-1.5 font-medium text-[#006d3e] transition hover:bg-[#f8fafb]"
+              className="rounded-full border border-[#bacbbc]/30 bg-white px-3 py-1.5 font-medium text-[#006d3e] transition duration-200 hover:-translate-y-0.5 hover:bg-[#f8fafb]"
             >
               Limpar filtros
             </button>
@@ -201,8 +204,37 @@ export function ConversationsWorkspace({
 
       <div className="grid gap-3 sm:gap-4">
         {filteredConversations.length === 0 ? (
-          <div className="rounded-[1.6rem] border border-dashed border-[#cfe0d1] bg-[#f8fcf8] p-6 text-sm leading-7 text-[#607766]">
-            Nenhuma conversa encontrada com os filtros atuais.
+          <div className="rounded-[1.6rem] border border-dashed border-[#cfe0d1] bg-[linear-gradient(180deg,#f8fcf8_0%,#f1f8f2_100%)] p-6 shadow-sm">
+            <div className="flex items-start gap-4">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-[#dff3e3] text-[#006d3e]">
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.9">
+                  <path d="M6 8h12" strokeLinecap="round" />
+                  <path d="M6 12h8" strokeLinecap="round" />
+                  <path d="M6 16h5" strokeLinecap="round" />
+                </svg>
+              </span>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-[#173424]">
+                  Nenhuma conversa encontrada
+                </p>
+                <p className="mt-1 text-sm leading-7 text-[#607766]">
+                  Ajuste os filtros ou limpe a busca para voltar a ver toda a fila de atendimento.
+                </p>
+                {filtersActive ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearch("");
+                      setStatusFilter("todas");
+                      setSegmentFilter("todas");
+                    }}
+                    className="mt-4 rounded-full bg-[#006d3e] px-4 py-2 text-xs font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:bg-[#005931]"
+                  >
+                    Limpar e mostrar todas
+                  </button>
+                ) : null}
+              </div>
+            </div>
           </div>
         ) : (
           filteredConversations.map((conversation) => {
@@ -216,7 +248,7 @@ export function ConversationsWorkspace({
             return (
               <div
                 key={conversation.id}
-                className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-3.5 sm:p-4"
+                className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-3.5 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_26px_rgba(0,0,0,0.06)] sm:p-4"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex min-w-0 gap-3">
@@ -251,7 +283,7 @@ export function ConversationsWorkspace({
                     <button
                       type="button"
                       onClick={() => toggleConversation(conversation.id)}
-                      className="rounded-full border border-[#bacbbc]/30 bg-white px-3 py-1.5 text-xs font-semibold text-[#006d3e] transition hover:bg-[#f8fafb]"
+                      className="rounded-full border border-[#bacbbc]/30 bg-white px-3 py-1.5 text-xs font-semibold text-[#006d3e] transition duration-200 hover:-translate-y-0.5 hover:bg-[#f8fafb]"
                     >
                       {isExpanded ? "Recolher" : "Expandir"}
                     </button>

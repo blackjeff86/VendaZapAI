@@ -1,8 +1,6 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" rx="146" fill="#08110D"/>
-  <rect x="18" y="18" width="476" height="476" rx="128" stroke="rgba(255,255,255,0.08)" stroke-width="4"/>
-  <rect x="90" y="156" width="332" height="200" rx="72" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="8"/>
-  <text x="164" y="284" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="96" font-weight="700" letter-spacing="-10">V</text>
-  <text x="247" y="275" fill="#52F26D" font-family="Arial, Helvetica, sans-serif" font-size="80" font-weight="700">/</text>
-  <text x="286" y="284" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="96" font-weight="700" letter-spacing="-7">Z</text>
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="58" y="62" width="124" height="98" rx="30" fill="#25D366"/>
+  <path d="M116 159L96 186L138 160L116 159Z" fill="#25D366"/>
+  <path d="M158 76L163 91L178 96L163 101L158 116L153 101L138 96L153 91L158 76Z" fill="white"/>
+  <path d="M105 105L108 114L117 117L108 120L105 129L102 120L93 117L102 114L105 105Z" fill="white" fill-opacity="0.85"/>
 </svg>

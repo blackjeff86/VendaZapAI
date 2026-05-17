@@ -34,7 +34,7 @@ export function WhatsappActivationChecklist({
   const progress = Math.round((completedCount / items.length) * 100);
 
   return (
-    <section className="dashboard-card rounded-[2rem] p-6 sm:p-7">
+    <section className="dashboard-card rounded-[2rem] p-6 transition duration-200 hover:shadow-[0_16px_32px_rgba(0,0,0,0.05)] sm:p-7">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
@@ -60,7 +60,7 @@ export function WhatsappActivationChecklist({
         {items.map((item, index) => (
           <div
             key={item.label}
-            className={`flex items-start gap-3 rounded-[1.3rem] border p-4 text-sm ${
+            className={`flex items-start gap-3 rounded-[1.3rem] border p-4 text-sm transition duration-200 hover:-translate-y-0.5 ${
               item.done
                 ? "border-[#d7ead9] bg-[linear-gradient(135deg,#effcf1_0%,#e2f7e7_100%)] text-[#30563d]"
                 : "border-[#e5e9e5] bg-[rgba(255,255,255,0.82)] text-[#607766]"
