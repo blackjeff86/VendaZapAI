@@ -17,7 +17,11 @@ export async function POST(
 
   try {
     const { id } = await context.params;
-    const body = (await request.json()) as { productId?: string };
+    const body = (await request.json()) as {
+      pickupName?: string;
+      pickupWindow?: string;
+      productId?: string;
+    };
     const productId = body.productId?.trim() ?? "";
 
     if (!productId) {
@@ -33,8 +37,12 @@ export async function POST(
     const updatedProduct = await reserveProductStock(productId, session.userId);
     const conversation = await reserveConversationProduct(
       id,
-      session.userId,
-      product.name,
+      {
+        pickupName: body.pickupName ?? "",
+        pickupWindow: body.pickupWindow ?? "",
+        productName: product.name,
+        userId: session.userId,
+      },
     );
 
     return NextResponse.json(

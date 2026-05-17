@@ -1,4 +1,4 @@
-import { ReserveProductButton } from "@/components/reserve-product-button";
+import { ReserveProductForm } from "@/components/reserve-product-form";
 import type { AssistantSuggestion } from "@/lib/ai-assistant";
 
 type AssistantSuggestionCardProps = {
@@ -31,7 +31,7 @@ export function AssistantSuggestionCard({
     <div className="mt-5 rounded-[1.4rem] border border-[#d8e8da] bg-white p-4">
       <div className="flex flex-wrap items-center gap-2">
         <span className="rounded-full bg-[#e8f5ea] px-3 py-1 text-xs font-semibold text-[#2d8a4b]">
-          Sugestao da IA
+          Sugestão da IA
         </span>
         <span className="rounded-full bg-[#f1f5f1] px-3 py-1 text-xs font-semibold text-[#617664]">
           {intentMap[suggestion.intent]}
@@ -67,7 +67,7 @@ export function AssistantSuggestionCard({
 
         <div className="rounded-[1.2rem] border border-[#e3ece3] bg-[#fbfefb] p-4">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6a7f6d]">
-            Acao operacional
+            Ação operacional
           </p>
           <p className="mt-2 text-sm font-medium text-[#173424]">
             {suggestion.shouldEscalateToHuman
@@ -111,9 +111,10 @@ export function AssistantSuggestionCard({
       ) : null}
 
       {suggestion.shouldOfferReservation && topProduct ? (
-        <ReserveProductButton
+        <ReserveProductForm
           conversationId={conversationId}
           productId={topProduct.id}
+          productName={topProduct.name}
         />
       ) : null}
     </div>

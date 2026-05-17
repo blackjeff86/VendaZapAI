@@ -26,6 +26,8 @@ export type StoredConversation = {
   messages: StoredMessage[];
   priorityLabel: "Quente" | "Médio" | "Humano";
   reservedProduct?: string;
+  reservedPickupName?: string;
+  reservedPickupWindow?: string;
   status: ConversationStatus;
   updatedAt: string;
   userId: string;
@@ -34,6 +36,13 @@ export type StoredConversation = {
 export type ConversationMessageInput = {
   author: MessageAuthor;
   content: string;
+  userId: string;
+};
+
+export type ConversationReservationInput = {
+  pickupName: string;
+  pickupWindow: string;
+  productName: string;
   userId: string;
 };
 
@@ -229,13 +238,15 @@ export async function appendConversationMessage(
 
   const currentConversation = conversations[conversationIndex];
   const nextStatus: ConversationStatus =
-    input.author === "cliente"
-      ? "nova"
-      : input.author === "ia"
-        ? "respondida_pela_ia"
-        : input.author === "humano"
-          ? "em_atendimento_humano"
-          : currentConversation.status;
+    currentConversation.status === "reservada"
+      ? "reservada"
+      : input.author === "cliente"
+        ? "nova"
+        : input.author === "ia"
+          ? "respondida_pela_ia"
+          : input.author === "humano"
+            ? "em_atendimento_humano"
+            : currentConversation.status;
 
   const updatedConversation: StoredConversation = {
     ...currentConversation,
@@ -261,18 +272,27 @@ export async function appendConversationMessage(
 
 export async function reserveConversationProduct(
   conversationId: string,
-  userId: string,
-  productName: string,
+  input: ConversationReservationInput,
 ) {
-  const normalizedProductName = productName.trim();
+  const normalizedProductName = input.productName.trim();
+  const normalizedPickupName = input.pickupName.trim();
+  const normalizedPickupWindow = input.pickupWindow.trim();
 
   if (!normalizedProductName) {
     throw new Error("Produto inválido para reserva.");
   }
 
+  if (normalizedPickupName.length < 2) {
+    throw new Error("Informe o nome para retirada.");
+  }
+
+  if (normalizedPickupWindow.length < 2) {
+    throw new Error("Informe o horário ou período de retirada.");
+  }
+
   const conversations = await readConversations();
   const conversationIndex = conversations.findIndex(
-    (item) => item.id === conversationId && item.userId === userId,
+    (item) => item.id === conversationId && item.userId === input.userId,
   );
 
   if (conversationIndex === -1) {
@@ -285,6 +305,8 @@ export async function reserveConversationProduct(
   const updatedConversation: StoredConversation = {
     ...currentConversation,
     reservedProduct: normalizedProductName,
+    reservedPickupName: normalizedPickupName,
+    reservedPickupWindow: normalizedPickupWindow,
     status: "reservada",
     priorityLabel: "Quente",
     updatedAt: timestamp,
@@ -293,14 +315,14 @@ export async function reserveConversationProduct(
       {
         id: randomUUID(),
         author: "sistema",
-        content: `Reserva criada para ${normalizedProductName}.`,
+        content: `Reserva criada para ${normalizedProductName} em nome de ${normalizedPickupName}.`,
         timestamp,
       },
       {
         id: randomUUID(),
         author: "ia",
         content:
-          "Perfeito 😊 Já deixei separado por aqui. Se quiser, me confirme o nome para retirada.",
+          `Perfeito 😊 Já deixei separado por aqui no nome de ${normalizedPickupName} para ${normalizedPickupWindow}.`,
         timestamp,
       },
     ],

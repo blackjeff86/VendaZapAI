@@ -3,10 +3,13 @@ import { buildAssistantSuggestion } from "@/lib/ai-assistant";
 import { AssistantSuggestionCard } from "@/components/assistant-suggestion-card";
 import { ConversationHandoffButton } from "@/components/conversation-handoff-button";
 import { ConversationMessageForm } from "@/components/conversation-message-form";
+import { ConversationReplyForm } from "@/components/conversation-reply-form";
+import { ConversationTimeline } from "@/components/conversation-timeline";
 import { ProductForm } from "@/components/product-form";
 import { ProductStockForm } from "@/components/product-stock-form";
 import { StoreOnboardingForm } from "@/components/store-onboarding-form";
 import { WhatsappConfigForm } from "@/components/whatsapp-config-form";
+import { WhatsappWebhookTesterForm } from "@/components/whatsapp-webhook-tester-form";
 import { AUTH_COOKIE_NAME, decodeSession, getUserById } from "@/lib/auth";
 import { listConversationsByUserId } from "@/lib/conversations";
 import { listProductsByUserId } from "@/lib/products";
@@ -349,9 +352,30 @@ export default async function DashboardPage() {
                         Última mensagem: {lastMessage?.content ?? "Sem mensagens ainda."}
                       </p>
                       {conversation.reservedProduct ? (
-                        <p className="mt-3 text-sm leading-7 text-[#486756]">
-                          Reserva vinculada: {conversation.reservedProduct}
-                        </p>
+                        <div className="mt-3 rounded-[1rem] border border-[#d7ead9] bg-[#f5fbf5] p-3 text-sm leading-7 text-[#486756]">
+                          <p>
+                            <span className="font-semibold text-[#173424]">
+                              Reserva vinculada:
+                            </span>{" "}
+                            {conversation.reservedProduct}
+                          </p>
+                          {conversation.reservedPickupName ? (
+                            <p>
+                              <span className="font-semibold text-[#173424]">
+                                Nome da retirada:
+                              </span>{" "}
+                              {conversation.reservedPickupName}
+                            </p>
+                          ) : null}
+                          {conversation.reservedPickupWindow ? (
+                            <p>
+                              <span className="font-semibold text-[#173424]">
+                                Retirada prevista:
+                              </span>{" "}
+                              {conversation.reservedPickupWindow}
+                            </p>
+                          ) : null}
+                        </div>
                       ) : null}
                     </div>
 
@@ -381,7 +405,13 @@ export default async function DashboardPage() {
                     />
                   ) : null}
 
-                  <ConversationMessageForm conversationId={conversation.id} />
+                  <ConversationTimeline messages={conversation.messages} />
+
+                  <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                    <ConversationReplyForm conversationId={conversation.id} />
+                    <ConversationMessageForm conversationId={conversation.id} />
+                  </div>
+
                 </div>
               );
             })}
@@ -431,6 +461,11 @@ export default async function DashboardPage() {
               Endpoint local preparado: <span className="font-semibold text-[#173424]">/api/whatsapp/webhook</span>.
               Quando formos conectar a Cloud API de verdade, essa rota já poderá receber a verificação do webhook e mensagens de entrada.
             </div>
+
+            <WhatsappWebhookTesterForm
+              businessPhoneId={currentUser?.whatsappBusinessPhoneId}
+              initialDisplayNumber={currentUser?.whatsappDisplayNumber}
+            />
           </div>
         </div>
       </section>

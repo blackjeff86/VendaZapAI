@@ -4,6 +4,7 @@ import { AUTH_COOKIE_NAME, decodeSession } from "@/lib/auth";
 import { buildAssistantSuggestion } from "@/lib/ai-assistant";
 import { appendConversationMessage, getConversationById } from "@/lib/conversations";
 import { listProductsByUserId } from "@/lib/products";
+import type { MessageAuthor } from "@/lib/conversations";
 
 export async function POST(
   request: Request,
@@ -19,12 +20,14 @@ export async function POST(
   try {
     const { id } = await context.params;
     const body = (await request.json()) as {
+      author?: MessageAuthor;
       autoReply?: boolean;
       content?: string;
     };
+    const author = body.author ?? "cliente";
 
     const conversation = await appendConversationMessage(id, {
-      author: "cliente",
+      author,
       content: body.content ?? "",
       userId: session.userId,
     });
@@ -32,7 +35,7 @@ export async function POST(
     let suggestion = null;
     let autoReplyApplied = false;
 
-    if (body.autoReply) {
+    if (body.autoReply && author === "cliente") {
       const products = await listProductsByUserId(session.userId);
       suggestion = buildAssistantSuggestion(conversation, products);
 
@@ -53,7 +56,9 @@ export async function POST(
         conversation: updatedConversation,
         message: autoReplyApplied
           ? "Mensagem simulada e resposta da IA aplicada."
-          : "Mensagem simulada com sucesso.",
+          : author === "humano"
+            ? "Resposta manual enviada com sucesso."
+            : "Mensagem simulada com sucesso.",
         suggestion,
       },
       { status: 200 },
