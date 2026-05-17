@@ -1,0 +1,142 @@
+"use client";
+
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+
+const nicheOptions = [
+  "Motopeças",
+  "Autopeças",
+  "Lojas de celular",
+  "Material de construção",
+  "Informática",
+  "Outro",
+] as const;
+
+type StoreOnboardingFormProps = {
+  initialNiche?: string;
+  initialPhone?: string;
+  initialStoreName: string;
+  initialWhatsappNumber?: string;
+};
+
+type SubmitState = "idle" | "submitting" | "success" | "error";
+
+export function StoreOnboardingForm({
+  initialNiche = "",
+  initialPhone = "",
+  initialStoreName,
+  initialWhatsappNumber = "",
+}: StoreOnboardingFormProps) {
+  const router = useRouter();
+  const [submitState, setSubmitState] = useState<SubmitState>("idle");
+  const [message, setMessage] = useState("");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const payload = {
+      niche: String(formData.get("niche") ?? "").trim(),
+      phone: String(formData.get("phone") ?? "").trim(),
+      storeName: String(formData.get("storeName") ?? "").trim(),
+      whatsappNumber: String(formData.get("whatsappNumber") ?? "").trim(),
+    };
+
+    setSubmitState("submitting");
+    setMessage("");
+
+    try {
+      const response = await fetch("/api/store/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = (await response.json()) as { message?: string };
+
+      if (!response.ok) {
+        throw new Error(data.message || "Não foi possível salvar a loja.");
+      }
+
+      setSubmitState("success");
+      setMessage("Dados da loja salvos. A base do onboarding inicial já está pronta.");
+      router.refresh();
+    } catch (error) {
+      setSubmitState("error");
+      setMessage(
+        error instanceof Error ? error.message : "Não foi possível salvar a loja.",
+      );
+    } finally {
+      setSubmitState((current) => (current === "error" ? current : "idle"));
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <input
+          name="storeName"
+          type="text"
+          required
+          defaultValue={initialStoreName}
+          placeholder="Nome da loja"
+          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+        />
+
+        <div className="rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424]">
+          <select
+            name="niche"
+            required
+            defaultValue={initialNiche}
+            className="w-full bg-transparent text-sm text-[#173424] outline-none"
+          >
+            <option value="" disabled>
+              Selecione o nicho
+            </option>
+            {nicheOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <input
+          name="phone"
+          type="text"
+          defaultValue={initialPhone}
+          placeholder="Telefone da loja"
+          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+        />
+
+        <input
+          name="whatsappNumber"
+          type="text"
+          defaultValue={initialWhatsappNumber}
+          placeholder="WhatsApp principal"
+          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={submitState === "submitting"}
+        className="w-full rounded-2xl bg-[#2d8a4b] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#25713e] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+      >
+        {submitState === "submitting" ? "Salvando..." : "Salvar onboarding inicial"}
+      </button>
+
+      {message ? (
+        <p
+          className={`text-sm ${
+            submitState === "error" ? "text-red-500" : "text-[#2d8a4b]"
+          }`}
+        >
+          {message}
+        </p>
+      ) : null}
+    </form>
+  );
+}

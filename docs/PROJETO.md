@@ -126,7 +126,8 @@ A IA:
 - controle basico de produtos e estoque;
 - visao das conversas;
 - possibilidade de assumir atendimento;
-- mais organizacao operacional.
+- mais organizacao operacional;
+- uso confortavel no celular.
 
 ## Escopo do Produto
 
@@ -251,6 +252,18 @@ O produto deve seguir estas regras:
 - mobile-first de verdade;
 - visual premium, mas acessivel;
 - nada com cara de sistema pesado.
+
+### Regra importante de produto
+
+O VendaZap AI deve ser pensado como mobile-first em toda a experiencia do sistema, nao apenas na landing page.
+
+Isso significa:
+
+- painel interno desenhado primeiro para celular;
+- acoes principais acessiveis com poucos toques;
+- leitura simples em telas menores;
+- formularios curtos e objetivos;
+- hierarquia visual clara para uso rapido no dia a dia do lojista.
 
 ### Referencias visuais
 

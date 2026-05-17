@@ -1,0 +1,353 @@
+import type { StoredConversation } from "@/lib/conversations";
+import type { StoredProduct } from "@/lib/products";
+
+export type AssistantIntent =
+  | "busca_produto"
+  | "negociacao"
+  | "reserva"
+  | "atendimento_humano"
+  | "duvida_geral";
+
+export type AssistantSuggestion = {
+  confidenceLabel: "Alta" | "Media" | "Baixa";
+  conversationId: string;
+  intent: AssistantIntent;
+  matchedProducts: Array<{
+    id: string;
+    name: string;
+    price: number;
+    stockQuantity: number;
+  }>;
+  missingData: string[];
+  nextStepLabel: string;
+  shouldEscalateToHuman: boolean;
+  shouldOfferReservation: boolean;
+  stockStatus: "em_estoque" | "baixo_estoque" | "sem_correspondencia" | "sem_estoque";
+  suggestedReply: string;
+  summary: string;
+};
+
+function normalizeText(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase();
+}
+
+function getLatestClientMessage(conversation: StoredConversation) {
+  const clientMessages = conversation.messages.filter(
+    (message) => message.author === "cliente",
+  );
+
+  return clientMessages[clientMessages.length - 1];
+}
+
+function inferIntent(message: string): AssistantIntent {
+  const normalized = normalizeText(message);
+
+  if (
+    normalized.includes("separ") ||
+    normalized.includes("reserv") ||
+    normalized.includes("guardar")
+  ) {
+    return "reserva";
+  }
+
+  if (
+    normalized.includes("desconto") ||
+    normalized.includes("melhorar no preco") ||
+    normalized.includes("faz por") ||
+    normalized.includes("consegue melhorar")
+  ) {
+    return "negociacao";
+  }
+
+  if (
+    normalized.includes("humano") ||
+    normalized.includes("atendente") ||
+    normalized.includes("vendedor")
+  ) {
+    return "atendimento_humano";
+  }
+
+  if (
+    normalized.includes("tem ") ||
+    normalized.includes("voc") ||
+    normalized.includes("compat") ||
+    normalized.includes("preco") ||
+    normalized.includes("valor")
+  ) {
+    return "busca_produto";
+  }
+
+  return "duvida_geral";
+}
+
+function extractYear(message: string) {
+  const yearMatch = message.match(/\b(19|20)\d{2}\b/);
+  return yearMatch?.[0] ?? null;
+}
+
+function scoreProductMatch(product: StoredProduct, normalizedMessage: string) {
+  const haystack = normalizeText(
+    [
+      product.name,
+      product.category,
+      product.description,
+      product.compatibility ?? "",
+      product.sku ?? "",
+    ].join(" "),
+  );
+
+  const tokens = normalizedMessage
+    .split(/[^a-z0-9]+/)
+    .map((token) => token.trim())
+    .filter((token) => token.length >= 3);
+
+  let score = 0;
+
+  for (const token of tokens) {
+    if (haystack.includes(token)) {
+      score += token.length >= 5 ? 3 : 1;
+    }
+  }
+
+  if (normalizedMessage.includes(normalizeText(product.name))) {
+    score += 6;
+  }
+
+  return score;
+}
+
+function formatCurrency(value: number) {
+  return value.toLocaleString("pt-BR", {
+    currency: "BRL",
+    style: "currency",
+  });
+}
+
+function buildProductReply(product: StoredProduct, year: string | null) {
+  const stockLead =
+    product.stockQuantity <= 0
+      ? "No momento esse item está sem estoque."
+      : product.stockQuantity <= 2
+        ? `Temos ${product.name} com poucas unidades no estoque.`
+        : `Temos ${product.name} disponível no estoque.`;
+
+  const compatibilityLead =
+    product.compatibility && year && !normalizeText(product.compatibility).includes(year)
+      ? `Antes de confirmar, preciso validar a compatibilidade com o ano ${year}.`
+      : "";
+
+  const reservationLead =
+    product.stockQuantity > 0
+      ? "Se quiser, posso deixar separado para retirada."
+      : "Se preferir, posso te avisar assim que voltar.";
+
+  return [stockLead, compatibilityLead, `Hoje ele está por ${formatCurrency(product.price)}.`, reservationLead]
+    .filter(Boolean)
+    .join(" ");
+}
+
+export function buildAssistantSuggestion(
+  conversation: StoredConversation,
+  products: StoredProduct[],
+): AssistantSuggestion {
+  const latestClientMessage = getLatestClientMessage(conversation);
+  const messageContent = latestClientMessage?.content ?? "";
+  const normalizedMessage = normalizeText(messageContent);
+  const intent = inferIntent(messageContent);
+  const year = extractYear(messageContent);
+  const activeProducts = products.filter((product) => product.active);
+  const matchedProducts = activeProducts
+    .map((product) => ({
+      product,
+      score: scoreProductMatch(product, normalizedMessage),
+    }))
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(({ product }) => product);
+
+  const missingData: string[] = [];
+
+  if (
+    intent === "busca_produto" &&
+    !year &&
+    (normalizedMessage.includes("xre") ||
+      normalizedMessage.includes("titan") ||
+      normalizedMessage.includes("fan") ||
+      normalizedMessage.includes("cg"))
+  ) {
+    missingData.push("ano do veículo");
+  }
+
+  if (intent === "negociacao") {
+    missingData.push("limite comercial da loja");
+  }
+
+  if (intent === "busca_produto" && matchedProducts.length === 0) {
+    return {
+      conversationId: conversation.id,
+      confidenceLabel: "Baixa",
+      intent,
+      matchedProducts: [],
+      missingData,
+      nextStepLabel: "Pedir mais contexto ou revisar catálogo",
+      shouldEscalateToHuman: false,
+      shouldOfferReservation: false,
+      stockStatus: "sem_correspondencia",
+      suggestedReply:
+        "Quero te ajudar certo por aqui. Me confirma o modelo completo, o ano e, se tiver, a marca da peça que você procura para eu validar no estoque.",
+      summary:
+        "Nenhum produto correspondente foi encontrado no catálogo local para esta conversa.",
+    };
+  }
+
+  if (intent === "atendimento_humano") {
+    return {
+      conversationId: conversation.id,
+      confidenceLabel: "Alta",
+      intent,
+      matchedProducts: matchedProducts.map((product) => ({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        stockQuantity: product.stockQuantity,
+      })),
+      missingData,
+      nextStepLabel: "Transferir para humano",
+      shouldEscalateToHuman: true,
+      shouldOfferReservation: false,
+      stockStatus: "sem_correspondencia",
+      suggestedReply:
+        "Perfeito. Vou te encaminhar para um vendedor continuar daqui e te atender da melhor forma.",
+      summary: "O cliente demonstrou preferência por atendimento humano.",
+    };
+  }
+
+  if (intent === "negociacao") {
+    return {
+      conversationId: conversation.id,
+      confidenceLabel: matchedProducts.length > 0 ? "Media" : "Baixa",
+      intent,
+      matchedProducts: matchedProducts.map((product) => ({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        stockQuantity: product.stockQuantity,
+      })),
+      missingData,
+      nextStepLabel: "Levar para aprovacao comercial",
+      shouldEscalateToHuman: true,
+      shouldOfferReservation: matchedProducts.some((product) => product.stockQuantity > 0),
+      stockStatus: matchedProducts.some((product) => product.stockQuantity > 0)
+        ? "em_estoque"
+        : "sem_correspondencia",
+      suggestedReply:
+        "Consigo verificar isso para você. Vou encaminhar aqui para validar a melhor condição e já te responder.",
+      summary:
+        "Pedido com viés de negociação. Melhor levar para atendimento humano ou regra comercial.",
+    };
+  }
+
+  if (intent === "reserva" || conversation.status === "reservada") {
+    return {
+      conversationId: conversation.id,
+      confidenceLabel: "Alta",
+      intent,
+      matchedProducts: matchedProducts.map((product) => ({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        stockQuantity: product.stockQuantity,
+      })),
+      missingData,
+      nextStepLabel: "Confirmar dados da retirada",
+      shouldEscalateToHuman: false,
+      shouldOfferReservation: false,
+      stockStatus: matchedProducts.some((product) => product.stockQuantity > 0)
+        ? "em_estoque"
+        : "sem_correspondencia",
+      suggestedReply:
+        "Perfeito 😊 Posso deixar separado. Me confirma no nome de quem fica a retirada e o melhor horario para passar aqui.",
+      summary:
+        "A conversa entrou em momento de reserva e precisa coletar dados operacionais finais.",
+    };
+  }
+
+  if (missingData.length > 0) {
+    return {
+      conversationId: conversation.id,
+      confidenceLabel: "Alta",
+      intent,
+      matchedProducts: matchedProducts.map((product) => ({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        stockQuantity: product.stockQuantity,
+      })),
+      missingData,
+      nextStepLabel: "Coletar dado faltante",
+      shouldEscalateToHuman: false,
+      shouldOfferReservation: false,
+      stockStatus: matchedProducts.some((product) => product.stockQuantity > 0)
+        ? "em_estoque"
+        : "sem_correspondencia",
+      suggestedReply:
+        "Tenho algumas opções compatíveis por aqui 😊 Para te passar certo, você consegue me confirmar o ano do veículo?",
+      summary:
+        "A intenção foi entendida, mas ainda falta contexto mínimo para responder com segurança.",
+    };
+  }
+
+  const topProduct = matchedProducts[0];
+
+  if (!topProduct) {
+    return {
+      conversationId: conversation.id,
+      confidenceLabel: "Baixa",
+      intent,
+      matchedProducts: [],
+      missingData,
+      nextStepLabel: "Pedir mais detalhes",
+      shouldEscalateToHuman: false,
+      shouldOfferReservation: false,
+      stockStatus: "sem_correspondencia",
+      suggestedReply:
+        "Consigo verificar para você. Me manda o modelo completo ou uma referência da peça para eu localizar certinho no estoque.",
+      summary:
+        "Não houve correspondência suficiente para montar uma oferta comercial segura.",
+    };
+  }
+
+  const stockStatus: AssistantSuggestion["stockStatus"] =
+    topProduct.stockQuantity <= 0
+      ? "sem_estoque"
+      : topProduct.stockQuantity <= 2
+        ? "baixo_estoque"
+        : "em_estoque";
+
+  return {
+    conversationId: conversation.id,
+    confidenceLabel: topProduct.stockQuantity > 0 ? "Alta" : "Media",
+    intent,
+    matchedProducts: matchedProducts.map((product) => ({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      stockQuantity: product.stockQuantity,
+    })),
+    missingData,
+    nextStepLabel:
+      topProduct.stockQuantity > 0 ? "Responder e oferecer reserva" : "Informar indisponibilidade",
+    shouldEscalateToHuman: false,
+    shouldOfferReservation: topProduct.stockQuantity > 0,
+    stockStatus,
+    suggestedReply: buildProductReply(topProduct, year),
+    summary:
+      topProduct.stockQuantity > 0
+        ? "A conversa já tem contexto suficiente para uma resposta comercial objetiva."
+        : "Produto identificado, mas sem saldo no estoque local.",
+  };
+}
