@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { LogoutButton } from "@/components/logout-button";
+import { PainelNav } from "@/components/painel-nav";
 import { AUTH_COOKIE_NAME, decodeSession } from "@/lib/auth";
 
 export default async function DashboardLayout({
@@ -41,7 +42,12 @@ export default async function DashboardLayout({
         </div>
       </header>
 
-      <main className="container-shell py-6 sm:py-8">{children}</main>
+      <main className="container-shell py-6 sm:py-8">
+        <div className="space-y-6">
+          <PainelNav />
+          {children}
+        </div>
+      </main>
     </div>
   );
 }
