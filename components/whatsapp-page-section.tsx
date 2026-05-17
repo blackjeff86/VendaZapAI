@@ -1,4 +1,5 @@
 import { WhatsappConfigForm } from "@/components/whatsapp-config-form";
+import { WhatsappActivationChecklist } from "@/components/whatsapp-activation-checklist";
 import { WhatsappWebhookTesterForm } from "@/components/whatsapp-webhook-tester-form";
 
 type WhatsappPageSectionProps = {
@@ -98,6 +99,13 @@ export function WhatsappPageSection({
           initialDisplayNumber={currentUser?.whatsappDisplayNumber}
         />
       </section>
+
+      <WhatsappActivationChecklist
+        businessPhoneId={currentUser?.whatsappBusinessPhoneId}
+        connected={currentUser?.whatsappConnected}
+        displayNumber={currentUser?.whatsappDisplayNumber}
+        webhookReady={currentUser?.whatsappWebhookReady}
+      />
     </div>
   );
 }

@@ -62,7 +62,7 @@ export function AuthForm({
       const data = (await response.json()) as { message?: string };
 
       if (!response.ok) {
-        throw new Error(data.message || "Nao foi possivel continuar.");
+        throw new Error(data.message || "Não foi possível continuar.");
       }
 
       router.push("/painel");
@@ -70,7 +70,7 @@ export function AuthForm({
     } catch (error) {
       setSubmitState("error");
       setMessage(
-        error instanceof Error ? error.message : "Nao foi possivel continuar.",
+        error instanceof Error ? error.message : "Não foi possível continuar.",
       );
     } finally {
       setSubmitState((current) => (current === "error" ? current : "idle"));
@@ -105,22 +105,31 @@ export function AuthForm({
               className="w-full rounded-2xl border border-white/10 bg-black/20 px-5 py-3.5 text-sm text-white outline-none placeholder:text-white/35"
             />
           </>
-        ) : null}
+        ) : (
+          <div className="rounded-[1.6rem] border border-white/10 bg-black/20 p-5 text-sm leading-7 text-white/72">
+            Nesta fase, o acesso ao painel está livre para facilitar os testes do
+            MVP. Basta tocar no botão abaixo para entrar.
+          </div>
+        )}
 
-        <input
-          name="email"
-          type="email"
-          placeholder="Seu e-mail"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-black/20 px-5 py-3.5 text-sm text-white outline-none placeholder:text-white/35"
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Sua senha"
-          required
-          className="w-full rounded-2xl border border-white/10 bg-black/20 px-5 py-3.5 text-sm text-white outline-none placeholder:text-white/35"
-        />
+        {mode === "register" ? (
+          <>
+            <input
+              name="email"
+              type="email"
+              placeholder="Seu e-mail"
+              required
+              className="w-full rounded-2xl border border-white/10 bg-black/20 px-5 py-3.5 text-sm text-white outline-none placeholder:text-white/35"
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Sua senha"
+              required
+              className="w-full rounded-2xl border border-white/10 bg-black/20 px-5 py-3.5 text-sm text-white outline-none placeholder:text-white/35"
+            />
+          </>
+        ) : null}
 
         <button
           type="submit"

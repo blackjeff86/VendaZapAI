@@ -23,9 +23,9 @@ export default async function RegisterPage() {
             Crie a base da sua loja para começar a montar o VendaZap AI.
           </h2>
           <p className="mt-5 max-w-xl text-base leading-8 text-white/68">
-            Nesta etapa, estamos estruturando o acesso inicial da operacao. O
-            objetivo e deixar o caminho pronto para onboarding, catalogo e
-            painel do lojista nas proximas entregas.
+            Nesta etapa, estamos estruturando o acesso inicial da operação. O
+            objetivo é deixar o caminho pronto para onboarding, catálogo e
+            painel do lojista nas próximas entregas.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/54">
             <span className="rounded-full border border-white/10 px-4 py-2">
@@ -39,7 +39,7 @@ export default async function RegisterPage() {
             </span>
           </div>
           <p className="mt-8 text-sm text-white/52">
-            Ja tem conta?{" "}
+            Já tem conta?{" "}
             <Link href="/entrar" className="font-semibold text-mint">
               Entrar agora
             </Link>
@@ -49,8 +49,8 @@ export default async function RegisterPage() {
         <AuthForm
           mode="register"
           title="Criar conta da loja"
-          description="Cadastre o acesso inicial da operacao. Depois vamos evoluir isso para o onboarding completo."
-          switchText="Ja tem uma conta?"
+          description="Cadastre o acesso inicial da operação. Depois vamos evoluir isso para o onboarding completo."
+          switchText="Já tem uma conta?"
           switchLabel="Entrar"
           switchHref="/entrar"
         />

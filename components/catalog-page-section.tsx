@@ -1,5 +1,5 @@
+import { CatalogWorkspace } from "@/components/catalog-workspace";
 import { ProductForm } from "@/components/product-form";
-import { ProductStockForm } from "@/components/product-stock-form";
 import { StoreOnboardingForm } from "@/components/store-onboarding-form";
 import type { StoredProduct } from "@/lib/products";
 
@@ -130,75 +130,8 @@ export function CatalogPageSection({
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4">
-          {products.length === 0 ? (
-            <div className="rounded-[1.5rem] border border-dashed border-[#cfe0d1] bg-[#f8fcf8] p-6 text-sm leading-7 text-[#607766]">
-              Ainda não há produtos cadastrados. Assim que você adicionar os
-              primeiros itens, esta área passa a refletir a base do catálogo da loja.
-            </div>
-          ) : (
-            products.map((product) => (
-              <div
-                key={product.id}
-                className="rounded-[1.6rem] border border-[#dbe7dc] bg-[#fbfefb] p-5 shadow-[0_14px_32px_rgba(26,74,43,0.04)]"
-              >
-                <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                  <div className="max-w-2xl">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <p className="display-font text-xl font-semibold text-[#173424]">
-                        {product.name}
-                      </p>
-                      <span
-                        className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                          product.active
-                            ? "bg-[#e4f6e8] text-[#2d8a4b]"
-                            : "bg-[#f2f4f2] text-[#6f8373]"
-                        }`}
-                      >
-                        {product.active ? "Ativo" : "Inativo"}
-                      </span>
-                    </div>
-                    <p className="mt-2 text-sm text-[#5b7362]">
-                      {product.category}
-                      {product.sku ? ` • SKU: ${product.sku}` : ""}
-                    </p>
-                    <p className="mt-3 text-sm leading-7 text-[#5f7766]">
-                      {product.description || "Sem descrição cadastrada."}
-                    </p>
-                    {product.compatibility ? (
-                      <p className="mt-3 text-sm leading-7 text-[#486756]">
-                        Compatibilidade: {product.compatibility}
-                      </p>
-                    ) : null}
-                  </div>
-
-                  <div className="min-w-full rounded-[1.4rem] border border-[#dce7dd] bg-white p-4 lg:min-w-[20rem]">
-                    <div className="mb-4 grid grid-cols-2 gap-3 text-sm">
-                      <div className="rounded-xl border border-[#e1ebe2] bg-[#f7fbf7] p-3">
-                        <p className="text-[#6a7d6d]">Preço</p>
-                        <p className="mt-1 font-semibold text-[#173424]">
-                          R$ {product.price.toFixed(2).replace(".", ",")}
-                        </p>
-                      </div>
-                      <div className="rounded-xl border border-[#e1ebe2] bg-[#f7fbf7] p-3">
-                        <p className="text-[#6a7d6d]">Estoque</p>
-                        <p className="mt-1 font-semibold text-[#173424]">
-                          {product.stockQuantity} unidade(s)
-                        </p>
-                      </div>
-                    </div>
-
-                    <ProductStockForm
-                      productId={product.id}
-                      initialActive={product.active}
-                      initialPrice={product.price}
-                      initialStockQuantity={product.stockQuantity}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
+        <div className="mt-6">
+          <CatalogWorkspace products={products} />
         </div>
       </section>
     </div>

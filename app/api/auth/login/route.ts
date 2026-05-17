@@ -1,20 +1,17 @@
 import { NextResponse } from "next/server";
-import { AUTH_COOKIE_NAME, encodeSession, loginUser } from "@/lib/auth";
+import {
+  AUTH_COOKIE_NAME,
+  encodeSession,
+  getTemporaryAccessSession,
+} from "@/lib/auth";
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as {
-      email?: string;
-      password?: string;
-    };
-
-    const session = await loginUser({
-      email: body.email ?? "",
-      password: body.password ?? "",
-    });
+    await request.json().catch(() => null);
+    const session = await getTemporaryAccessSession();
 
     const response = NextResponse.json(
-      { message: "Login realizado com sucesso." },
+      { message: "Acesso liberado com sucesso." },
       { status: 200 },
     );
 
@@ -33,7 +30,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message:
-          error instanceof Error ? error.message : "Nao foi possivel fazer login.",
+          error instanceof Error ? error.message : "Não foi possível liberar o acesso.",
       },
       { status: 400 },
     );

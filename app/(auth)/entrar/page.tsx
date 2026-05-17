@@ -23,7 +23,7 @@ export default async function LoginPage() {
             Entre para acompanhar conversas, reservas e atendimento em um só painel.
           </h2>
           <p className="mt-5 max-w-xl text-base leading-8 text-white/68">
-            O VendaZap AI foi pensado para ser simples no uso diario. Seu time
+            O VendaZap AI foi pensado para ser simples no uso diário. Seu time
             entra, acompanha as conversas quentes e assume o atendimento quando
             precisar.
           </p>
@@ -39,7 +39,7 @@ export default async function LoginPage() {
             </span>
           </div>
           <p className="mt-8 text-sm text-white/52">
-            Ainda nao tem conta?{" "}
+            Ainda não tem conta?{" "}
             <Link href="/criar-conta" className="font-semibold text-mint">
               Criar conta da loja
             </Link>
@@ -49,8 +49,8 @@ export default async function LoginPage() {
         <AuthForm
           mode="login"
           title="Entrar no painel"
-          description="Acesse sua area da loja para acompanhar o atendimento e preparar o restante do MVP."
-          switchText="Ainda nao tem acesso?"
+          description="Entre no painel para testar a operação, acompanhar conversas e validar o fluxo do MVP sem barreira de acesso nesta fase."
+          switchText="Ainda não quer criar conta?"
           switchLabel="Criar conta"
           switchHref="/criar-conta"
         />

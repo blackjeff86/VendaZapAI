@@ -1,11 +1,6 @@
-import { AssistantSuggestionCard } from "@/components/assistant-suggestion-card";
-import { ConversationHandoffButton } from "@/components/conversation-handoff-button";
-import { ConversationMessageForm } from "@/components/conversation-message-form";
-import { ConversationReplyForm } from "@/components/conversation-reply-form";
-import { ConversationTimeline } from "@/components/conversation-timeline";
+import { ConversationsWorkspace } from "@/components/conversations-workspace";
 import type { AssistantSuggestion } from "@/lib/ai-assistant";
 import type { StoredConversation } from "@/lib/conversations";
-import { conversationStatusLabelMap } from "@/lib/dashboard";
 
 type ConversationsPageSectionProps = {
   aiSuggestions: Array<{
@@ -63,99 +58,10 @@ export function ConversationsPageSection({
         </div>
       </section>
 
-      <section className="grid gap-4">
-        {conversations.map((conversation) => {
-          const lastMessage = conversation.messages[conversation.messages.length - 1];
-          const conversationSuggestion = aiSuggestions.find(
-            (item) => item.conversationId === conversation.id,
-          )?.suggestion;
-
-          return (
-            <div
-              key={conversation.id}
-              className="rounded-[1.6rem] border border-[#dbe7dc] bg-white p-5 shadow-[0_14px_32px_rgba(26,74,43,0.04)]"
-            >
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                <div className="max-w-2xl">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <p className="display-font text-xl font-semibold text-[#173424]">
-                      {conversation.clientName}
-                    </p>
-                    <span className="rounded-full bg-[#e4f6e8] px-3 py-1 text-xs font-semibold text-[#2d8a4b]">
-                      {conversation.priorityLabel}
-                    </span>
-                    <span className="rounded-full bg-[#eff4ef] px-3 py-1 text-xs font-semibold text-[#637867]">
-                      {conversationStatusLabelMap[conversation.status]}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-sm text-[#5b7362]">{conversation.clientPhone}</p>
-                  <p className="mt-4 text-sm leading-7 text-[#5f7766]">
-                    Última mensagem: {lastMessage?.content ?? "Sem mensagens ainda."}
-                  </p>
-                  {conversation.reservedProduct ? (
-                    <div className="mt-3 rounded-[1rem] border border-[#d7ead9] bg-[#f5fbf5] p-3 text-sm leading-7 text-[#486756]">
-                      <p>
-                        <span className="font-semibold text-[#173424]">
-                          Reserva vinculada:
-                        </span>{" "}
-                        {conversation.reservedProduct}
-                      </p>
-                      {conversation.reservedPickupName ? (
-                        <p>
-                          <span className="font-semibold text-[#173424]">
-                            Nome da retirada:
-                          </span>{" "}
-                          {conversation.reservedPickupName}
-                        </p>
-                      ) : null}
-                      {conversation.reservedPickupWindow ? (
-                        <p>
-                          <span className="font-semibold text-[#173424]">
-                            Retirada prevista:
-                          </span>{" "}
-                          {conversation.reservedPickupWindow}
-                        </p>
-                      ) : null}
-                    </div>
-                  ) : null}
-                </div>
-
-                <div className="min-w-full rounded-[1.4rem] border border-[#dce7dd] bg-[#fbfefb] p-4 lg:min-w-[20rem]">
-                  <div className="mb-4 space-y-2 text-sm text-[#5f7766]">
-                    <p>
-                      <span className="font-semibold text-[#173424]">Atualizada:</span>{" "}
-                      {new Date(conversation.updatedAt).toLocaleString("pt-BR")}
-                    </p>
-                    <p>
-                      <span className="font-semibold text-[#173424]">Mensagens:</span>{" "}
-                      {conversation.messages.length}
-                    </p>
-                  </div>
-
-                  <ConversationHandoffButton
-                    conversationId={conversation.id}
-                    humanActive={conversation.status === "em_atendimento_humano"}
-                  />
-                </div>
-              </div>
-
-              {conversationSuggestion ? (
-                <AssistantSuggestionCard
-                  conversationId={conversation.id}
-                  suggestion={conversationSuggestion}
-                />
-              ) : null}
-
-              <ConversationTimeline messages={conversation.messages} />
-
-              <div className="mt-4 grid gap-4 lg:grid-cols-2">
-                <ConversationReplyForm conversationId={conversation.id} />
-                <ConversationMessageForm conversationId={conversation.id} />
-              </div>
-            </div>
-          );
-        })}
-      </section>
+      <ConversationsWorkspace
+        aiSuggestions={aiSuggestions}
+        conversations={conversations}
+      />
     </div>
   );
 }

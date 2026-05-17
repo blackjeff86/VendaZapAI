@@ -2,17 +2,9 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { buildAssistantSuggestion } from "@/lib/ai-assistant";
 import { AUTH_COOKIE_NAME, decodeSession, getUserById } from "@/lib/auth";
+import { conversationStatusLabelMap } from "@/lib/dashboard-constants";
 import { listConversationsByUserId } from "@/lib/conversations";
 import { listProductsByUserId } from "@/lib/products";
-
-export const conversationStatusLabelMap = {
-  aguardando_dados: "Aguardando dados",
-  aguardando_humano: "Aguardando humano",
-  em_atendimento_humano: "Em atendimento humano",
-  nova: "Nova",
-  reservada: "Reservada",
-  respondida_pela_ia: "Respondida pela IA",
-} as const;
 
 export async function getDashboardData() {
   const cookieStore = await cookies();

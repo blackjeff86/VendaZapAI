@@ -41,6 +41,8 @@ export type LoginInput = {
   password: string;
 };
 
+const TEMP_ACCESS_EMAIL = "acesso-demo@vendazap.local";
+
 export type StoreProfileInput = {
   niche: string;
   phone?: string;
@@ -138,7 +140,7 @@ export function validateRegisterInput(input: RegisterInput) {
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized.email)) {
-    throw new Error("Informe um e-mail valido.");
+    throw new Error("Informe um e-mail válido.");
   }
 
   if (normalized.password.length < 6) {
@@ -172,7 +174,7 @@ export async function registerUser(input: RegisterInput) {
   const alreadyExists = users.some((user) => user.email === normalized.email);
 
   if (alreadyExists) {
-    throw new Error("Ja existe uma conta com este e-mail.");
+    throw new Error("Já existe uma conta com este e-mail.");
   }
 
   const newUser: StoredUser = {
@@ -202,7 +204,7 @@ export async function loginUser(input: LoginInput) {
   const user = users.find((item) => item.email === normalized.email);
 
   if (!user || !verifyPassword(normalized.password, user.passwordHash)) {
-    throw new Error("E-mail ou senha invalidos.");
+    throw new Error("E-mail ou senha inválidos.");
   }
 
   return {
@@ -210,6 +212,51 @@ export async function loginUser(input: LoginInput) {
     name: user.name,
     storeName: user.storeName,
     userId: user.id,
+  } satisfies SessionPayload;
+}
+
+export async function getTemporaryAccessSession() {
+  const users = await readUsers();
+  const existingDemoUser = users.find((user) => user.email === TEMP_ACCESS_EMAIL);
+
+  if (existingDemoUser) {
+    return {
+      email: existingDemoUser.email,
+      name: existingDemoUser.name,
+      storeName: existingDemoUser.storeName,
+      userId: existingDemoUser.id,
+    } satisfies SessionPayload;
+  }
+
+  const firstUser = users[0];
+
+  if (firstUser) {
+    return {
+      email: firstUser.email,
+      name: firstUser.name,
+      storeName: firstUser.storeName,
+      userId: firstUser.id,
+    } satisfies SessionPayload;
+  }
+
+  const demoPassword = randomBytes(12).toString("hex");
+  const demoUser: StoredUser = {
+    createdAt: new Date().toISOString(),
+    email: TEMP_ACCESS_EMAIL,
+    id: randomUUID(),
+    name: "Acesso temporário",
+    passwordHash: hashPassword(demoPassword),
+    storeName: "Loja Demo VendaZap",
+  };
+
+  users.push(demoUser);
+  await writeUsers(users);
+
+  return {
+    email: demoUser.email,
+    name: demoUser.name,
+    storeName: demoUser.storeName,
+    userId: demoUser.id,
   } satisfies SessionPayload;
 }
 
