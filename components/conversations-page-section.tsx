@@ -63,7 +63,7 @@ export function ConversationsPageSection({
 
   return (
     <div className="space-y-5">
-      <section className="flex flex-col gap-1">
+      <section className="flex flex-col gap-1 md:hidden">
         <h1 className="text-[1.6rem] font-bold tracking-[-0.03em] text-[#191c1d]">
           Central de conversas
         </h1>
@@ -72,7 +72,7 @@ export function ConversationsPageSection({
         </p>
       </section>
 
-      <section className="grid grid-cols-2 gap-3">
+      <section className="grid grid-cols-2 gap-3 md:hidden">
         {[
           ["Conversas", String(conversations.length)],
           ["Reservas", String(reservedConversationsCount)],
@@ -96,10 +96,107 @@ export function ConversationsPageSection({
         ))}
       </section>
 
-      <ConversationsWorkspace
-        aiSuggestions={aiSuggestions}
-        conversations={conversations}
-      />
+      <section className="hidden space-y-6 md:block">
+        <section className="grid grid-cols-12 gap-6">
+          <div className="col-span-3 rounded-2xl border border-[#bbcbb9]/20 bg-white p-6 shadow-sm">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6c7b6b]">
+              Conversas
+            </p>
+            <h3 className="mt-2 text-3xl font-bold tracking-[-0.03em] text-[#111c2d]">
+              {conversations.length}
+            </h3>
+            <p className="mt-2 text-xs font-semibold text-[#006d2f]">Fila ativa da operação</p>
+          </div>
+
+          <div className="col-span-3 rounded-2xl border border-[#bbcbb9]/20 bg-white p-6 shadow-sm">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6c7b6b]">
+              Reservas
+            </p>
+            <h3 className="mt-2 text-3xl font-bold tracking-[-0.03em] text-[#111c2d]">
+              {reservedConversationsCount}
+            </h3>
+            <p className="mt-2 text-xs font-semibold text-[#006b5f]">Pedidos em fase final</p>
+          </div>
+
+          <div className="col-span-3 rounded-2xl border border-[#bbcbb9]/20 bg-white p-6 shadow-sm">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6c7b6b]">
+              Atendimento humano
+            </p>
+            <h3 className="mt-2 text-3xl font-bold tracking-[-0.03em] text-[#111c2d]">
+              {humanConversationsCount}
+            </h3>
+            <p className="mt-2 text-xs font-semibold text-[#93492e]">Casos com intervenção</p>
+          </div>
+
+          <div className="col-span-3 rounded-2xl bg-[#006d2f] p-6 text-white shadow-md">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-white/80">
+              Prioridade quente
+            </p>
+            <h3 className="mt-2 text-3xl font-bold tracking-[-0.03em]">
+              {hotConversationsCount}
+            </h3>
+            <p className="mt-2 text-sm text-white/80">
+              Conversas com maior chance de virar venda agora.
+            </p>
+          </div>
+
+          <div className="col-span-8 rounded-2xl border border-[#bbcbb9]/20 bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <h3 className="text-xl font-semibold text-[#111c2d]">Central operacional</h3>
+                <p className="mt-1 text-sm text-[#3c4a3d]">
+                  Filtros, fila e acompanhamento da IA para a equipe decidir rápido.
+                </p>
+              </div>
+              <span className="rounded-full bg-[#dee8ff] px-4 py-2 text-xs font-semibold text-[#006d2f]">
+                IA + humano em conjunto
+              </span>
+            </div>
+            <div className="mt-6">
+              <ConversationsWorkspace
+                aiSuggestions={aiSuggestions}
+                conversations={conversations}
+              />
+            </div>
+          </div>
+
+          <div className="col-span-4 flex flex-col gap-6">
+            <div className="rounded-2xl border border-[#bbcbb9]/20 bg-white p-6 shadow-sm">
+              <h4 className="text-xl font-semibold text-[#111c2d]">Leitura da IA</h4>
+              <div className="mt-5 space-y-4">
+                <div className="border-l-2 border-[#006d2f] pl-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#006d2f]">Resposta rápida</p>
+                  <p className="mt-1 text-sm leading-6 text-[#3c4a3d]">
+                    A IA já cobre boa parte das perguntas iniciais e deixa o time focado em conversão.
+                  </p>
+                </div>
+                <div className="border-l-2 border-[#006b5f] pl-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#006b5f]">Fila quente</p>
+                  <p className="mt-1 text-sm leading-6 text-[#3c4a3d]">
+                    Dê prioridade para clientes prontos para reservar ou fechar a compra.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-[#006b5f] via-[#25d366] to-[#3B82F6] p-6 text-white shadow-lg">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-white/80">
+                VendaZap Insight
+              </p>
+              <p className="mt-2 text-lg font-semibold">
+                Respostas mais rápidas e reservas organizadas aumentam a chance de fechamento.
+              </p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <div className="md:hidden">
+        <ConversationsWorkspace
+          aiSuggestions={aiSuggestions}
+          conversations={conversations}
+        />
+      </div>
     </div>
   );
 }

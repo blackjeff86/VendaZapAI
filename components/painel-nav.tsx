@@ -75,7 +75,7 @@ export function PainelNav() {
 
   return (
     <>
-      <nav className="hidden -mx-4 overflow-x-auto px-4 pb-1 md:block md:px-0">
+      <nav className="hidden">
         <div className="flex min-w-full gap-3">
           {items.map((item) => {
             const isActive =
