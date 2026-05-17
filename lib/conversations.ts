@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { resolveDataFilePath } from "@/lib/storage-path";
 
 export type ConversationStatus =
   | "nova"
@@ -47,13 +48,10 @@ export type ConversationReservationInput = {
 };
 
 function resolveConversationsFilePath() {
-  const customPath = process.env.CONVERSATIONS_FILE_PATH?.trim();
-
-  if (customPath) {
-    return path.resolve(customPath);
-  }
-
-  return path.join(process.cwd(), "data", "conversations.json");
+  return resolveDataFilePath(
+    process.env.CONVERSATIONS_FILE_PATH,
+    "conversations.json",
+  );
 }
 
 async function readConversations(): Promise<StoredConversation[]> {

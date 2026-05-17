@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { resolveDataFilePath } from "@/lib/storage-path";
 
 export type LeadInput = {
   email: string;
@@ -17,13 +18,7 @@ type StoredLead = LeadInput & {
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function resolveLeadsFilePath() {
-  const customPath = process.env.LEADS_FILE_PATH?.trim();
-
-  if (customPath) {
-    return path.resolve(customPath);
-  }
-
-  return path.join(process.cwd(), "data", "leads.json");
+  return resolveDataFilePath(process.env.LEADS_FILE_PATH, "leads.json");
 }
 
 export function validateLeadInput(input: LeadInput) {

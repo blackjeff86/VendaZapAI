@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { resolveDataFilePath } from "@/lib/storage-path";
 
 export type ProductInput = {
   category: string;
@@ -36,13 +37,7 @@ export type StoredProduct = {
 };
 
 function resolveProductsFilePath() {
-  const customPath = process.env.PRODUCTS_FILE_PATH?.trim();
-
-  if (customPath) {
-    return path.resolve(customPath);
-  }
-
-  return path.join(process.cwd(), "data", "products.json");
+  return resolveDataFilePath(process.env.PRODUCTS_FILE_PATH, "products.json");
 }
 
 async function readProducts(): Promise<StoredProduct[]> {

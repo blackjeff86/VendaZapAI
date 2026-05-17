@@ -1,6 +1,7 @@
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { resolveDataFilePath } from "@/lib/storage-path";
 
 export const AUTH_COOKIE_NAME = "vendazap_session";
 
@@ -61,13 +62,7 @@ export type WhatsappConfigInput = {
 };
 
 function resolveUsersFilePath() {
-  const customPath = process.env.USERS_FILE_PATH?.trim();
-
-  if (customPath) {
-    return path.resolve(customPath);
-  }
-
-  return path.join(process.cwd(), "data", "users.json");
+  return resolveDataFilePath(process.env.USERS_FILE_PATH, "users.json");
 }
 
 function normalizeEmail(email: string) {
