@@ -1,0 +1,24 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(310 230) rotate(47) scale(1018)">
+      <stop offset="0" stop-color="#4CE56D"/>
+      <stop offset="0.34" stop-color="#26B655"/>
+      <stop offset="0.72" stop-color="#0B3B21"/>
+      <stop offset="1" stop-color="#06170E"/>
+    </radialGradient>
+    <linearGradient id="accent" x1="281" y1="266" x2="794" y2="809" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E0FF79"/>
+      <stop offset="1" stop-color="#87F5B1"/>
+    </linearGradient>
+    <filter id="shadow" x="130" y="146" width="820" height="820" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="32" stdDeviation="38" flood-color="#072012" flood-opacity="0.34"/>
+    </filter>
+  </defs>
+  <rect width="1080" height="1080" rx="280" fill="url(#bg)"/>
+  <circle cx="540" cy="540" r="396" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.14)" stroke-width="10"/>
+  <g filter="url(#shadow)">
+    <path d="M284 344C284 308.654 312.654 280 348 280H728C763.346 280 792 308.654 792 344V590C792 625.346 763.346 654 728 654H548L403.414 788.781C384.096 806.785 353 793.09 353 766.71V654H348C312.654 654 284 625.346 284 590V344Z" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.16)" stroke-width="12"/>
+    <path d="M350 402H470L541 558L610 402H727L607 716H518L350 402Z" fill="white"/>
+    <path d="M666 338H780L724 458H610L666 338Z" fill="url(#accent)"/>
+  </g>
+</svg>

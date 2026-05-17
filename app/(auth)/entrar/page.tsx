@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { AuthForm } from "@/components/auth-form";
+import { BrandLogo } from "@/components/brand-logo";
 import { AUTH_COOKIE_NAME, decodeSession } from "@/lib/auth";
 
 export default async function LoginPage() {
@@ -16,6 +17,7 @@ export default async function LoginPage() {
     <main className="container-shell flex min-h-screen items-center py-12">
       <div className="grid w-full gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
         <div>
+          <BrandLogo size="md" theme="dark" />
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-mint">
             Acesso da loja
           </p>

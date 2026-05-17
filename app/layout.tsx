@@ -13,7 +13,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "VendaZap AI | Venda mais no WhatsApp sem perder clientes",
+  title: "VendaZap | Venda mais no WhatsApp sem perder clientes",
   description:
     "IA para lojas responderem clientes no WhatsApp, consultarem estoque e venderem mais com atendimento humanizado.",
 };

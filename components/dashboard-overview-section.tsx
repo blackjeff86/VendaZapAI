@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type DashboardOverviewSectionProps = {
   onboardingCompleted: boolean;
 };
@@ -12,12 +14,12 @@ export function DashboardOverviewSection({
           Painel do MVP
         </p>
         <h1 className="display-font mt-4 text-3xl font-semibold tracking-tight text-[#183323] sm:text-4xl">
-          Sua operação agora está separada por módulos claros e rápidos.
+          VendaZap é a marca. AI é a inteligência por trás da operação.
         </h1>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-[#54705d] sm:text-base">
-          A ideia aqui é simples: acompanhar conversas, ajustar catálogo e
-          configurar o canal do WhatsApp sem confusão, com uma experiência que
-          funciona bem no celular e no uso do dia a dia.
+          Refinamos a identidade do produto para reforçar o que ele entrega:
+          um vendedor inteligente para WhatsApp com visual limpo, memorável e
+          fácil de reconhecer tanto no sistema quanto nas redes sociais.
         </p>
 
         <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -36,6 +38,21 @@ export function DashboardOverviewSection({
               <p className="mt-2 text-sm leading-6 text-[#5c7563]">{copy}</p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link
+            href="/brand/vendazap-instagram-avatar.svg"
+            className="rounded-full border border-[#cfe0d0] bg-white px-4 py-2 text-sm font-semibold text-[#1d3a29] transition hover:border-[#8abf93] hover:bg-[#f4fbf4]"
+          >
+            Ver avatar da marca
+          </Link>
+          <Link
+            href="/brand/vendazap-wordmark.svg"
+            className="rounded-full border border-[#cfe0d0] bg-[#f6fbf6] px-4 py-2 text-sm font-semibold text-[#2d8a4b] transition hover:border-[#8abf93] hover:bg-white"
+          >
+            Ver wordmark
+          </Link>
         </div>
       </div>
 

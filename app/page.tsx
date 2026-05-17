@@ -1,4 +1,5 @@
 import { LeadCaptureForm } from "@/components/lead-capture-form";
+import { BrandLogo } from "@/components/brand-logo";
 
 const benefits = [
   {
@@ -117,9 +118,7 @@ export default function Home() {
         <div className="container-shell pt-6 sm:pt-8">
           <div className="glass-card soft-rise flex items-center justify-between rounded-full px-4 py-3 text-xs text-white/68 sm:px-5">
             <div className="flex items-center gap-3">
-              <span className="display-font text-sm font-semibold text-white">VendaZap AI</span>
-              <span className="hidden h-1.5 w-1.5 rounded-full bg-whatsapp sm:block" />
-              <span className="hidden sm:block">Vendedor inteligente para WhatsApp</span>
+              <BrandLogo size="sm" theme="dark" />
             </div>
             <span className="rounded-full bg-whatsapp/15 px-3 py-1 text-whatsapp">
               Beta para lojistas brasileiros

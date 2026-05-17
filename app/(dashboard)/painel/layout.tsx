@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { BrandLogo } from "@/components/brand-logo";
 import { LogoutButton } from "@/components/logout-button";
 import { PainelNav } from "@/components/painel-nav";
 import { AUTH_COOKIE_NAME, decodeSession } from "@/lib/auth";
@@ -22,7 +23,7 @@ export default async function DashboardLayout({
       <header className="sticky top-0 z-20 border-b border-[#d8e7d9] bg-[rgba(244,251,244,0.92)] backdrop-blur-xl">
         <div className="container-shell flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="display-font text-lg font-semibold text-[#173424]">VendaZap AI</p>
+            <BrandLogo size="sm" />
             <p className="mt-1 text-sm text-[#4c6b57]">
               {session.storeName} • {session.name}
             </p>

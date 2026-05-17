@@ -1,0 +1,19 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(72 50) rotate(45) scale(247)">
+      <stop offset="0" stop-color="#4CE56D"/>
+      <stop offset="0.36" stop-color="#23B253"/>
+      <stop offset="0.76" stop-color="#0B3B21"/>
+      <stop offset="1" stop-color="#06170E"/>
+    </radialGradient>
+    <linearGradient id="accent" x1="66" y1="67" x2="188" y2="198" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E0FF79"/>
+      <stop offset="1" stop-color="#87F5B1"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="64" fill="url(#bg)"/>
+  <rect x="16" y="16" width="224" height="224" rx="52" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+  <path d="M66 82C66 73.1634 73.1634 66 82 66H172C180.837 66 188 73.1634 188 82V141C188 149.837 180.837 157 172 157H129L93.7718 189.84C88.3503 194.893 79.5 191.05 79.5 183.638V157H82C73.1634 157 66 149.837 66 141V82Z" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.16)" stroke-width="3"/>
+  <path d="M82 102H109L126 140L143 102H171L141 178H117L82 102Z" fill="white"/>
+  <path d="M149 83H180L165 114H134L149 83Z" fill="url(#accent)"/>
+</svg>
