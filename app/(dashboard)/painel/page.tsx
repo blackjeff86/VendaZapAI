@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DashboardOverviewSection } from "@/components/dashboard-overview-section";
+import { PerformanceChart } from "@/components/performance-chart";
 import { getDashboardData } from "@/lib/dashboard";
 
 function ModuleIcon({ title }: { title: string }) {
@@ -46,6 +47,16 @@ export default async function DashboardPage() {
     reservedConversationsCount,
     session,
   } = await getDashboardData();
+  const weeklyLabels = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"];
+  const weeklyValues = [
+    "R$ 7,2 mil",
+    "R$ 5,4 mil",
+    "R$ 8,1 mil",
+    "R$ 10,9 mil",
+    "R$ 7,5 mil",
+    "R$ 5,8 mil",
+    "R$ 9,1 mil",
+  ];
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -132,22 +143,15 @@ export default async function DashboardPage() {
               </div>
             </div>
 
-            <div className="relative flex h-64 items-end gap-3 pb-4">
-              {[66, 50, 74, 100, 68, 52, 84].map((height, index) => (
-                <div key={`${height}-${index}`} className={`flex-1 rounded-t-lg ${index === 6 ? "bg-[#006d2f]" : "bg-[#25d366]/20"}`} style={{ height: `${height}%` }} />
-              ))}
-              <svg className="pointer-events-none absolute inset-0 h-1/2 w-full stroke-[#006b5f]" preserveAspectRatio="none" viewBox="0 0 100 100">
+            <div className="relative">
+              <PerformanceChart
+                bars={[66, 50, 74, 100, 68, 52, 84]}
+                labels={weeklyLabels}
+                values={weeklyValues}
+              />
+              <svg className="pointer-events-none absolute inset-x-0 top-[4.15rem] h-1/2 w-full stroke-[#006b5f]" preserveAspectRatio="none" viewBox="0 0 100 100">
                 <path d="M0,80 Q25,20 50,50 T100,10" fill="none" strokeDasharray="4" strokeWidth="2" />
               </svg>
-            </div>
-            <div className="mt-2 flex justify-between px-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[#6c7b6b]">
-              <span>Seg</span>
-              <span>Ter</span>
-              <span>Qua</span>
-              <span>Qui</span>
-              <span>Sex</span>
-              <span>Sab</span>
-              <span>Dom</span>
             </div>
           </div>
 

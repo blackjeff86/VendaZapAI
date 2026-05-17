@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PerformanceChart } from "@/components/performance-chart";
 
 type DashboardOverviewSectionProps = {
   activeProductsCount: number;
@@ -10,6 +11,8 @@ type DashboardOverviewSectionProps = {
 };
 
 const chartBars = [40, 65, 52, 86, 100, 74, 58];
+const chartLabels = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"];
+const chartValues = ["R$ 420", "R$ 680", "R$ 510", "R$ 890", "R$ 1.020", "R$ 760", "R$ 590"];
 
 function OverviewIcon({ title }: { title: string }) {
   const common = "h-4 w-4";
@@ -108,24 +111,12 @@ export function DashboardOverviewSection({
               +12% vs ontem
             </span>
           </div>
-          <div className="flex h-40 items-end gap-2 px-2">
-            {chartBars.map((height, index) => (
-              <div
-                key={`${height}-${index}`}
-                className={`flex-1 rounded-t-lg transition-all duration-300 ${index === 4 ? "bg-[#006d3e]" : "bg-[#e6e8e9]"}`}
-                style={{ height: `${height}%` }}
-              />
-            ))}
-          </div>
-          <div className="mt-2 flex justify-between px-2 text-[11px] font-semibold text-[#6b7b6e]">
-            <span>S</span>
-            <span>T</span>
-            <span>Q</span>
-            <span>Q</span>
-            <span className="text-[#006d3e]">S</span>
-            <span>S</span>
-            <span>D</span>
-          </div>
+          <PerformanceChart
+            bars={chartBars}
+            compact
+            labels={chartLabels}
+            values={chartValues}
+          />
         </section>
 
         <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4 transition duration-200 hover:shadow-[0_16px_30px_rgba(0,0,0,0.05)]">
