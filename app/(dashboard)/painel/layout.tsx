@@ -29,9 +29,6 @@ export default async function DashboardLayout({
             <div className="flex min-w-0 items-center gap-3">
               <div className="min-w-0">
                 <BrandLogo size="sm" theme="light" />
-                <p className="truncate text-xs text-[#6b7b6e]">
-                  {session.storeName} • {session.name}
-                </p>
               </div>
             </div>
 

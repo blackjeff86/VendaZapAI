@@ -8,17 +8,17 @@ type BrandLogoProps = {
 
 const sizeMap = {
   lg: {
-    gap: "gap-3.5",
+    gap: "gap-2",
     markWidth: "w-[4.6rem]",
     wordmarkWidth: "w-[12.6rem]",
   },
   md: {
-    gap: "gap-3",
+    gap: "gap-2",
     markWidth: "w-[4rem]",
     wordmarkWidth: "w-[11rem]",
   },
   sm: {
-    gap: "gap-2.5",
+    gap: "gap-1.5",
     markWidth: "w-[3.5rem]",
     wordmarkWidth: "w-[9rem]",
   },
