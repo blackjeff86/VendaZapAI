@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+  font-family: var(--font-body), sans-serif;
+  background-image:
+    radial-gradient(circle at top, rgba(37, 211, 102, 0.18), transparent 24%),
+    radial-gradient(circle at 85% 12%, rgba(216, 255, 116, 0.1), transparent 18%),
+    radial-gradient(circle at 15% 32%, rgba(68, 187, 255, 0.08), transparent 20%),
+    linear-gradient(180deg, #07110d 0%, #060b09 45%, #050806 100%);
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(143, 247, 176, 0.3);
+  color: #f6f7f2;
+}
+
+.container-shell {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.glass-card {
+  @apply border border-white/10 bg-white/5 backdrop-blur-xl;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.section-title {
+  @apply text-3xl font-semibold tracking-tight text-white sm:text-4xl;
+  font-family: var(--font-display), sans-serif;
+}
+
+.section-copy {
+  @apply mt-4 max-w-2xl text-sm leading-7 text-white/70 sm:text-base;
+}
+
+.display-font {
+  font-family: var(--font-display), sans-serif;
+}
+
+.noise-overlay {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)),
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.03) 0, transparent 30%),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.02) 0, transparent 25%);
+}
+
+.hero-orbit {
+  animation: orbit-float 10s ease-in-out infinite;
+}
+
+.soft-rise {
+  animation: soft-rise 0.8s ease-out both;
+}
+
+.soft-rise-delay {
+  animation: soft-rise 0.8s ease-out 0.14s both;
+}
+
+.soft-rise-delay-2 {
+  animation: soft-rise 0.8s ease-out 0.24s both;
+}
+
+@keyframes orbit-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes soft-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
