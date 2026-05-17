@@ -1,3 +1,6 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import { CatalogWorkspace } from "@/components/catalog-workspace";
 import { ProductForm } from "@/components/product-form";
 import { StoreOnboardingForm } from "@/components/store-onboarding-form";
@@ -23,6 +26,37 @@ export function CatalogPageSection({
   products,
   sessionStoreName,
 }: CatalogPageSectionProps) {
+  const [desktopSearch, setDesktopSearch] = useState("");
+
+  function normalizeText(value: string) {
+    return value
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .toLowerCase();
+  }
+
+  const filteredDesktopProducts = useMemo(() => {
+    const normalizedSearch = normalizeText(desktopSearch.trim());
+
+    if (!normalizedSearch) {
+      return products;
+    }
+
+    return products.filter((product) => {
+      const haystack = normalizeText(
+        [
+          product.name,
+          product.category,
+          product.compatibility ?? "",
+          product.sku ?? "",
+          product.description,
+        ].join(" "),
+      );
+
+      return haystack.includes(normalizedSearch);
+    });
+  }, [desktopSearch, products]);
+
   const categories = Array.from(
     new Set(products.map((product) => product.category).filter(Boolean)),
   ).slice(0, 6);
@@ -187,6 +221,8 @@ export function CatalogPageSection({
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6c7b6b]">⌕</span>
               <input
                 type="text"
+                value={desktopSearch}
+                onChange={(event) => setDesktopSearch(event.target.value)}
                 placeholder="Buscar por nome, SKU ou categoria..."
                 className="h-12 w-full rounded-xl border border-[#bbcbb9]/30 bg-[#f0f3ff] pl-12 pr-4 text-sm text-[#111c2d] outline-none"
               />
@@ -230,7 +266,7 @@ export function CatalogPageSection({
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#bbcbb9]/15">
-                {products.map((product) => (
+                {filteredDesktopProducts.map((product) => (
                   <tr key={product.id} className="group hover:bg-[#f9f9ff]">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4">
@@ -276,7 +312,7 @@ export function CatalogPageSection({
 
           <div className="flex items-center justify-between border-t border-[#bbcbb9]/20 bg-[#f0f3ff]/50 px-6 py-4">
             <p className="text-xs font-semibold text-[#6c7b6b]">
-              Exibindo {products.length} produto(s) no catálogo
+              Exibindo {filteredDesktopProducts.length} produto(s) no catálogo
             </p>
             <div className="flex items-center gap-2">
               <button className="rounded-full p-2 text-[#6c7b6b] transition hover:bg-[#dee8ff]">‹</button>

@@ -132,6 +132,15 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
           </p>
           <span className="text-xs text-[#6d8373]">{filteredProducts.length} itens</span>
         </div>
+        <div className="mb-3">
+          <input
+            type="text"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Buscar produto, SKU ou categoria"
+            className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
+          />
+        </div>
         <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
           {quickFilters.map((filter) => {
             const isActive = stockFilter === filter.value;
