@@ -104,7 +104,7 @@ export function WhatsappWebhookTesterForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="mt-5 space-y-4 rounded-[1.3rem] border border-[#dce8dd] bg-[#f8fcf8] p-4"
+      className="dashboard-tint-emerald mt-5 space-y-4 rounded-[1.6rem] border border-[#dce8dd] p-4 sm:p-5"
     >
       <div className="flex flex-col gap-2">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#2d8a4b]">
@@ -116,7 +116,7 @@ export function WhatsappWebhookTesterForm({
         </p>
       </div>
 
-      <div className="rounded-[1rem] border border-[#e0ebe1] bg-white px-4 py-3 text-sm text-[#58705f]">
+      <div className="dashboard-chip rounded-[1rem] px-4 py-3 text-sm text-[#58705f]">
         Número configurado:{" "}
         <span className="font-semibold text-[#173424]">
           {initialDisplayNumber || "Ainda não informado"}
@@ -124,28 +124,43 @@ export function WhatsappWebhookTesterForm({
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <input
-          name="clientName"
-          type="text"
-          placeholder="Nome do cliente"
-          className="w-full rounded-[1rem] border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
-        />
-        <input
-          name="clientPhone"
-          type="text"
-          required
-          placeholder="WhatsApp do cliente"
-          className="w-full rounded-[1rem] border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
-        />
+        <label className="space-y-2">
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#66806f]">
+            Cliente
+          </span>
+          <input
+            name="clientName"
+            type="text"
+            placeholder="Nome do cliente"
+            className="w-full rounded-[1rem] border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+          />
+        </label>
+        <label className="space-y-2">
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#66806f]">
+            WhatsApp
+          </span>
+          <input
+            name="clientPhone"
+            type="text"
+            required
+            placeholder="WhatsApp do cliente"
+            className="w-full rounded-[1rem] border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+          />
+        </label>
       </div>
 
-      <textarea
-        name="content"
-        rows={3}
-        required
-        placeholder="Ex.: Boa tarde, vocês têm correia da XRE 300 2020?"
-        className="w-full rounded-[1rem] border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
-      />
+      <label className="space-y-2">
+        <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#66806f]">
+          Mensagem de teste
+        </span>
+        <textarea
+          name="content"
+          rows={3}
+          required
+          placeholder="Ex.: Boa tarde, vocês têm correia da XRE 300 2020?"
+          className="w-full rounded-[1rem] border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+        />
+      </label>
 
       <div className="flex flex-wrap items-center gap-3">
         <button

@@ -3,6 +3,56 @@ import { ProductForm } from "@/components/product-form";
 import { StoreOnboardingForm } from "@/components/store-onboarding-form";
 import type { StoredProduct } from "@/lib/products";
 
+function CatalogIcon({ title }: { title: string }) {
+  const common = "h-[1rem] w-[1rem]";
+
+  if (title === "Onboarding") {
+    return (
+      <svg viewBox="0 0 24 24" className={common} fill="none" stroke="currentColor" strokeWidth="1.9">
+        <circle cx="12" cy="8" r="3" />
+        <path d="M6.5 18a5.5 5.5 0 0 1 11 0" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  if (title === "Produtos ativos" || title === "Produtos cadastrados") {
+    return (
+      <svg viewBox="0 0 24 24" className={common} fill="none" stroke="currentColor" strokeWidth="1.9">
+        <path d="M6 6.5h12" strokeLinecap="round" />
+        <path d="M6 11.5h12" strokeLinecap="round" />
+        <path d="M6 16.5h8" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  if (title === "Estoque") {
+    return (
+      <svg viewBox="0 0 24 24" className={common} fill="none" stroke="currentColor" strokeWidth="1.9">
+        <path d="M5.5 8h13" strokeLinecap="round" />
+        <path d="M8 12h8" strokeLinecap="round" />
+        <path d="M9.5 16h5" strokeLinecap="round" />
+        <path d="M6 5h12a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 18 19H6a1.5 1.5 0 0 1-1.5-1.5v-11A1.5 1.5 0 0 1 6 5Z" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+
+  if (title === "Compatibilidade") {
+    return (
+      <svg viewBox="0 0 24 24" className={common} fill="none" stroke="currentColor" strokeWidth="1.9">
+        <path d="m7 12 3 3 7-7" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="12" cy="12" r="8" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" className={common} fill="none" stroke="currentColor" strokeWidth="1.9">
+      <path d="m6 15 3-3 2 2 5-6 2 2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18 10V6h-4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 type CatalogPageSectionProps = {
   activeProductsCount: number;
   currentUser: {
@@ -26,7 +76,7 @@ export function CatalogPageSection({
   return (
     <div className="space-y-6">
       <section className="grid gap-4 lg:grid-cols-[0.98fr_1.02fr]">
-        <div className="rounded-[2rem] border border-[#d9e8db] bg-[linear-gradient(135deg,#ffffff_0%,#f7fcf8_60%,#eef8f0_100%)] p-6 shadow-[0_20px_48px_rgba(26,74,43,0.06)] sm:p-7">
+        <div className="dashboard-card-strong rounded-[2rem] p-6 sm:p-7">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
             Base da loja
           </p>
@@ -70,8 +120,17 @@ export function CatalogPageSection({
           ].map(([title, value, copy]) => (
             <div
               key={title}
-              className="rounded-[1.6rem] border border-[#d9e6da] bg-[#fbfefb] p-5 shadow-[0_14px_32px_rgba(26,74,43,0.04)]"
+              className={`rounded-[1.7rem] border p-5 shadow-[0_14px_32px_rgba(26,74,43,0.07)] ${
+                title === "Produtos ativos"
+                  ? "dashboard-tint-green border-[#bfe5c7]"
+                  : title === "Produtos cadastrados"
+                    ? "dashboard-tint-cyan border-[#cae2df]"
+                    : "dashboard-card border-[#d9e6da]"
+              }`}
             >
+              <span className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-[1rem] bg-[rgba(255,255,255,0.72)] text-[#2d8a4b]">
+                <CatalogIcon title={title} />
+              </span>
               <p className="display-font text-lg font-semibold text-[#173424]">{title}</p>
               <p className="mt-3 text-2xl font-semibold text-[#2d8a4b]">{value}</p>
               <p className="mt-3 text-sm leading-7 text-[#5f7766]">{copy}</p>
@@ -81,7 +140,7 @@ export function CatalogPageSection({
       </section>
 
       <section className="grid gap-4 lg:grid-cols-[0.96fr_1.04fr]">
-        <div className="rounded-[2rem] border border-[#d9e8db] bg-white p-6 shadow-[0_20px_48px_rgba(26,74,43,0.06)] sm:p-7">
+        <div className="dashboard-card rounded-[2rem] p-6 sm:p-7">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
             Cadastro manual de produtos
           </p>
@@ -106,8 +165,15 @@ export function CatalogPageSection({
           ].map(([title, copy]) => (
             <div
               key={title}
-              className="rounded-[1.6rem] border border-[#d9e6da] bg-[#fbfefb] p-5 shadow-[0_14px_32px_rgba(26,74,43,0.04)]"
+              className={`rounded-[1.7rem] border p-5 shadow-[0_14px_32px_rgba(26,74,43,0.07)] ${
+                title === "Próximo passo"
+                  ? "dashboard-tint-warm border-[#f0d9a6]"
+                  : "dashboard-card border-[#d9e6da]"
+              }`}
             >
+              <span className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-[1rem] bg-[rgba(255,255,255,0.72)] text-[#2d8a4b]">
+                <CatalogIcon title={title} />
+              </span>
               <p className="display-font text-lg font-semibold text-[#173424]">{title}</p>
               <p className="mt-3 text-sm leading-7 text-[#5f7766]">{copy}</p>
             </div>
@@ -115,7 +181,7 @@ export function CatalogPageSection({
         </div>
       </section>
 
-      <section className="rounded-[2rem] border border-[#dce8dd] bg-white p-6 shadow-[0_18px_44px_rgba(26,74,43,0.05)] sm:p-7">
+      <section className="dashboard-card rounded-[2rem] p-6 sm:p-7">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
@@ -125,7 +191,7 @@ export function CatalogPageSection({
               Produtos cadastrados nesta conta
             </h2>
           </div>
-          <div className="rounded-[1.2rem] border border-[#d7e5d8] bg-[#f6fbf6] px-4 py-3 text-sm text-[#597260]">
+          <div className="dashboard-chip rounded-[1.2rem] px-4 py-3 text-sm text-[#597260]">
             Campos essenciais para o MVP: nome, categoria, preço e estoque
           </div>
         </div>

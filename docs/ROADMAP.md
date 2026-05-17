@@ -84,7 +84,8 @@ Por isso, o MVP nao deve prometer:
 - importacao em massa no primeiro momento;
 - analytics profundos;
 - automacoes comerciais avancadas;
-- audio e voz;
+- interpretacao de pedidos por audio no inicio;
+- voz;
 - omnichannel;
 - campanhas automaticas;
 - gestao complexa de equipe;
@@ -229,6 +230,7 @@ Entregas prioritarias:
 - historico de clientes;
 - produtos similares;
 - fotos de produtos;
+- interpretacao de audio no WhatsApp;
 - promocoes automaticas simples;
 - notificacoes internas;
 - indicadores operacionais basicos;
@@ -270,6 +272,7 @@ Significa que o VendaZap AI ja cumpre muito bem sua proposta principal e pode op
 - regras de compatibilidade melhores;
 - promocoes e ofertas basicas;
 - historico de interacoes por cliente;
+- transcricao e leitura de pedidos enviados por audio;
 - filtros melhores no painel;
 - mais visibilidade sobre reservas e status;
 - controles de equipe;
@@ -289,6 +292,8 @@ Entregas:
 - integracao Bling;
 - integracao Omie;
 - pagamentos PIX;
+- interpretacao de audio com mais contexto comercial;
+- resposta por voz no futuro, se fizer sentido para o lojista;
 - campanhas automaticas;
 - recuperacao de carrinho;
 - IA de upsell e cross-sell;
@@ -473,7 +478,8 @@ As principais frentes de evolucao devem ser:
 - entender melhor contexto;
 - perguntar menos e melhor;
 - errar menos em ambiguidades;
-- vender com mais naturalidade.
+- vender com mais naturalidade;
+- interpretar texto e audio com consistencia.
 
 ### 2. Facilidade de onboarding
 
@@ -529,7 +535,7 @@ Itens importantes, mas fora do foco imediato:
 - ERP logo no inicio;
 - dashboard complexo;
 - campanhas sofisticadas;
-- audio e voz;
+- resposta por voz no inicio;
 - multi-unidade cedo demais;
 - omnichannel;
 - automacoes muito profundas antes da validacao.

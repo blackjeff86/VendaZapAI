@@ -34,7 +34,7 @@ export function WhatsappActivationChecklist({
   const progress = Math.round((completedCount / items.length) * 100);
 
   return (
-    <section className="rounded-[2rem] border border-[#dce8dd] bg-white p-6 shadow-[0_18px_44px_rgba(26,74,43,0.05)] sm:p-7">
+    <section className="dashboard-card rounded-[2rem] p-6 sm:p-7">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
@@ -44,7 +44,7 @@ export function WhatsappActivationChecklist({
             Acompanhe o que falta para o canal ficar pronto.
           </h2>
         </div>
-        <div className="rounded-[1.2rem] border border-[#d7e5d8] bg-[#f6fbf6] px-4 py-3 text-sm font-semibold text-[#2d8a4b]">
+        <div className="dashboard-chip rounded-[1.2rem] px-4 py-3 text-sm font-semibold text-[#2d8a4b]">
           {completedCount}/{items.length} concluído • {progress}%
         </div>
       </div>
@@ -57,17 +57,28 @@ export function WhatsappActivationChecklist({
       </div>
 
       <div className="mt-5 grid gap-3">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <div
             key={item.label}
-            className={`rounded-[1.2rem] border p-4 text-sm ${
+            className={`flex items-start gap-3 rounded-[1.3rem] border p-4 text-sm ${
               item.done
-                ? "border-[#d7ead9] bg-[#f5fbf5] text-[#30563d]"
-                : "border-[#e5e9e5] bg-[#fbfdfb] text-[#607766]"
+                ? "border-[#d7ead9] bg-[linear-gradient(135deg,#effcf1_0%,#e2f7e7_100%)] text-[#30563d]"
+                : "border-[#e5e9e5] bg-[rgba(255,255,255,0.82)] text-[#607766]"
             }`}
           >
-            <span className="font-semibold">{item.done ? "Concluído" : "Pendente"}</span>{" "}
-            • {item.label}
+            <span
+              className={`mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
+                item.done
+                  ? "bg-[#d8f1de] text-[#2d8a4b]"
+                  : "bg-[#f2f5f2] text-[#6d8271]"
+              }`}
+            >
+              {item.done ? "✓" : `0${index + 1}`}
+            </span>
+            <div>
+              <p className="font-semibold">{item.done ? "Concluído" : "Pendente"}</p>
+              <p className="mt-1 leading-6">{item.label}</p>
+            </div>
           </div>
         ))}
       </div>

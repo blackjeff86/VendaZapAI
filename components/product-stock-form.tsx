@@ -75,24 +75,34 @@ export function ProductStockForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <div className="grid gap-3 sm:grid-cols-2">
-        <input
-          name="price"
-          type="number"
-          min="0"
-          step="0.01"
-          value={price}
-          onChange={(event) => setPrice(event.target.value)}
-          className="w-full rounded-xl border border-[#d8e6d9] bg-white px-3 py-2.5 text-sm text-[#173424] outline-none"
-        />
-        <input
-          name="stockQuantity"
-          type="number"
-          min="0"
-          step="1"
-          value={stockQuantity}
-          onChange={(event) => setStockQuantity(event.target.value)}
-          className="w-full rounded-xl border border-[#d8e6d9] bg-white px-3 py-2.5 text-sm text-[#173424] outline-none"
-        />
+        <label className="space-y-2">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6c8573]">
+            Preço
+          </span>
+          <input
+            name="price"
+            type="number"
+            min="0"
+            step="0.01"
+            value={price}
+            onChange={(event) => setPrice(event.target.value)}
+            className="w-full rounded-xl border border-[#d8e6d9] bg-white px-3 py-2.5 text-sm text-[#173424] outline-none transition focus:border-[#8ac798]"
+          />
+        </label>
+        <label className="space-y-2">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6c8573]">
+            Estoque
+          </span>
+          <input
+            name="stockQuantity"
+            type="number"
+            min="0"
+            step="1"
+            value={stockQuantity}
+            onChange={(event) => setStockQuantity(event.target.value)}
+            className="w-full rounded-xl border border-[#d8e6d9] bg-white px-3 py-2.5 text-sm text-[#173424] outline-none transition focus:border-[#8ac798]"
+          />
+        </label>
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -105,7 +115,7 @@ export function ProductStockForm({
             key={label}
             type="button"
             onClick={() => adjustStock(Number(delta))}
-            className="rounded-full border border-[#d6e4d7] bg-[#f8fcf8] px-3 py-1.5 text-xs font-semibold text-[#30563d] transition hover:border-[#8abf93] hover:bg-white"
+            className="dashboard-chip rounded-full px-3 py-1.5 text-xs font-semibold text-[#30563d] transition hover:border-[#8abf93] hover:bg-white"
           >
             {label} estoque
           </button>
@@ -123,11 +133,11 @@ export function ProductStockForm({
         Produto ativo no catálogo
       </label>
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         <button
           type="submit"
           disabled={submitState === "submitting"}
-          className="rounded-full border border-[#cfe0d0] bg-white px-4 py-2 text-sm font-semibold text-[#1d3a29] transition hover:border-[#8abf93] hover:bg-[#f4fbf4] disabled:cursor-not-allowed disabled:opacity-70"
+          className="rounded-full bg-[#173424] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#214932] disabled:cursor-not-allowed disabled:opacity-70"
         >
           {submitState === "submitting" ? "Salvando..." : "Salvar ajustes"}
         </button>

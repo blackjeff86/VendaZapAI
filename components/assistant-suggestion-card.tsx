@@ -26,27 +26,40 @@ export function AssistantSuggestionCard({
   suggestion,
 }: AssistantSuggestionCardProps) {
   const topProduct = suggestion.matchedProducts[0];
+  const operationalLabel = suggestion.shouldEscalateToHuman
+    ? "Levar para atendimento humano"
+    : suggestion.shouldOfferReservation
+      ? "Oferecer reserva da peça"
+      : "Seguir no fluxo assistido";
 
   return (
-    <div className="mt-5 rounded-[1.4rem] border border-[#d8e8da] bg-white p-4">
+    <div className="dashboard-card dashboard-soft-enter-delay mt-5 overflow-hidden rounded-[1.6rem] p-4 sm:p-5">
+      <div className="mb-4 rounded-[1.35rem] border border-[#d9eadc] bg-[linear-gradient(135deg,rgba(242,255,246,0.95)_0%,rgba(231,251,239,0.92)_100%)] p-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-[#dff4e3] px-3 py-1 text-xs font-semibold text-[#2d8a4b]">
+            Sugestão da IA
+          </span>
+          <span className="rounded-full bg-[rgba(255,255,255,0.72)] px-3 py-1 text-xs font-semibold text-[#617664]">
+            {intentMap[suggestion.intent]}
+          </span>
+          <span className="rounded-full bg-[rgba(255,255,255,0.72)] px-3 py-1 text-xs font-semibold text-[#617664]">
+            Confiança {suggestion.confidenceLabel}
+          </span>
+        </div>
+
+        <p className="mt-4 text-sm leading-7 text-[#355342]">{suggestion.summary}</p>
+      </div>
+
       <div className="flex flex-wrap items-center gap-2">
-        <span className="rounded-full bg-[#e8f5ea] px-3 py-1 text-xs font-semibold text-[#2d8a4b]">
-          Sugestão da IA
-        </span>
-        <span className="rounded-full bg-[#f1f5f1] px-3 py-1 text-xs font-semibold text-[#617664]">
-          {intentMap[suggestion.intent]}
-        </span>
-        <span className="rounded-full bg-[#f1f5f1] px-3 py-1 text-xs font-semibold text-[#617664]">
-          Confiança {suggestion.confidenceLabel}
-        </span>
         <span className="rounded-full bg-[#f6faf6] px-3 py-1 text-xs font-semibold text-[#6b7f6f]">
           {stockStatusMap[suggestion.stockStatus]}
         </span>
+        <span className="rounded-full bg-[#fff7e8] px-3 py-1 text-xs font-semibold text-[#99751b]">
+          Próxima ação: {suggestion.nextStepLabel}
+        </span>
       </div>
 
-      <p className="mt-4 text-sm leading-7 text-[#57705e]">{suggestion.summary}</p>
-
-      <div className="mt-4 rounded-[1.2rem] border border-[#deeadf] bg-[#f8fcf8] p-4">
+      <div className="dashboard-tint-emerald mt-4 rounded-[1.3rem] border border-[#deeadf] p-4">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#2d8a4b]">
           Resposta sugerida
         </p>
@@ -56,7 +69,7 @@ export function AssistantSuggestionCard({
       </div>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-[1.2rem] border border-[#e3ece3] bg-[#fbfefb] p-4">
+        <div className="dashboard-card rounded-[1.2rem] p-4">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6a7f6d]">
             Próximo passo
           </p>
@@ -65,17 +78,11 @@ export function AssistantSuggestionCard({
           </p>
         </div>
 
-        <div className="rounded-[1.2rem] border border-[#e3ece3] bg-[#fbfefb] p-4">
+        <div className="dashboard-card rounded-[1.2rem] p-4">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6a7f6d]">
             Ação operacional
           </p>
-          <p className="mt-2 text-sm font-medium text-[#173424]">
-            {suggestion.shouldEscalateToHuman
-              ? "Levar para atendimento humano"
-              : suggestion.shouldOfferReservation
-                ? "Oferecer reserva da peça"
-                : "Seguir no fluxo assistido"}
-          </p>
+          <p className="mt-2 text-sm font-medium text-[#173424]">{operationalLabel}</p>
         </div>
       </div>
 
@@ -98,7 +105,7 @@ export function AssistantSuggestionCard({
           {suggestion.matchedProducts.map((product) => (
             <div
               key={product.id}
-              className="rounded-[1.2rem] border border-[#e3ece3] bg-[#fbfefb] p-4"
+              className="dashboard-card rounded-[1.2rem] p-4"
             >
               <p className="text-sm font-semibold text-[#173424]">{product.name}</p>
               <p className="mt-2 text-sm text-[#5f7766]">

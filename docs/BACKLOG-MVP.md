@@ -254,6 +254,14 @@ Status sugeridos:
 - anexar imagem
 - usar imagem no painel e no futuro na conversa
 
+### P1 - Interpretacao de audio no WhatsApp
+
+- receber audio enviado pelo cliente
+- transcrever audio para texto
+- usar a transcricao no mesmo fluxo de interpretacao da IA
+- identificar pedido de produto, contexto e informacoes faltantes
+- mostrar no painel que a mensagem original foi audio
+
 ### P1 - Notificacoes internas
 
 - destaque de atendimento

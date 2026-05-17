@@ -85,6 +85,7 @@ A IA deve atuar como um vendedor experiente no WhatsApp da loja.
 Ela precisa:
 
 - interpretar mensagens recebidas;
+- interpretar pedidos enviados por audio;
 - identificar intencao do cliente;
 - entender contexto da conversa;
 - detectar informacoes faltantes;
@@ -321,8 +322,8 @@ Adaptacao:
 - metricas de conversao;
 - multi-loja;
 - multi-unidades;
-- audio no WhatsApp;
-- IA por voz;
+- audio no WhatsApp com transcricao e interpretacao comercial;
+- IA por voz no futuro;
 - integracao Instagram Direct.
 
 ## Criterios de Sucesso

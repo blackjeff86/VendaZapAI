@@ -72,54 +72,75 @@ export function WhatsappConfigForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
-        <input
-          name="displayNumber"
-          type="text"
-          defaultValue={initialDisplayNumber}
-          placeholder="Número exibido no WhatsApp"
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
-        />
-        <input
-          name="businessPhoneId"
-          type="text"
-          defaultValue={initialBusinessPhoneId}
-          placeholder="Business Phone ID"
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
-        />
-        <input
-          name="accessTokenHint"
-          type="text"
-          defaultValue={initialAccessTokenHint}
-          placeholder="Referência do token ou observação"
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f] sm:col-span-2"
-        />
+        <label className="space-y-2">
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#66806f]">
+            Número exibido
+          </span>
+          <input
+            name="displayNumber"
+            type="text"
+            defaultValue={initialDisplayNumber}
+            placeholder="Número exibido no WhatsApp"
+            className="w-full rounded-2xl border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+          />
+        </label>
+        <label className="space-y-2">
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#66806f]">
+            Identificador do canal
+          </span>
+          <input
+            name="businessPhoneId"
+            type="text"
+            defaultValue={initialBusinessPhoneId}
+            placeholder="Business Phone ID"
+            className="w-full rounded-2xl border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+          />
+        </label>
+        <label className="space-y-2 sm:col-span-2">
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#66806f]">
+            Referência interna
+          </span>
+          <input
+            name="accessTokenHint"
+            type="text"
+            defaultValue={initialAccessTokenHint}
+            placeholder="Referência do token ou observação"
+            className="w-full rounded-2xl border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+          />
+        </label>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <label className="flex items-center gap-3 rounded-2xl border border-[#dbe8dc] bg-[#f8fcf8] px-4 py-3 text-sm text-[#486756]">
+        <label className="dashboard-chip flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-[#486756] transition hover:border-[#b6d7bc] hover:bg-white">
           <input
             name="connected"
             type="checkbox"
             defaultChecked={initialConnected}
             className="h-4 w-4 rounded border-[#b8ceb9] text-[#2d8a4b]"
           />
-          Número conectado
+          <span>
+            <span className="block font-semibold text-[#173424]">Número conectado</span>
+            <span className="mt-0.5 block text-xs text-[#6c8573]">Pronto para receber atendimento real</span>
+          </span>
         </label>
-        <label className="flex items-center gap-3 rounded-2xl border border-[#dbe8dc] bg-[#f8fcf8] px-4 py-3 text-sm text-[#486756]">
+        <label className="dashboard-chip flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-[#486756] transition hover:border-[#b6d7bc] hover:bg-white">
           <input
             name="webhookReady"
             type="checkbox"
             defaultChecked={initialWebhookReady}
             className="h-4 w-4 rounded border-[#b8ceb9] text-[#2d8a4b]"
           />
-          Webhook preparado
+          <span>
+            <span className="block font-semibold text-[#173424]">Webhook preparado</span>
+            <span className="mt-0.5 block text-xs text-[#6c8573]">Base pronta para validar entradas</span>
+          </span>
         </label>
       </div>
 
       <button
         type="submit"
         disabled={submitState === "submitting"}
-        className="w-full rounded-2xl bg-[#2d8a4b] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#25713e] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+        className="w-full rounded-2xl bg-[#173424] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#214932] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
       >
         {submitState === "submitting" ? "Salvando..." : "Salvar configuração"}
       </button>

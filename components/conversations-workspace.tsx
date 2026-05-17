@@ -119,7 +119,13 @@ export function ConversationsWorkspace({
 
   return (
     <section className="space-y-4">
-      <div className="sticky top-[5.4rem] z-10 rounded-[1.6rem] border border-[#d9e6da] bg-[rgba(255,255,255,0.94)] p-4 shadow-[0_14px_32px_rgba(26,74,43,0.08)] backdrop-blur-xl lg:static lg:bg-white lg:shadow-[0_14px_32px_rgba(26,74,43,0.04)]">
+      <div className="sticky top-[5rem] z-10 rounded-[1.8rem] border border-[#d9e6da] bg-[rgba(255,255,255,0.94)] p-4 shadow-[0_20px_40px_rgba(26,74,43,0.10)] backdrop-blur-xl lg:static lg:bg-white lg:shadow-[0_14px_32px_rgba(26,74,43,0.04)]">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6d8373]">
+            Filtrar atendimento
+          </p>
+          <span className="text-xs text-[#6d8373]">{filteredConversations.length} ativas</span>
+        </div>
         <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-3">
           {quickSegments.map((segment) => {
             const isActive = segmentFilter === segment.value;
@@ -193,7 +199,7 @@ export function ConversationsWorkspace({
         </div>
       </div>
 
-      <div className="grid gap-4">
+      <div className="grid gap-3 sm:gap-4">
         {filteredConversations.length === 0 ? (
           <div className="rounded-[1.6rem] border border-dashed border-[#cfe0d1] bg-[#f8fcf8] p-6 text-sm leading-7 text-[#607766]">
             Nenhuma conversa encontrada com os filtros atuais.
@@ -210,14 +216,17 @@ export function ConversationsWorkspace({
             return (
               <div
                 key={conversation.id}
-                className="rounded-[1.45rem] border border-[#dbe7dc] bg-[linear-gradient(180deg,#ffffff_0%,#fbfefb_100%)] p-4 shadow-[0_14px_32px_rgba(26,74,43,0.04)]"
+                className="rounded-[1.45rem] border border-[#dbe7dc] bg-[linear-gradient(180deg,#ffffff_0%,#fbfefb_100%)] p-3.5 shadow-[0_14px_32px_rgba(26,74,43,0.06)] sm:p-4"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <p className="display-font text-lg font-semibold text-[#173424]">
+                    <p className="display-font text-[1rem] font-semibold text-[#173424] sm:text-[1.05rem]">
                         {conversation.clientName}
-                      </p>
+                    </p>
+                    <p className="mt-1 text-sm text-[#5b7362]">
+                      {conversation.clientPhone}
+                    </p>
+                    <div className="mt-2 flex flex-wrap items-center gap-2">
                       <span className="rounded-full bg-[#e4f6e8] px-3 py-1 text-xs font-semibold text-[#2d8a4b]">
                         {conversation.priorityLabel}
                       </span>
@@ -225,9 +234,6 @@ export function ConversationsWorkspace({
                         {conversationStatusLabelMap[conversation.status]}
                       </span>
                     </div>
-                    <p className="mt-2 text-sm text-[#5b7362]">
-                      {conversation.clientPhone}
-                    </p>
                   </div>
 
                   <div className="flex shrink-0 flex-col items-end gap-2">
@@ -302,6 +308,10 @@ export function ConversationsWorkspace({
                       <ConversationMessageForm conversationId={conversation.id} />
                     </div>
                   </>
+                ) : lastMessage ? (
+                  <p className="mt-3 line-clamp-2 text-sm leading-6 text-[#6a8170]">
+                    {lastMessage.content}
+                  </p>
                 ) : null}
               </div>
             );

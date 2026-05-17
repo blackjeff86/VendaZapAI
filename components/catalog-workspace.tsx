@@ -80,7 +80,13 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-[1.6rem] border border-[#d9e6da] bg-white p-4 shadow-[0_14px_32px_rgba(26,74,43,0.04)]">
+      <div className="dashboard-card rounded-[1.8rem] p-4">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6d8373]">
+            Filtrar catálogo
+          </p>
+          <span className="text-xs text-[#6d8373]">{filteredProducts.length} itens</span>
+        </div>
         <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-3">
           {quickFilters.map((filter) => {
             const isActive = stockFilter === filter.value;
@@ -92,8 +98,8 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
                 onClick={() => setStockFilter(filter.value)}
                 className={`min-w-fit rounded-full border px-4 py-2 text-sm font-semibold transition ${
                   isActive
-                    ? "border-[#7bb98c] bg-[#ecf8ee] text-[#226f42]"
-                    : "border-[#d8e6d9] bg-[#fbfefb] text-[#56715d]"
+                    ? "border-[#7bb98c] bg-[linear-gradient(180deg,#effcf1_0%,#dbf4e2_100%)] text-[#226f42]"
+                    : "dashboard-chip text-[#56715d]"
                 }`}
               >
                 {filter.label} ({filter.count})
@@ -149,7 +155,7 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
           filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="rounded-[1.6rem] border border-[#dbe7dc] bg-[linear-gradient(180deg,#ffffff_0%,#fbfefb_100%)] p-4 shadow-[0_14px_32px_rgba(26,74,43,0.04)] sm:p-5"
+              className="dashboard-card dashboard-soft-enter rounded-[1.8rem] p-4 sm:p-5"
             >
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div className="max-w-2xl">
@@ -176,6 +182,14 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
                     {product.category}
                     {product.sku ? ` • SKU: ${product.sku}` : ""}
                   </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <span className="dashboard-chip rounded-full px-3 py-1 text-xs font-semibold text-[#5d7564]">
+                      {product.compatibility ? "Compatível" : "Sem compatibilidade"}
+                    </span>
+                    <span className="dashboard-chip rounded-full px-3 py-1 text-xs font-semibold text-[#5d7564]">
+                      Atualização rápida
+                    </span>
+                  </div>
                   <p className="mt-3 text-sm leading-7 text-[#5f7766]">
                     {product.description || "Sem descrição cadastrada."}
                   </p>
@@ -186,15 +200,15 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
                   ) : null}
                 </div>
 
-                <div className="min-w-full rounded-[1.4rem] border border-[#dce7dd] bg-white p-4 lg:min-w-[21rem]">
+                <div className="min-w-full rounded-[1.5rem] border border-[#dce7dd] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbf8_100%)] p-4 lg:min-w-[21rem]">
                   <div className="mb-4 grid grid-cols-2 gap-3 text-sm">
-                    <div className="rounded-xl border border-[#e1ebe2] bg-[#f7fbf7] p-3">
+                    <div className="dashboard-tint-green rounded-[1.1rem] border border-[#d8eadb] p-3">
                       <p className="text-[#6a7d6d]">Preço</p>
                       <p className="mt-1 font-semibold text-[#173424]">
                         R$ {product.price.toFixed(2).replace(".", ",")}
                       </p>
                     </div>
-                    <div className="rounded-xl border border-[#e1ebe2] bg-[#f7fbf7] p-3">
+                    <div className="dashboard-tint-cyan rounded-[1.1rem] border border-[#d7e7e5] p-3">
                       <p className="text-[#6a7d6d]">Estoque</p>
                       <p className="mt-1 font-semibold text-[#173424]">
                         {product.stockQuantity} unidade(s)
@@ -202,7 +216,7 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
                     </div>
                   </div>
 
-                  <div className="mb-4 rounded-[1rem] border border-[#dce8dd] bg-[#f8fcf8] p-3 text-sm leading-6 text-[#58705f]">
+                  <div className="dashboard-chip mb-4 rounded-[1rem] p-3 text-sm leading-6 text-[#58705f]">
                     Ajuste rápido pensado para o celular: corrija preço, estoque e status sem abrir outra tela.
                   </div>
 
