@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BrandLogo } from "@/components/brand-logo";
 import { LogoutButton } from "@/components/logout-button";
 
 const items = [
@@ -63,8 +64,8 @@ export function DashboardSidebar() {
   return (
     <aside className="fixed left-0 top-0 hidden h-screen w-64 flex-col border-r border-[#bbcbb9]/60 bg-[#f0f3ff] shadow-sm md:flex">
       <div className="flex h-full flex-col gap-4 p-4">
-        <div className="px-4 py-6">
-          <h1 className="text-2xl font-bold tracking-[-0.03em] text-[#006d2f]">VendaZap AI</h1>
+        <div className="px-4 py-5">
+          <BrandLogo size="sm" theme="light" />
           <p className="mt-1 text-xs font-semibold uppercase tracking-[0.08em] text-[#6c7b6b]">
             Loja Ativa
           </p>

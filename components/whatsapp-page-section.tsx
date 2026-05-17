@@ -63,21 +63,21 @@ export function WhatsappPageSection({
   ] as const;
 
   return (
-    <div className="space-y-5">
-      <section className="flex flex-col gap-1 md:hidden">
+    <div className="space-y-6 md:space-y-5">
+      <section className="flex flex-col gap-1.5 md:hidden">
         <h1 className="text-[1.6rem] font-bold tracking-[-0.03em] text-[#191c1d]">
           Ajustes do WhatsApp
         </h1>
-        <p className="text-sm text-[#3c4a3f]">
+        <p className="text-sm leading-6 text-[#3c4a3f]">
           Configure o canal, valide o webhook e prepare a operação real.
         </p>
       </section>
 
-      <section className="grid grid-cols-2 gap-3 md:hidden">
+      <section className="grid grid-cols-2 gap-3.5 md:hidden">
         {metrics.map(([title, value]) => (
           <div
             key={title}
-            className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4"
+            className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-[1.125rem]"
           >
             <div className="mb-3 flex items-start justify-between gap-3">
               <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#3c4a3f]">
@@ -92,9 +92,9 @@ export function WhatsappPageSection({
         ))}
       </section>
 
-      <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4 md:hidden">
-        <div className="mb-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#006d3e]">
+      <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-5 md:hidden">
+        <div className="mb-5">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#006d3e]">
             Configuração do canal
           </p>
           <h2 className="mt-1 text-lg font-bold text-[#191c1d]">
@@ -111,8 +111,8 @@ export function WhatsappPageSection({
         />
       </section>
 
-      <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4 md:hidden">
-        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-5 md:hidden">
+        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#006d3e]">
               Webhook local
@@ -238,7 +238,7 @@ export function WhatsappPageSection({
                 </div>
                 <div className="border-l-2 border-[#006b5f] pl-4">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#006b5f]">
-                    Validacao
+                    Validação
                   </p>
                   <p className="mt-1 text-sm leading-6 text-[#3c4a3d]">
                     Use o teste local para simular mensagens antes da conexão final com a Meta.

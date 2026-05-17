@@ -62,17 +62,17 @@ export function ConversationsPageSection({
   ).length;
 
   return (
-    <div className="space-y-5">
-      <section className="flex flex-col gap-1 md:hidden">
+    <div className="space-y-6 md:space-y-5">
+      <section className="flex flex-col gap-1.5 md:hidden">
         <h1 className="text-[1.6rem] font-bold tracking-[-0.03em] text-[#191c1d]">
           Central de conversas
         </h1>
-        <p className="text-sm text-[#3c4a3f]">
+        <p className="text-sm leading-6 text-[#3c4a3f]">
           Responda rápido, acompanhe a IA e assuma quando a venda pedir atenção humana.
         </p>
       </section>
 
-      <section className="grid grid-cols-2 gap-3 md:hidden">
+      <section className="grid grid-cols-2 gap-3.5 md:hidden">
         {[
           ["Conversas", String(conversations.length)],
           ["Reservas", String(reservedConversationsCount)],
@@ -81,7 +81,7 @@ export function ConversationsPageSection({
         ].map(([title, value]) => (
           <div
             key={title}
-            className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4"
+            className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-[1.125rem]"
           >
             <div className="mb-3 flex items-start justify-between gap-3">
               <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#3c4a3f]">

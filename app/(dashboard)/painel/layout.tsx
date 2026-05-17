@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { DashboardSidebar } from "@/components/dashboard-sidebar";
 import { DashboardTopbar } from "@/components/dashboard-topbar";
+import { BrandLogo } from "@/components/brand-logo";
 import { LogoutButton } from "@/components/logout-button";
 import { PainelNav } from "@/components/painel-nav";
 import { AUTH_COOKIE_NAME, decodeSession } from "@/lib/auth";
@@ -24,19 +25,10 @@ export default async function DashboardLayout({
 
       <div className="md:ml-64">
         <div className="border-b border-[#e1e3e4] bg-[rgba(248,250,251,0.92)] md:hidden">
-          <div className="container-shell flex items-center justify-between py-3">
+          <div className="container-shell flex items-center justify-between gap-3 py-3.5">
             <div className="flex min-w-0 items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#006d3e] shadow-[0_4px_10px_rgba(0,0,0,0.04)]">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.9">
-                  <path d="M4 7h16" strokeLinecap="round" />
-                  <path d="M4 12h16" strokeLinecap="round" />
-                  <path d="M4 17h10" strokeLinecap="round" />
-                </svg>
-              </span>
               <div className="min-w-0">
-                <p className="truncate text-lg font-bold tracking-[-0.02em] text-[#006d3e]">
-                  VendaZap AI
-                </p>
+                <BrandLogo size="sm" theme="light" />
                 <p className="truncate text-xs text-[#6b7b6e]">
                   {session.storeName} • {session.name}
                 </p>
@@ -57,8 +49,8 @@ export default async function DashboardLayout({
           <DashboardTopbar />
         </div>
 
-        <main className="container-shell relative z-10 py-5 pb-28 sm:py-6 sm:pb-8 md:max-w-none md:px-10 md:py-8">
-          <div className="space-y-5 sm:space-y-6">
+        <main className="container-shell relative z-10 py-4 pb-32 sm:py-6 sm:pb-8 md:max-w-none md:px-10 md:py-6">
+          <div className="space-y-6 sm:space-y-6 md:space-y-5">
             <PainelNav />
             {children}
           </div>

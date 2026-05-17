@@ -28,14 +28,14 @@ export function CatalogPageSection({
   ).slice(0, 6);
 
   return (
-    <div className="space-y-5">
-      <section className="flex flex-col gap-3 md:hidden">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div className="space-y-6 md:space-y-5">
+      <section className="flex flex-col gap-4 md:hidden">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-[1.6rem] font-bold tracking-[-0.03em] text-[#191c1d]">
               Gestão de catálogo
             </h1>
-            <p className="text-sm text-[#3c4a3f]">
+            <p className="mt-1 text-sm leading-6 text-[#3c4a3f]">
               Cadastre, organize e ajuste os produtos que a IA vai usar nas respostas.
             </p>
           </div>
@@ -51,7 +51,7 @@ export function CatalogPageSection({
           </a>
         </div>
 
-        <div className="flex gap-2 overflow-x-auto pb-1 md:hidden">
+        <div className="flex gap-2 overflow-x-auto pb-2 md:hidden">
           <span className="whitespace-nowrap rounded-full bg-[#006d3e] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.05em] text-white">
             Todos
           </span>
@@ -113,8 +113,8 @@ export function CatalogPageSection({
         </div>
       </section>
 
-      <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4 md:hidden">
-        <div className="mb-4 flex items-center justify-between gap-3">
+      <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-5 md:hidden">
+        <div className="mb-5 flex items-center justify-between gap-3">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#006d3e]">
               Novo produto
@@ -287,11 +287,11 @@ export function CatalogPageSection({
         </section>
       </section>
 
-      <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4 md:hidden">
-        <div className="mb-4 flex items-center justify-between gap-3">
+      <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-5 md:hidden">
+        <div className="mb-5 flex items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-bold text-[#191c1d]">Produtos cadastrados</h2>
-            <p className="text-sm text-[#3c4a3f]">
+            <p className="mt-1 text-sm leading-6 text-[#3c4a3f]">
               Edite preço, estoque e status sem sair da tela.
             </p>
           </div>
