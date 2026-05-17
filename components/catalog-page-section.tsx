@@ -26,16 +26,16 @@ export function CatalogPageSection({
   return (
     <div className="space-y-6">
       <section className="grid gap-4 lg:grid-cols-[0.98fr_1.02fr]">
-        <div className="rounded-[2rem] border border-[#d9e8db] bg-white p-6 shadow-[0_20px_48px_rgba(26,74,43,0.06)] sm:p-7">
+        <div className="rounded-[2rem] border border-[#d9e8db] bg-[linear-gradient(135deg,#ffffff_0%,#f7fcf8_60%,#eef8f0_100%)] p-6 shadow-[0_20px_48px_rgba(26,74,43,0.06)] sm:p-7">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
             Base da loja
           </p>
           <h1 className="display-font mt-4 text-2xl font-semibold tracking-tight text-[#173424] sm:text-3xl">
-            Ajuste o onboarding e o catálogo que alimentam a IA.
+            Organize a base da loja para a IA responder com segurança.
           </h1>
           <p className="mt-4 text-sm leading-7 text-[#5d7564]">
             Esta área reúne as informações básicas da loja e os produtos que o
-            VendaZap AI vai usar nas respostas comerciais.
+            VendaZap AI vai usar nas respostas comerciais e nas reservas.
           </p>
 
           <div className="mt-6">
@@ -89,8 +89,8 @@ export function CatalogPageSection({
             Monte a base do catálogo que vai alimentar a IA.
           </h2>
           <p className="mt-4 text-sm leading-7 text-[#5d7564]">
-            Comece com os itens mais procurados da loja. Isso já dá contexto
-            suficiente para testar busca, resposta comercial e reserva.
+            Comece pelos itens que mais geram pergunta no WhatsApp. Isso já
+            dá contexto suficiente para testar busca, resposta comercial e reserva.
           </p>
 
           <div className="mt-6">

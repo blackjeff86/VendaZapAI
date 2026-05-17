@@ -1,3 +1,6 @@
+ "use client";
+
+import { useMemo, useState } from "react";
 import type { StoredMessage } from "@/lib/conversations";
 
 type ConversationTimelineProps = {
@@ -21,6 +24,15 @@ const bubbleClassMap = {
 export function ConversationTimeline({
   messages,
 }: ConversationTimelineProps) {
+  const [showAll, setShowAll] = useState(false);
+  const visibleMessages = useMemo(() => {
+    if (showAll || messages.length <= 4) {
+      return messages;
+    }
+
+    return messages.slice(-4);
+  }, [messages, showAll]);
+
   return (
     <div className="mt-5 rounded-[1.5rem] border border-[#deeadf] bg-[#fcfefc] p-4">
       <div className="flex items-center justify-between gap-3">
@@ -30,28 +42,52 @@ export function ConversationTimeline({
         <p className="text-xs text-[#7a8d7d]">{messages.length} evento(s)</p>
       </div>
 
-      <div className="mt-4 space-y-4">
-        {messages.map((message, index) => (
+      {messages.length > 4 ? (
+        <div className="mt-3 flex items-center justify-between gap-3 rounded-[1rem] border border-[#e4ece4] bg-white px-3 py-2 text-xs text-[#627766]">
+          <span>
+            {showAll
+              ? "Mostrando a conversa completa."
+              : "Mostrando os 4 eventos mais recentes."}
+          </span>
+          <button
+            type="button"
+            onClick={() => setShowAll((current) => !current)}
+            className="font-semibold text-[#2d8a4b]"
+          >
+            {showAll ? "Ver menos" : "Ver tudo"}
+          </button>
+        </div>
+      ) : null}
+
+      <div className="mt-4 space-y-3">
+        {visibleMessages.map((message, index) => (
           <div key={message.id} className="flex gap-3">
             <div className="flex w-5 flex-col items-center">
               <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[#2d8a4b]" />
-              {index < messages.length - 1 ? (
-                <span className="mt-1 min-h-[2.5rem] w-px flex-1 bg-[#d6e6d8]" />
+              {index < visibleMessages.length - 1 ? (
+                <span className="mt-1 min-h-[2rem] w-px flex-1 bg-[#d6e6d8]" />
               ) : null}
             </div>
 
             <div
-              className={`flex-1 rounded-[1.2rem] border p-4 ${bubbleClassMap[message.author]}`}
+              className={`flex-1 rounded-[1.1rem] border p-3 sm:rounded-[1.2rem] sm:p-4 ${bubbleClassMap[message.author]}`}
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-xs font-semibold uppercase tracking-[0.16em]">
                   {authorLabelMap[message.author]}
                 </span>
                 <span className="text-xs opacity-80">
-                  {new Date(message.timestamp).toLocaleString("pt-BR")}
+                  {new Date(message.timestamp).toLocaleString("pt-BR", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </span>
               </div>
-              <p className="mt-3 text-sm leading-7">{message.content}</p>
+              <p className="mt-2 text-sm leading-6 sm:mt-3 sm:leading-7">
+                {message.content}
+              </p>
             </div>
           </div>
         ))}

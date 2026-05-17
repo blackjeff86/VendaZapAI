@@ -18,12 +18,12 @@ export function WhatsappPageSection({
   return (
     <div className="space-y-6">
       <section className="grid gap-4 lg:grid-cols-[1fr_0.92fr]">
-        <div className="rounded-[2rem] border border-[#d9e8db] bg-white p-6 shadow-[0_20px_48px_rgba(26,74,43,0.06)] sm:p-7">
+        <div className="rounded-[2rem] border border-[#d9e8db] bg-[linear-gradient(135deg,#ffffff_0%,#f7fcf8_60%,#eef8f0_100%)] p-6 shadow-[0_20px_48px_rgba(26,74,43,0.06)] sm:p-7">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
             Canal do WhatsApp
           </p>
           <h1 className="display-font mt-4 text-2xl font-semibold tracking-tight text-[#173424] sm:text-3xl">
-            Prepare a integração do canal e teste a entrada de mensagens.
+            Deixe o canal pronto para receber mensagens sem improviso.
           </h1>
           <p className="mt-4 text-sm leading-7 text-[#5d7564]">
             Esta área concentra a configuração do WhatsApp Cloud API e o

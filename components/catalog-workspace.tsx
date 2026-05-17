@@ -55,9 +55,53 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
     });
   }, [products, search, stockFilter]);
 
+  const quickFilters: Array<{
+    count: number;
+    label: string;
+    value: StockFilter;
+  }> = [
+    { count: products.length, label: "Todos", value: "todos" },
+    {
+      count: products.filter((product) => product.active).length,
+      label: "Ativos",
+      value: "ativos",
+    },
+    {
+      count: products.filter((product) => product.stockQuantity <= 3).length,
+      label: "Baixo estoque",
+      value: "baixo_estoque",
+    },
+    {
+      count: products.filter((product) => product.stockQuantity === 0).length,
+      label: "Sem estoque",
+      value: "sem_estoque",
+    },
+  ];
+
   return (
     <div className="space-y-4">
       <div className="rounded-[1.6rem] border border-[#d9e6da] bg-white p-4 shadow-[0_14px_32px_rgba(26,74,43,0.04)]">
+        <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-3">
+          {quickFilters.map((filter) => {
+            const isActive = stockFilter === filter.value;
+
+            return (
+              <button
+                key={filter.value}
+                type="button"
+                onClick={() => setStockFilter(filter.value)}
+                className={`min-w-fit rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                  isActive
+                    ? "border-[#7bb98c] bg-[#ecf8ee] text-[#226f42]"
+                    : "border-[#d8e6d9] bg-[#fbfefb] text-[#56715d]"
+                }`}
+              >
+                {filter.label} ({filter.count})
+              </button>
+            );
+          })}
+        </div>
+
         <div className="grid gap-3 lg:grid-cols-[1.15fr_0.85fr]">
           <input
             type="text"
@@ -105,7 +149,7 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
           filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="rounded-[1.6rem] border border-[#dbe7dc] bg-[#fbfefb] p-5 shadow-[0_14px_32px_rgba(26,74,43,0.04)]"
+              className="rounded-[1.6rem] border border-[#dbe7dc] bg-[linear-gradient(180deg,#ffffff_0%,#fbfefb_100%)] p-4 shadow-[0_14px_32px_rgba(26,74,43,0.04)] sm:p-5"
             >
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div className="max-w-2xl">
@@ -156,6 +200,10 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
                         {product.stockQuantity} unidade(s)
                       </p>
                     </div>
+                  </div>
+
+                  <div className="mb-4 rounded-[1rem] border border-[#dce8dd] bg-[#f8fcf8] p-3 text-sm leading-6 text-[#58705f]">
+                    Ajuste rápido pensado para o celular: corrija preço, estoque e status sem abrir outra tela.
                   </div>
 
                   <ProductStockForm

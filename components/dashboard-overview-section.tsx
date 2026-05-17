@@ -9,28 +9,28 @@ export function DashboardOverviewSection({
 }: DashboardOverviewSectionProps) {
   return (
     <section className="grid gap-4 lg:grid-cols-[1.08fr_0.92fr]">
-      <div className="rounded-[2rem] border border-[#d9e8db] bg-[linear-gradient(135deg,#ffffff_0%,#f4fbf4_100%)] p-6 shadow-[0_24px_70px_rgba(26,74,43,0.08)] sm:p-8">
+      <div className="overflow-hidden rounded-[2rem] border border-[#d9e8db] bg-[linear-gradient(135deg,#ffffff_0%,#f6fcf7_52%,#eef8f0_100%)] p-6 shadow-[0_24px_70px_rgba(26,74,43,0.08)] sm:p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
-          Painel do MVP
+          Centro da operação
         </p>
         <h1 className="display-font mt-4 text-3xl font-semibold tracking-tight text-[#183323] sm:text-4xl">
-          VendaZap é a marca. AI é a inteligência por trás da operação.
+          O lojista precisa bater o olho e saber onde agir primeiro.
         </h1>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-[#54705d] sm:text-base">
-          Refinamos a identidade do produto para reforçar o que ele entrega:
-          um vendedor inteligente para WhatsApp com visual limpo, memorável e
-          fácil de reconhecer tanto no sistema quanto nas redes sociais.
+          Essa visão geral foi reorganizada para priorizar rotina real:
+          atendimento pendente, catálogo pronto para responder e canal do
+          WhatsApp configurado para não perder venda.
         </p>
 
         <div className="mt-8 grid gap-3 sm:grid-cols-3">
           {[
-            ["Conversas", "Atendimento, resposta manual e reservas"],
-            ["Catálogo", "Produtos, estoque e base da IA"],
-            ["WhatsApp", "Configuração do canal e simulador de entrada"],
+            ["Conversas", "Responder rápido, reservar e assumir quando precisar"],
+            ["Catálogo", "Preço, estoque e compatibilidade sempre à mão"],
+            ["WhatsApp", "Canal pronto para teste e operação real"],
           ].map(([title, copy]) => (
             <div
               key={title}
-              className="rounded-[1.25rem] border border-[#dbe8dc] bg-white/90 p-4"
+              className="rounded-[1.25rem] border border-[#dbe8dc] bg-white/92 p-4"
             >
               <p className="display-font text-base font-semibold text-[#1c3928]">
                 {title}
@@ -42,16 +42,16 @@ export function DashboardOverviewSection({
 
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
-            href="/brand/vendazap-instagram-avatar.svg"
+            href="/painel/conversas"
             className="rounded-full border border-[#cfe0d0] bg-white px-4 py-2 text-sm font-semibold text-[#1d3a29] transition hover:border-[#8abf93] hover:bg-[#f4fbf4]"
           >
-            Ver avatar da marca
+            Abrir central de conversas
           </Link>
           <Link
-            href="/brand/vendazap-wordmark.svg"
+            href="/painel/catalogo"
             className="rounded-full border border-[#cfe0d0] bg-[#f6fbf6] px-4 py-2 text-sm font-semibold text-[#2d8a4b] transition hover:border-[#8abf93] hover:bg-white"
           >
-            Ver wordmark
+            Ajustar catálogo
           </Link>
         </div>
       </div>
@@ -59,15 +59,15 @@ export function DashboardOverviewSection({
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
         {[
           [
-            "Onboarding",
+            "Loja pronta",
             onboardingCompleted
-              ? "Base da loja preenchida e pronta para operação."
-              : "Ainda faltam dados iniciais da loja.",
+              ? "Dados mínimos preenchidos para seguir operando."
+              : "Ainda faltam dados básicos para ativar a rotina.",
           ],
-          ["Uso mobile", "Fluxo pensado para o lojista acompanhar do celular."],
+          ["Uso mobile", "Navegação e blocos redesenhados para leitura rápida no celular."],
           [
-            "Próximo foco",
-            "Testar conversas, alimentar catálogo e evoluir a operação real.",
+            "Próxima meta",
+            "Responder mais rápido, deixar o catálogo confiável e ativar o canal.",
           ],
         ].map(([title, copy]) => (
           <div
