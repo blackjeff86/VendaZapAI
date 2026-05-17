@@ -8,22 +8,19 @@ type BrandLogoProps = {
 
 const sizeMap = {
   lg: {
-    gap: "gap-4",
-    markWidth: "w-[7.4rem]",
-    subtitle: "text-sm",
-    wordmarkWidth: "w-[14.8rem]",
+    gap: "gap-3.5",
+    markWidth: "w-[4.6rem]",
+    wordmarkWidth: "w-[12.6rem]",
   },
   md: {
     gap: "gap-3",
-    markWidth: "w-[6.4rem]",
-    subtitle: "text-[13px]",
-    wordmarkWidth: "w-[13.4rem]",
+    markWidth: "w-[4rem]",
+    wordmarkWidth: "w-[11rem]",
   },
   sm: {
-    gap: "gap-3",
-    markWidth: "w-[5.7rem]",
-    subtitle: "text-xs",
-    wordmarkWidth: "w-[12rem]",
+    gap: "gap-2.5",
+    markWidth: "w-[3.5rem]",
+    wordmarkWidth: "w-[9rem]",
   },
 } as const;
 
@@ -32,15 +29,6 @@ export function BrandLogo({
   size = "md",
   theme = "light",
 }: BrandLogoProps) {
-  const palette =
-    theme === "dark"
-      ? {
-          muted: "text-white/60",
-        }
-      : {
-          muted: "text-[#5a7361]",
-        };
-
   const sizes = sizeMap[size];
 
   return (
@@ -68,9 +56,6 @@ export function BrandLogo({
             className={`h-auto ${sizes.wordmarkWidth}`}
             priority
           />
-          <p className={`mt-1 ${sizes.subtitle} leading-5 ${palette.muted}`}>
-            Vendedor inteligente para WhatsApp
-          </p>
         </div>
       )}
     </div>

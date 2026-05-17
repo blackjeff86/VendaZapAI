@@ -49,7 +49,7 @@ export default async function DashboardLayout({
           <DashboardTopbar />
         </div>
 
-        <main className="container-shell relative z-10 py-4 pb-32 sm:py-6 sm:pb-8 md:max-w-none md:px-10 md:py-6">
+        <main className="container-shell relative z-10 py-4 pb-32 sm:py-6 sm:pb-8 md:max-w-none md:px-6 md:py-6 lg:px-8">
           <div className="space-y-6 sm:space-y-6 md:space-y-5">
             <PainelNav />
             {children}

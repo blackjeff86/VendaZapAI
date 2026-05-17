@@ -28,7 +28,7 @@ export function DashboardTopbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-[#bbcbb9]/30 bg-[rgba(249,249,255,0.86)] backdrop-blur-md">
-      <div className="container-shell flex items-center justify-between gap-6 py-3 md:py-3.5">
+      <div className="container-shell flex items-center justify-between gap-6 py-3 md:max-w-none md:px-6 lg:px-8 md:py-3.5">
         <div>
           <h2 className="text-[1.72rem] font-bold tracking-[-0.03em] text-[#111c2d]">
             {content.title}

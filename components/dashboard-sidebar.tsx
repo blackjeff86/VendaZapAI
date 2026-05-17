@@ -94,16 +94,7 @@ export function DashboardSidebar() {
           })}
         </nav>
 
-        <button className="flex items-center justify-center gap-2 rounded-2xl bg-[#006d2f] px-4 py-3 text-sm font-bold text-white shadow-md transition hover:opacity-95">
-          <span className="text-lg leading-none">+</span>
-          Nova Venda
-        </button>
-
         <div className="mt-auto flex flex-col gap-2 border-t border-[#bbcbb9]/40 pt-4">
-          <button className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-[#3c4a3d] transition hover:bg-[#dee8ff]">
-            <span>?</span>
-            <span>Suporte</span>
-          </button>
           <div className="px-4">
             <LogoutButton />
           </div>
