@@ -127,16 +127,15 @@ export default function Home() {
           <div className="grid gap-12 pb-16 pt-10 sm:pb-24 sm:pt-16 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
             <div>
               <div className="soft-rise inline-flex rounded-full border border-whatsapp/30 bg-whatsapp/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-mint">
-                Venda mais no WhatsApp sem perder clientes
+                Responda mais rápido. Venda mais. Perca menos clientes.
               </div>
               <h1 className="display-font soft-rise-delay mt-6 max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.04em] text-white sm:text-6xl lg:text-[5.4rem]">
-                Sua loja respondendo clientes automaticamente no WhatsApp.
+                Transforme seu WhatsApp em um vendedor que responde na hora.
               </h1>
               <p className="soft-rise-delay mt-6 max-w-2xl text-base leading-8 text-white/72 sm:text-lg">
-                O VendaZap AI usa inteligência artificial para consultar
-                estoque, responder clientes e ajudar sua loja a vender mais no
-                WhatsApp com atendimento rápido, natural e sem cara de chatbot
-                barato.
+                O VendaZap AI responde clientes, consulta estoque, tira dúvidas
+                e leva a conversa para a reserva sem depender do vendedor estar
+                disponível naquele momento.
               </p>
 
               <div className="soft-rise-delay-2 mt-8 flex flex-col gap-3 sm:flex-row">
@@ -144,13 +143,13 @@ export default function Home() {
                   href="#cta"
                   className="inline-flex items-center justify-center rounded-full bg-whatsapp px-6 py-3.5 text-sm font-semibold text-[#041108] transition hover:scale-[1.01] hover:bg-mint"
                 >
-                  Quero acesso antecipado
+                  Quero testar primeiro
                 </a>
                 <a
                   href="#demo"
                   className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition hover:border-white/25 hover:bg-white/8"
                 >
-                  Ver demonstração
+                  Ver como funciona
                 </a>
               </div>
 
@@ -415,14 +414,14 @@ export default function Home() {
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-mint">
-                Acesso antecipado
+                Entre primeiro
               </p>
               <h2 className="display-font mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
-                Coloque sua loja entre as primeiras a vender com IA no WhatsApp.
+                Sua loja pode começar a vender mais no WhatsApp sem aumentar a equipe.
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-white/72 sm:text-base">
-                Cadastre seu interesse para receber acesso antecipado,
-                demonstração e condições especiais de lançamento.
+                Entre na lista para receber acesso antecipado, demonstração e as
+                primeiras condições comerciais do lançamento.
               </p>
             </div>
             <div className="rounded-[1.5rem] border border-white/10 bg-black/20 px-5 py-4 text-sm text-white/70">
@@ -451,7 +450,7 @@ export default function Home() {
               type="submit"
               className="rounded-full bg-whatsapp px-6 py-3 text-sm font-semibold text-[#041108] transition hover:bg-mint"
             >
-              Entrar na lista
+              Quero meu acesso
             </button>
           </form>
         </div>
