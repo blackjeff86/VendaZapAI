@@ -104,7 +104,7 @@ export function WhatsappWebhookTesterForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="dashboard-tint-emerald mt-5 space-y-4 rounded-[1.6rem] border border-[#dce8dd] p-4 sm:p-5"
+      className="mt-5 space-y-4 rounded-xl border border-[#bacbbc]/30 bg-[#f2f4f5] p-4 sm:p-5"
     >
       <div className="flex flex-col gap-2">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#2d8a4b]">
@@ -116,7 +116,7 @@ export function WhatsappWebhookTesterForm({
         </p>
       </div>
 
-      <div className="dashboard-chip rounded-[1rem] px-4 py-3 text-sm text-[#58705f]">
+      <div className="rounded-xl bg-white px-4 py-3 text-sm text-[#3c4a3f]">
         Número configurado:{" "}
         <span className="font-semibold text-[#173424]">
           {initialDisplayNumber || "Ainda não informado"}
@@ -132,7 +132,7 @@ export function WhatsappWebhookTesterForm({
             name="clientName"
             type="text"
             placeholder="Nome do cliente"
-            className="w-full rounded-[1rem] border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+            className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none transition focus:border-[#006d3e] placeholder:text-[#6b7b6e]"
           />
         </label>
         <label className="space-y-2">
@@ -144,7 +144,7 @@ export function WhatsappWebhookTesterForm({
             type="text"
             required
             placeholder="WhatsApp do cliente"
-            className="w-full rounded-[1rem] border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+            className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none transition focus:border-[#006d3e] placeholder:text-[#6b7b6e]"
           />
         </label>
       </div>
@@ -158,7 +158,7 @@ export function WhatsappWebhookTesterForm({
           rows={3}
           required
           placeholder="Ex.: Boa tarde, vocês têm correia da XRE 300 2020?"
-          className="w-full rounded-[1rem] border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+          className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none transition focus:border-[#006d3e] placeholder:text-[#6b7b6e]"
         />
       </label>
 
@@ -166,7 +166,7 @@ export function WhatsappWebhookTesterForm({
         <button
           type="submit"
           disabled={submitState === "submitting" || !canSimulate}
-          className="rounded-full bg-[#173424] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#214932] disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-xl bg-[#006d3e] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#005931] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submitState === "submitting" ? "Simulando..." : "Simular entrada do WhatsApp"}
         </button>

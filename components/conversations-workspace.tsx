@@ -119,9 +119,9 @@ export function ConversationsWorkspace({
 
   return (
     <section className="space-y-4">
-      <div className="sticky top-[5rem] z-10 rounded-[1.8rem] border border-[#d9e6da] bg-[rgba(255,255,255,0.94)] p-4 shadow-[0_20px_40px_rgba(26,74,43,0.10)] backdrop-blur-xl lg:static lg:bg-white lg:shadow-[0_14px_32px_rgba(26,74,43,0.04)]">
+      <div className="sticky top-[4.6rem] z-10 rounded-xl border border-[#bacbbc]/30 bg-[rgba(248,250,251,0.95)] p-4 shadow-[0_8px_20px_rgba(0,0,0,0.04)] backdrop-blur-xl lg:static lg:bg-transparent lg:p-0 lg:shadow-none">
         <div className="mb-3 flex items-center justify-between gap-3">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6d8373]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6d8373]">
             Filtrar atendimento
           </p>
           <span className="text-xs text-[#6d8373]">{filteredConversations.length} ativas</span>
@@ -137,8 +137,8 @@ export function ConversationsWorkspace({
                 onClick={() => setSegmentFilter(segment.value)}
                 className={`min-w-fit rounded-full border px-4 py-2 text-sm font-semibold transition ${
                   isActive
-                    ? "border-[#7bb98c] bg-[#ecf8ee] text-[#226f42]"
-                    : "border-[#d8e6d9] bg-[#fbfefb] text-[#56715d]"
+                    ? "border-[#006d3e] bg-[#006d3e] text-white"
+                    : "border-[#e1e3e4] bg-[#e6e8e9] text-[#3c4a3f]"
                 }`}
               >
                 {segment.label} ({segment.count})
@@ -153,13 +153,13 @@ export function ConversationsWorkspace({
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Buscar por cliente, telefone, produto ou última mensagem"
-            className="w-full rounded-2xl border border-[#d8e6d9] bg-[#fbfefb] px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+            className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
           />
 
           <select
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value as StatusFilter)}
-            className="w-full rounded-2xl border border-[#d8e6d9] bg-[#fbfefb] px-4 py-3 text-sm text-[#173424] outline-none"
+            className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none"
           >
             <option value="todas">Todos os status</option>
             <option value="nova">Novas</option>
@@ -172,7 +172,7 @@ export function ConversationsWorkspace({
           <select
             value={segmentFilter}
             onChange={(event) => setSegmentFilter(event.target.value as SegmentFilter)}
-            className="w-full rounded-2xl border border-[#d8e6d9] bg-[#fbfefb] px-4 py-3 text-sm text-[#173424] outline-none"
+            className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none"
           >
             <option value="todas">Todas as filas</option>
             <option value="reservas">Só reservas</option>
@@ -191,7 +191,7 @@ export function ConversationsWorkspace({
                 setStatusFilter("todas");
                 setSegmentFilter("todas");
               }}
-              className="rounded-full border border-[#cfe0d0] bg-white px-3 py-1.5 font-medium text-[#1d3a29] transition hover:border-[#8abf93] hover:bg-[#f4fbf4]"
+              className="rounded-full border border-[#bacbbc]/30 bg-white px-3 py-1.5 font-medium text-[#006d3e] transition hover:bg-[#f8fafb]"
             >
               Limpar filtros
             </button>
@@ -216,28 +216,33 @@ export function ConversationsWorkspace({
             return (
               <div
                 key={conversation.id}
-                className="rounded-[1.45rem] border border-[#dbe7dc] bg-[linear-gradient(180deg,#ffffff_0%,#fbfefb_100%)] p-3.5 shadow-[0_14px_32px_rgba(26,74,43,0.06)] sm:p-4"
+                className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-3.5 sm:p-4"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0">
-                    <p className="display-font text-[1rem] font-semibold text-[#173424] sm:text-[1.05rem]">
+                  <div className="flex min-w-0 gap-3">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#a5ede0] text-sm font-bold text-[#1c695f]">
+                      {conversation.clientName.slice(0, 2).toUpperCase()}
+                    </div>
+                    <div className="min-w-0">
+                    <p className="text-[0.95rem] font-bold text-[#191c1d] sm:text-[1rem]">
                         {conversation.clientName}
                     </p>
-                    <p className="mt-1 text-sm text-[#5b7362]">
+                    <p className="mt-1 text-sm text-[#3c4a3f]">
                       {conversation.clientPhone}
                     </p>
                     <div className="mt-2 flex flex-wrap items-center gap-2">
-                      <span className="rounded-full bg-[#e4f6e8] px-3 py-1 text-xs font-semibold text-[#2d8a4b]">
+                      <span className="rounded-md bg-[#f3e5f5] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-[#7b1fa2]">
                         {conversation.priorityLabel}
                       </span>
-                      <span className="rounded-full bg-[#eff4ef] px-3 py-1 text-xs font-semibold text-[#637867]">
+                      <span className="rounded-md bg-[#e6e8e9] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-[#3c4a3f]">
                         {conversationStatusLabelMap[conversation.status]}
                       </span>
+                    </div>
                     </div>
                   </div>
 
                   <div className="flex shrink-0 flex-col items-end gap-2">
-                    <span className="rounded-full bg-[#eff5ef] px-3 py-1 text-[11px] font-medium text-[#5f7766]">
+                    <span className="text-[10px] font-semibold text-[#6b7b6e]">
                       {new Date(conversation.updatedAt).toLocaleTimeString("pt-BR", {
                         hour: "2-digit",
                         minute: "2-digit",
@@ -246,7 +251,7 @@ export function ConversationsWorkspace({
                     <button
                       type="button"
                       onClick={() => toggleConversation(conversation.id)}
-                      className="rounded-full border border-[#cfe0d0] bg-white px-4 py-2 text-sm font-semibold text-[#1d3a29] transition hover:border-[#8abf93] hover:bg-[#f4fbf4]"
+                      className="rounded-full border border-[#bacbbc]/30 bg-white px-3 py-1.5 text-xs font-semibold text-[#006d3e] transition hover:bg-[#f8fafb]"
                     >
                       {isExpanded ? "Recolher" : "Expandir"}
                     </button>

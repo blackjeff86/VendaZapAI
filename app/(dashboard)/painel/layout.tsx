@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { BrandLogo } from "@/components/brand-logo";
 import { LogoutButton } from "@/components/logout-button";
 import { PainelNav } from "@/components/painel-nav";
 import { AUTH_COOKIE_NAME, decodeSession } from "@/lib/auth";
@@ -20,27 +19,35 @@ export default async function DashboardLayout({
 
   return (
     <div className="dashboard-shell dashboard-grid min-h-screen text-[#163322]">
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[18rem] bg-[radial-gradient(circle_at_top,rgba(37,201,91,0.18),transparent_58%)]" />
-      <div className="pointer-events-none fixed right-[-8rem] top-24 z-0 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(37,201,91,0.14),transparent_68%)] blur-3xl" />
-      <div className="pointer-events-none fixed left-[-6rem] bottom-20 z-0 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(25,170,150,0.12),transparent_68%)] blur-3xl" />
-
-      <header className="sticky top-0 z-20 border-b border-[#d8e7d9] bg-[rgba(248,252,248,0.78)] backdrop-blur-xl">
-        <div className="container-shell flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="min-w-0">
-            <BrandLogo size="sm" />
-            <p className="mt-1 truncate text-sm text-[#4c6b57]">
-              {session.storeName} • {session.name}
-            </p>
+      <header className="sticky top-0 z-20 border-b border-[#e1e3e4] bg-[rgba(248,250,251,0.9)] backdrop-blur-xl">
+        <div className="container-shell flex items-center justify-between py-3">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#006d3e] shadow-[0_4px_10px_rgba(0,0,0,0.04)]">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.9">
+                <path d="M4 7h16" strokeLinecap="round" />
+                <path d="M4 12h16" strokeLinecap="round" />
+                <path d="M4 17h10" strokeLinecap="round" />
+              </svg>
+            </span>
+            <div className="min-w-0">
+              <p className="truncate text-lg font-bold tracking-[-0.02em] text-[#006d3e]">
+                VendaZap AI
+              </p>
+              <p className="truncate text-xs text-[#6b7b6e]">
+                {session.storeName} • {session.name}
+              </p>
+            </div>
           </div>
 
-          <div className="flex items-center justify-between gap-3 sm:justify-end">
-            <div className="hidden dashboard-chip rounded-full px-3 py-2 text-xs font-medium text-[#5b7261] shadow-[0_10px_22px_rgba(26,74,43,0.04)] md:block">
-              Painel pensado para uso rápido no celular
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 rounded-full border border-[#00d981]/20 bg-[#00d981]/10 px-3 py-1.5 text-[11px] font-semibold text-[#005931]">
+              <span className="h-2 w-2 rounded-full bg-[#006d3e]" />
+              Conectado
             </div>
-            <nav className="hidden items-center gap-2 text-sm text-[#53715d] sm:flex">
+            <nav className="hidden items-center gap-2 text-sm text-[#53715d] md:flex">
               <Link
                 href="/painel"
-                className="dashboard-chip rounded-full px-4 py-2 font-medium transition hover:border-[#8abf93] hover:bg-white"
+                className="rounded-full border border-[#dfe5e1] bg-white px-4 py-2 font-medium transition hover:border-[#c6d2c9] hover:bg-[#fbfcfc]"
               >
                 Painel
               </Link>
@@ -50,7 +57,7 @@ export default async function DashboardLayout({
         </div>
       </header>
 
-      <main className="container-shell relative z-10 py-5 pb-28 sm:py-8 sm:pb-8">
+      <main className="container-shell relative z-10 py-5 pb-28 sm:py-6 sm:pb-8">
         <div className="space-y-5 sm:space-y-6">
           <PainelNav />
           {children}

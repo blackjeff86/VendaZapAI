@@ -27,7 +27,6 @@ function WhatsappInfoIcon({ title }: { title: string }) {
     <svg viewBox="0 0 24 24" className={common} fill="none" stroke="currentColor" strokeWidth="1.9">
       <path d="M6 9.5h12" strokeLinecap="round" />
       <path d="M9 14h6" strokeLinecap="round" />
-      <path d="M6 5h12a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 18 19H6a1.5 1.5 0 0 1-1.5-1.5v-11A1.5 1.5 0 0 1 6 5Z" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -46,91 +45,84 @@ export function WhatsappPageSection({
   currentUser,
 }: WhatsappPageSectionProps) {
   return (
-    <div className="space-y-6">
-      <section className="grid gap-4 lg:grid-cols-[1fr_0.92fr]">
-        <div className="dashboard-card-strong rounded-[2rem] p-6 sm:p-7">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
-            Canal do WhatsApp
-          </p>
-          <h1 className="display-font mt-4 text-2xl font-semibold tracking-tight text-[#173424] sm:text-3xl">
-            Deixe o canal pronto para receber mensagens sem improviso.
-          </h1>
-          <p className="mt-4 text-sm leading-7 text-[#5d7564]">
-            Esta área concentra a configuração do WhatsApp Cloud API e o
-            simulador que envia mensagens para a mesma rota que vamos usar na
-            operação real.
-          </p>
-
-          <div className="mt-6">
-            <WhatsappConfigForm
-              initialDisplayNumber={currentUser?.whatsappDisplayNumber}
-              initialBusinessPhoneId={currentUser?.whatsappBusinessPhoneId}
-              initialAccessTokenHint={currentUser?.whatsappAccessTokenHint}
-              initialConnected={Boolean(currentUser?.whatsappConnected)}
-              initialWebhookReady={Boolean(currentUser?.whatsappWebhookReady)}
-            />
-          </div>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-          {[
-            [
-              "Canal conectado",
-              currentUser?.whatsappConnected ? "Sim" : "Ainda não",
-              "Marca se o número já está pronto para operação real.",
-            ],
-            [
-              "Webhook",
-              currentUser?.whatsappWebhookReady ? "Preparado" : "Pendente",
-              "Indica se a base do recebimento já foi configurada.",
-            ],
-            [
-              "Phone Number ID",
-              currentUser?.whatsappBusinessPhoneId || "Pendente",
-              "Chave usada para vincular as mensagens à loja correta.",
-            ],
-          ].map(([title, value, copy]) => (
-            <div
-              key={title}
-              className={`rounded-[1.7rem] border p-5 shadow-[0_14px_32px_rgba(26,74,43,0.07)] ${
-                title === "Canal conectado"
-                  ? "dashboard-tint-green border-[#bfe5c7]"
-                  : title === "Webhook"
-                    ? "dashboard-tint-cyan border-[#cae2df]"
-                    : "dashboard-card border-[#d9e6da]"
-              }`}
-            >
-              <span className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-[1rem] bg-[rgba(255,255,255,0.72)] text-[#2d8a4b]">
-                <WhatsappInfoIcon title={title} />
-              </span>
-              <p className="display-font text-lg font-semibold text-[#173424]">{title}</p>
-              <p className="mt-3 text-base font-medium text-[#2d8a4b] break-words">
-                {value}
-              </p>
-              <p className="mt-3 text-sm leading-7 text-[#5f7766]">{copy}</p>
-            </div>
-          ))}
-        </div>
+    <div className="space-y-5">
+      <section className="flex flex-col gap-1">
+        <h1 className="text-[1.6rem] font-bold tracking-[-0.03em] text-[#191c1d]">
+          Ajustes do WhatsApp
+        </h1>
+        <p className="text-sm text-[#3c4a3f]">
+          Configure o canal, valide o webhook e prepare a operação real.
+        </p>
       </section>
 
-      <section className="dashboard-card rounded-[2rem] p-6 sm:p-7">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
-              Webhook local
-            </p>
-            <h2 className="display-font mt-3 text-2xl font-semibold tracking-tight text-[#173424]">
-              Teste mensagens de entrada sem depender ainda da Meta.
-            </h2>
+      <section className="grid grid-cols-2 gap-3">
+        {[
+          [
+            "Canal conectado",
+            currentUser?.whatsappConnected ? "Sim" : "Não",
+          ],
+          [
+            "Webhook",
+            currentUser?.whatsappWebhookReady ? "Pronto" : "Pendente",
+          ],
+          [
+            "Número",
+            currentUser?.whatsappDisplayNumber || "Pendente",
+          ],
+          [
+            "Phone ID",
+            currentUser?.whatsappBusinessPhoneId || "Pendente",
+          ],
+        ].map(([title, value]) => (
+          <div
+            key={title}
+            className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4"
+          >
+            <div className="mb-3 flex items-start justify-between gap-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#3c4a3f]">
+                {title}
+              </p>
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#f2f4f5] text-[#006d3e]">
+                <WhatsappInfoIcon title={title} />
+              </span>
+            </div>
+            <p className="break-words text-sm font-bold text-[#191c1d]">{value}</p>
           </div>
-          <div className="dashboard-chip rounded-[1.2rem] px-4 py-3 text-sm text-[#597260]">
-            Endpoint: /api/whatsapp/webhook
-          </div>
+        ))}
+      </section>
+
+      <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4">
+        <div className="mb-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#006d3e]">
+            Configuração do canal
+          </p>
+          <h2 className="mt-1 text-lg font-bold text-[#191c1d]">
+            Dados da integração
+          </h2>
         </div>
 
-        <div className="dashboard-tint-emerald mt-5 rounded-[1.4rem] border border-[#dce8dd] p-4 text-sm leading-7 text-[#58705f]">
-          Quando formos conectar a Cloud API de verdade, essa mesma rota já
-          poderá receber a verificação do webhook e as mensagens de entrada da loja.
+        <WhatsappConfigForm
+          initialDisplayNumber={currentUser?.whatsappDisplayNumber}
+          initialBusinessPhoneId={currentUser?.whatsappBusinessPhoneId}
+          initialAccessTokenHint={currentUser?.whatsappAccessTokenHint}
+          initialConnected={Boolean(currentUser?.whatsappConnected)}
+          initialWebhookReady={Boolean(currentUser?.whatsappWebhookReady)}
+        />
+      </section>
+
+      <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#006d3e]">
+              Webhook local
+            </p>
+            <h2 className="mt-1 text-lg font-bold text-[#191c1d]">
+              Teste a entrada de mensagens
+            </h2>
+          </div>
+          <div className="rounded-full bg-[#e6e8e9] px-3 py-1 text-[11px] font-semibold text-[#3c4a3f]">
+            /api/whatsapp/webhook
+          </div>
         </div>
 
         <WhatsappWebhookTesterForm

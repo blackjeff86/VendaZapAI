@@ -75,8 +75,8 @@ export function PainelNav() {
 
   return (
     <>
-      <nav className="hidden -mx-4 overflow-x-auto px-4 pb-1 sm:mx-0 sm:block sm:px-0">
-        <div className="flex min-w-full gap-3 sm:grid sm:grid-cols-2 xl:grid-cols-4">
+      <nav className="hidden -mx-4 overflow-x-auto px-4 pb-1 md:block md:px-0">
+        <div className="flex min-w-full gap-3">
           {items.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -86,36 +86,25 @@ export function PainelNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`min-w-[15.5rem] rounded-[1.6rem] border p-4 transition sm:min-w-0 ${
+                className={`min-w-[12rem] rounded-full border px-4 py-3 transition ${
                   isActive
-                    ? "border-[#7bb98c] bg-[linear-gradient(135deg,#f6fff7_0%,#ddf5e4_100%)] shadow-[0_18px_30px_rgba(45,138,75,0.12)]"
-                    : "dashboard-card hover:border-[#bdd8c2] hover:bg-white"
+                    ? "border-[#006d3e] bg-[#006d3e] text-white shadow-[0_8px_20px_rgba(0,0,0,0.08)]"
+                    : "bg-white text-[#3c4a3f] shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:border-[#c8d6cc]"
                 }`}
               >
-                <div className="flex items-center justify-between gap-3">
-                  <span
-                    className={`flex h-10 w-10 items-center justify-center rounded-2xl ${
-                      isActive
-                        ? "bg-[linear-gradient(180deg,#ffffff_0%,#ebf8ef_100%)] text-[#226f42] shadow-[0_10px_20px_rgba(37,112,63,0.10)]"
-                        : "bg-[rgba(255,255,255,0.8)] text-[#6d8574]"
-                    }`}
-                  >
+                <div className="flex items-center gap-3">
+                  <span className={`flex h-9 w-9 items-center justify-center rounded-full ${isActive ? "bg-white/15 text-white" : "bg-[#f2f4f5] text-[#006d3e]"}`}>
                     <NavIcon label={item.label} />
                   </span>
-                  <span
-                    className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${
-                      isActive
-                        ? "bg-[#dff4e3] text-[#226f42]"
-                        : "bg-[#f2f7f3] text-[#708678]"
-                    }`}
-                  >
-                    {isActive ? "Ativo" : "Abrir"}
-                  </span>
+                  <div className="min-w-0">
+                    <p className={`text-sm font-bold ${isActive ? "text-white" : "text-[#191c1d]"}`}>
+                      {item.label}
+                    </p>
+                    <p className={`truncate text-xs ${isActive ? "text-white/70" : "text-[#6b7b6e]"}`}>
+                      {item.copy}
+                    </p>
+                  </div>
                 </div>
-                <p className="display-font mt-3 text-base font-semibold text-[#173424]">
-                  {item.label}
-                </p>
-                <p className="mt-2 text-sm leading-6 text-[#5d7564]">{item.copy}</p>
               </Link>
             );
           })}
@@ -123,7 +112,7 @@ export function PainelNav() {
       </nav>
 
       <nav className="fixed inset-x-0 bottom-3 z-30 px-4 sm:hidden">
-        <div className="mx-auto flex max-w-md items-center justify-between rounded-[1.7rem] border border-[#d5e5d7] bg-[rgba(255,255,255,0.92)] p-2 shadow-[0_18px_42px_rgba(19,52,36,0.16)] backdrop-blur-xl">
+        <div className="mx-auto flex max-w-md items-center justify-between rounded-t-[1.25rem] rounded-b-[1rem] border border-[#e1e3e4] bg-[rgba(248,250,251,0.92)] p-2 shadow-[0_-4px_20px_rgba(0,0,0,0.04)] backdrop-blur-xl">
           {items.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -135,11 +124,11 @@ export function PainelNav() {
                 href={item.href}
                 className={`flex min-w-0 flex-1 flex-col items-center rounded-[1.2rem] px-2 py-2 text-center transition ${
                   isActive
-                    ? "bg-[linear-gradient(180deg,#effcf1_0%,#dcf6e4_100%)] text-[#226f42] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
-                    : "text-[#5c7363]"
+                    ? "bg-[#00d981]/18 text-[#005931]"
+                    : "text-[#6b7b6e]"
                 }`}
               >
-                <span className={`flex h-8 w-8 items-center justify-center rounded-2xl ${isActive ? "bg-white/75" : "bg-[rgba(255,255,255,0.55)]"}`}>
+                <span className={`flex h-8 w-8 items-center justify-center rounded-2xl ${isActive ? "bg-white text-[#006d3e]" : "bg-transparent"}`}>
                   <NavIcon label={item.label} />
                 </span>
                 <span className="mt-1 text-[11px] font-semibold leading-4">{item.label}</span>

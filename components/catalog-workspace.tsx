@@ -80,9 +80,9 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
 
   return (
     <div className="space-y-4">
-      <div className="dashboard-card rounded-[1.8rem] p-4">
+      <div className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4">
         <div className="mb-3 flex items-center justify-between gap-3">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6d8373]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6d8373]">
             Filtrar catálogo
           </p>
           <span className="text-xs text-[#6d8373]">{filteredProducts.length} itens</span>
@@ -98,8 +98,8 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
                 onClick={() => setStockFilter(filter.value)}
                 className={`min-w-fit rounded-full border px-4 py-2 text-sm font-semibold transition ${
                   isActive
-                    ? "border-[#7bb98c] bg-[linear-gradient(180deg,#effcf1_0%,#dbf4e2_100%)] text-[#226f42]"
-                    : "dashboard-chip text-[#56715d]"
+                    ? "border-[#006d3e] bg-[#006d3e] text-white"
+                    : "border-[#e1e3e4] bg-[#e6e8e9] text-[#3c4a3f]"
                 }`}
               >
                 {filter.label} ({filter.count})
@@ -114,13 +114,13 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Buscar por produto, SKU, categoria ou compatibilidade"
-            className="w-full rounded-2xl border border-[#d8e6d9] bg-[#fbfefb] px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+            className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
           />
 
           <select
             value={stockFilter}
             onChange={(event) => setStockFilter(event.target.value as StockFilter)}
-            className="w-full rounded-2xl border border-[#d8e6d9] bg-[#fbfefb] px-4 py-3 text-sm text-[#173424] outline-none"
+            className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none"
           >
             <option value="todos">Todos os produtos</option>
             <option value="ativos">Somente ativos</option>
@@ -138,7 +138,7 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
                 setSearch("");
                 setStockFilter("todos");
               }}
-              className="rounded-full border border-[#cfe0d0] bg-white px-3 py-1.5 font-medium text-[#1d3a29] transition hover:border-[#8abf93] hover:bg-[#f4fbf4]"
+              className="rounded-full border border-[#bacbbc]/30 bg-white px-3 py-1.5 font-medium text-[#006d3e] transition hover:bg-[#f8fafb]"
             >
               Limpar filtros
             </button>
@@ -155,68 +155,68 @@ export function CatalogWorkspace({ products }: CatalogWorkspaceProps) {
           filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="dashboard-card dashboard-soft-enter rounded-[1.8rem] p-4 sm:p-5"
+              className="dashboard-card dashboard-soft-enter rounded-xl border border-[#bacbbc]/30 p-3 sm:p-4"
             >
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div className="max-w-2xl">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="display-font text-xl font-semibold text-[#173424]">
+                    <p className="text-base font-bold text-[#191c1d]">
                       {product.name}
                     </p>
                     <span
-                      className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                      className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] ${
                         product.active
-                          ? "bg-[#e4f6e8] text-[#2d8a4b]"
-                          : "bg-[#f2f4f2] text-[#6f8373]"
+                          ? "bg-[#00d981]/12 text-[#005931]"
+                          : "bg-[#e6e8e9] text-[#3c4a3f]"
                       }`}
                     >
                       {product.active ? "Ativo" : "Inativo"}
                     </span>
                     {product.stockQuantity <= 3 ? (
-                      <span className="rounded-full bg-[#fff4dd] px-3 py-1 text-xs font-semibold text-[#9b6a10]">
+                      <span className="rounded-md bg-[#fff3e0] px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-[#e65100]">
                         {product.stockQuantity === 0 ? "Sem estoque" : "Baixo estoque"}
                       </span>
                     ) : null}
                   </div>
-                  <p className="mt-2 text-sm text-[#5b7362]">
+                  <p className="mt-1 text-sm text-[#3c4a3f]">
                     {product.category}
                     {product.sku ? ` • SKU: ${product.sku}` : ""}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
-                    <span className="dashboard-chip rounded-full px-3 py-1 text-xs font-semibold text-[#5d7564]">
+                    <span className="rounded-full bg-[#e6e8e9] px-3 py-1 text-[11px] font-semibold text-[#3c4a3f]">
                       {product.compatibility ? "Compatível" : "Sem compatibilidade"}
                     </span>
-                    <span className="dashboard-chip rounded-full px-3 py-1 text-xs font-semibold text-[#5d7564]">
+                    <span className="rounded-full bg-[#e6e8e9] px-3 py-1 text-[11px] font-semibold text-[#3c4a3f]">
                       Atualização rápida
                     </span>
                   </div>
-                  <p className="mt-3 text-sm leading-7 text-[#5f7766]">
+                  <p className="mt-3 text-sm leading-6 text-[#3c4a3f]">
                     {product.description || "Sem descrição cadastrada."}
                   </p>
                   {product.compatibility ? (
-                    <p className="mt-3 text-sm leading-7 text-[#486756]">
+                    <p className="mt-3 text-sm leading-6 text-[#3c4a3f]">
                       Compatibilidade: {product.compatibility}
                     </p>
                   ) : null}
                 </div>
 
-                <div className="min-w-full rounded-[1.5rem] border border-[#dce7dd] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbf8_100%)] p-4 lg:min-w-[21rem]">
+                <div className="min-w-full rounded-xl border border-[#bacbbc]/30 bg-[#f8fafb] p-4 lg:min-w-[21rem]">
                   <div className="mb-4 grid grid-cols-2 gap-3 text-sm">
-                    <div className="dashboard-tint-green rounded-[1.1rem] border border-[#d8eadb] p-3">
-                      <p className="text-[#6a7d6d]">Preço</p>
-                      <p className="mt-1 font-semibold text-[#173424]">
+                    <div className="rounded-xl bg-white p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                      <p className="text-[#6b7b6e]">Preço</p>
+                      <p className="mt-1 font-semibold text-[#191c1d]">
                         R$ {product.price.toFixed(2).replace(".", ",")}
                       </p>
                     </div>
-                    <div className="dashboard-tint-cyan rounded-[1.1rem] border border-[#d7e7e5] p-3">
-                      <p className="text-[#6a7d6d]">Estoque</p>
-                      <p className="mt-1 font-semibold text-[#173424]">
+                    <div className="rounded-xl bg-white p-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                      <p className="text-[#6b7b6e]">Estoque</p>
+                      <p className="mt-1 font-semibold text-[#191c1d]">
                         {product.stockQuantity} unidade(s)
                       </p>
                     </div>
                   </div>
 
-                  <div className="dashboard-chip mb-4 rounded-[1rem] p-3 text-sm leading-6 text-[#58705f]">
+                  <div className="mb-4 rounded-xl bg-[#edf9ff] p-3 text-sm leading-6 text-[#004c69]">
                     Ajuste rápido pensado para o celular: corrija preço, estoque e status sem abrir outra tela.
                   </div>
 

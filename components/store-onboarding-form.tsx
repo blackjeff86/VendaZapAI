@@ -82,15 +82,15 @@ export function StoreOnboardingForm({
           required
           defaultValue={initialStoreName}
           placeholder="Nome da loja"
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+          className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
         />
 
-        <div className="rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424]">
+        <div className="rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d]">
           <select
             name="niche"
             required
             defaultValue={initialNiche}
-            className="w-full bg-transparent text-sm text-[#173424] outline-none"
+            className="w-full bg-transparent text-sm text-[#191c1d] outline-none"
           >
             <option value="" disabled>
               Selecione o nicho
@@ -108,7 +108,7 @@ export function StoreOnboardingForm({
           type="text"
           defaultValue={initialPhone}
           placeholder="Telefone da loja"
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+          className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
         />
 
         <input
@@ -116,14 +116,14 @@ export function StoreOnboardingForm({
           type="text"
           defaultValue={initialWhatsappNumber}
           placeholder="WhatsApp principal"
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+          className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
         />
       </div>
 
       <button
         type="submit"
         disabled={submitState === "submitting"}
-        className="w-full rounded-2xl bg-[#2d8a4b] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#25713e] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+        className="w-full rounded-xl bg-[#006d3e] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#005931] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
       >
         {submitState === "submitting" ? "Salvando..." : "Salvar onboarding inicial"}
       </button>

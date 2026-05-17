@@ -81,7 +81,7 @@ export function WhatsappConfigForm({
             type="text"
             defaultValue={initialDisplayNumber}
             placeholder="Número exibido no WhatsApp"
-            className="w-full rounded-2xl border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+            className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none transition focus:border-[#006d3e] placeholder:text-[#6b7b6e]"
           />
         </label>
         <label className="space-y-2">
@@ -93,7 +93,7 @@ export function WhatsappConfigForm({
             type="text"
             defaultValue={initialBusinessPhoneId}
             placeholder="Business Phone ID"
-            className="w-full rounded-2xl border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+            className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none transition focus:border-[#006d3e] placeholder:text-[#6b7b6e]"
           />
         </label>
         <label className="space-y-2 sm:col-span-2">
@@ -105,13 +105,13 @@ export function WhatsappConfigForm({
             type="text"
             defaultValue={initialAccessTokenHint}
             placeholder="Referência do token ou observação"
-            className="w-full rounded-2xl border border-[#d8e6d9] bg-[rgba(255,255,255,0.92)] px-4 py-3 text-sm text-[#173424] outline-none transition focus:border-[#8ac798] focus:bg-white placeholder:text-[#8aa08f]"
+            className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none transition focus:border-[#006d3e] placeholder:text-[#6b7b6e]"
           />
         </label>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <label className="dashboard-chip flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-[#486756] transition hover:border-[#b6d7bc] hover:bg-white">
+        <label className="flex items-center gap-3 rounded-xl border border-[#bacbbc]/30 bg-[#f2f4f5] px-4 py-3 text-sm text-[#3c4a3f] transition hover:bg-white">
           <input
             name="connected"
             type="checkbox"
@@ -119,11 +119,11 @@ export function WhatsappConfigForm({
             className="h-4 w-4 rounded border-[#b8ceb9] text-[#2d8a4b]"
           />
           <span>
-            <span className="block font-semibold text-[#173424]">Número conectado</span>
+            <span className="block font-semibold text-[#191c1d]">Número conectado</span>
             <span className="mt-0.5 block text-xs text-[#6c8573]">Pronto para receber atendimento real</span>
           </span>
         </label>
-        <label className="dashboard-chip flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-[#486756] transition hover:border-[#b6d7bc] hover:bg-white">
+        <label className="flex items-center gap-3 rounded-xl border border-[#bacbbc]/30 bg-[#f2f4f5] px-4 py-3 text-sm text-[#3c4a3f] transition hover:bg-white">
           <input
             name="webhookReady"
             type="checkbox"
@@ -131,7 +131,7 @@ export function WhatsappConfigForm({
             className="h-4 w-4 rounded border-[#b8ceb9] text-[#2d8a4b]"
           />
           <span>
-            <span className="block font-semibold text-[#173424]">Webhook preparado</span>
+            <span className="block font-semibold text-[#191c1d]">Webhook preparado</span>
             <span className="mt-0.5 block text-xs text-[#6c8573]">Base pronta para validar entradas</span>
           </span>
         </label>
@@ -140,7 +140,7 @@ export function WhatsappConfigForm({
       <button
         type="submit"
         disabled={submitState === "submitting"}
-        className="w-full rounded-2xl bg-[#173424] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#214932] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+        className="w-full rounded-xl bg-[#006d3e] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#005931] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
       >
         {submitState === "submitting" ? "Salvando..." : "Salvar configuração"}
       </button>

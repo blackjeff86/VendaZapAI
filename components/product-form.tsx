@@ -68,14 +68,14 @@ export function ProductForm() {
           type="text"
           placeholder="Nome do produto"
           required
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+          className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
         />
         <input
           name="category"
           type="text"
           placeholder="Categoria"
           required
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+          className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
         />
         <input
           name="price"
@@ -84,7 +84,7 @@ export function ProductForm() {
           step="0.01"
           placeholder="Preço"
           required
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+          className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
         />
         <input
           name="stockQuantity"
@@ -93,19 +93,19 @@ export function ProductForm() {
           step="1"
           placeholder="Estoque atual"
           required
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+          className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
         />
         <input
           name="sku"
           type="text"
           placeholder="SKU ou código interno"
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+          className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
         />
         <input
           name="compatibility"
           type="text"
           placeholder="Compatibilidade (opcional)"
-          className="w-full rounded-2xl border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+          className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
         />
       </div>
 
@@ -113,13 +113,13 @@ export function ProductForm() {
         name="description"
         placeholder="Descrição curta do produto"
         rows={4}
-        className="w-full rounded-[1.4rem] border border-[#d8e6d9] bg-white px-4 py-3 text-sm text-[#173424] outline-none placeholder:text-[#8aa08f]"
+        className="w-full rounded-xl border border-[#bacbbc]/30 bg-white px-4 py-3 text-sm text-[#191c1d] outline-none placeholder:text-[#6b7b6e]"
       />
 
       <button
         type="submit"
         disabled={submitState === "submitting"}
-        className="w-full rounded-2xl bg-[#2d8a4b] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#25713e] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+        className="w-full rounded-xl bg-[#006d3e] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#005931] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
       >
         {submitState === "submitting" ? "Salvando..." : "Cadastrar produto"}
       </button>

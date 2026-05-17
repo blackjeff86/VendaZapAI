@@ -38,11 +38,25 @@ function ModuleIcon({ title }: { title: string }) {
 }
 
 export default async function DashboardPage() {
-  const { onboardingCompleted } = await getDashboardData();
+  const {
+    activeProductsCount,
+    conversations,
+    humanConversationsCount,
+    onboardingCompleted,
+    reservedConversationsCount,
+    session,
+  } = await getDashboardData();
 
   return (
     <div className="space-y-6 sm:space-y-8">
-      <DashboardOverviewSection onboardingCompleted={onboardingCompleted} />
+      <DashboardOverviewSection
+        activeProductsCount={activeProductsCount}
+        conversationsCount={conversations.length}
+        humanConversationsCount={humanConversationsCount}
+        onboardingCompleted={onboardingCompleted}
+        reservedConversationsCount={reservedConversationsCount}
+        userName={session.name}
+      />
 
       <section className="grid gap-4 md:grid-cols-3">
         {[
@@ -67,35 +81,35 @@ export default async function DashboardPage() {
         ].map(([title, copy, href, cta], index) => (
           <div
             key={title}
-            className={`rounded-[1.8rem] border p-5 shadow-[0_16px_34px_rgba(26,74,43,0.05)] ${
+            className={`dashboard-card rounded-xl border border-[#bacbbc]/30 p-4 ${
               index === 0
-                ? "border-[#bfe5c7] bg-[linear-gradient(135deg,#f2fff6_0%,#ddf6e6_100%)]"
+                ? "bg-[#ffffff]"
                 : index === 2
-                  ? "border-[#cae2df] bg-[linear-gradient(135deg,#f1fbfb_0%,#e4f3f2_100%)]"
-                  : "dashboard-card"
+                  ? "bg-[#ffffff]"
+                  : "bg-[#ffffff]"
             }`}
           >
             <div className="flex items-center justify-between gap-3">
               <span
-                className={`flex h-11 w-11 items-center justify-center rounded-[1.1rem] ${
+                className={`flex h-11 w-11 items-center justify-center rounded-xl ${
                   index === 0
-                    ? "bg-[rgba(37,201,91,0.12)] text-[#1f7a43]"
+                    ? "bg-[#eafbf3] text-[#006d3e]"
                     : index === 2
-                      ? "bg-[rgba(72,182,170,0.14)] text-[#1a6e68]"
-                      : "bg-[rgba(255,255,255,0.8)] text-[#506a58]"
+                      ? "bg-[#edf9ff] text-[#00668a]"
+                      : "bg-[#f2f4f5] text-[#3c4a3f]"
                 }`}
               >
                 <ModuleIcon title={title} />
               </span>
-              <span className="dashboard-chip rounded-full px-3 py-1 text-xs font-semibold text-[#607766]">
+              <span className="rounded-full bg-[#f2f4f5] px-3 py-1 text-[11px] font-semibold text-[#3c4a3f]">
                 Abrir módulo
               </span>
             </div>
-            <p className="display-font text-xl font-semibold text-[#173424]">{title}</p>
-            <p className="mt-3 text-sm leading-7 text-[#5f7766]">{copy}</p>
+            <p className="mt-4 text-base font-bold text-[#191c1d]">{title}</p>
+            <p className="mt-2 text-sm leading-6 text-[#3c4a3f]">{copy}</p>
             <Link
               href={href}
-              className="mt-5 inline-flex rounded-full border border-[#cfe0d0] bg-[#f8fcf8] px-4 py-2 text-sm font-semibold text-[#1d3a29] transition hover:border-[#8abf93] hover:bg-white"
+              className="mt-4 inline-flex rounded-xl border border-[#bacbbc]/30 bg-[#ffffff] px-4 py-2.5 text-sm font-semibold text-[#006d3e] transition hover:bg-[#f8fafb]"
             >
               {cta}
             </Link>
@@ -103,17 +117,17 @@ export default async function DashboardPage() {
         ))}
       </section>
 
-      <section className="dashboard-card-strong rounded-[2rem] p-6 sm:p-7">
+      <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4 sm:p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#006d3e]">
               Direção da experiência
             </p>
-            <h2 className="display-font mt-3 text-2xl font-semibold tracking-tight text-[#173424]">
-              O painel foi refinado para priorizar ação rápida em telas menores.
+            <h2 className="mt-2 text-lg font-bold tracking-[-0.02em] text-[#191c1d]">
+              O painel agora segue uma lógica mais mobile, clara e operacional.
             </h2>
           </div>
-          <div className="rounded-[1.3rem] border border-[#cde0d0] bg-white px-4 py-3 text-sm text-[#5a7361]">
+          <div className="rounded-xl border border-[#bacbbc]/30 bg-[#f2f4f5] px-4 py-3 text-sm text-[#3c4a3f]">
             Próxima camada: métricas mais fortes, automações e conexão real
           </div>
         </div>

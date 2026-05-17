@@ -1,127 +1,132 @@
 import Link from "next/link";
 
 type DashboardOverviewSectionProps = {
+  activeProductsCount: number;
+  conversationsCount: number;
+  humanConversationsCount: number;
   onboardingCompleted: boolean;
+  reservedConversationsCount: number;
+  userName: string;
 };
 
-function OverviewIcon({ title }: { title: string }) {
-  const common = "h-[1rem] w-[1rem]";
-
-  if (title === "Conversas") {
-    return (
-      <svg viewBox="0 0 24 24" className={common} fill="none" stroke="currentColor" strokeWidth="1.9">
-        <path d="M6 8h12" strokeLinecap="round" />
-        <path d="M6 12h8" strokeLinecap="round" />
-        <path d="M6 16h5" strokeLinecap="round" />
-      </svg>
-    );
-  }
-
-  if (title === "Catálogo") {
-    return (
-      <svg viewBox="0 0 24 24" className={common} fill="none" stroke="currentColor" strokeWidth="1.9">
-        <path d="M6 6.5h12" strokeLinecap="round" />
-        <path d="M6 11.5h12" strokeLinecap="round" />
-        <path d="M6 16.5h7" strokeLinecap="round" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg viewBox="0 0 24 24" className={common} fill="none" stroke="currentColor" strokeWidth="1.9">
-      <path d="M12 4.5v2.5" strokeLinecap="round" />
-      <path d="M9.75 4.5h4.5" strokeLinecap="round" />
-      <path d="M6 18V9.75A2.75 2.75 0 0 1 8.75 7h6.5A2.75 2.75 0 0 1 18 9.75V18" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+const chartBars = [40, 65, 52, 86, 100, 74, 58];
 
 export function DashboardOverviewSection({
+  activeProductsCount,
+  conversationsCount,
+  humanConversationsCount,
   onboardingCompleted,
+  reservedConversationsCount,
+  userName,
 }: DashboardOverviewSectionProps) {
   return (
-    <section className="grid gap-4 lg:grid-cols-[1.08fr_0.92fr]">
-      <div className="dashboard-card-strong relative overflow-hidden rounded-[2.15rem] p-6 sm:p-8">
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-40 bg-[radial-gradient(circle_at_top_right,rgba(37,201,91,0.16),transparent_72%)]" />
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2d8a4b]">
-          Centro da operação
+    <section className="space-y-4">
+      <div className="flex flex-col gap-1">
+        <h2 className="text-[1.75rem] font-bold tracking-[-0.03em] text-[#191c1d]">
+          Olá, {userName}! 👋
+        </h2>
+        <p className="text-sm text-[#3c4a3f]">
+          Sua loja está ativa e pronta para vender mais pelo WhatsApp.
         </p>
-        <h1 className="display-font mt-4 text-3xl font-semibold tracking-tight text-[#183323] sm:text-4xl">
-          Painel vivo, claro e pronto para decisão rápida.
-        </h1>
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-[#54705d] sm:text-base">
-          A experiência foi redesenhada para parecer uma central de operação
-          moderna, com mais contraste, hierarquia e atalhos que realmente ajudam o lojista no dia a dia.
-        </p>
-
-        <div className="mt-8 grid gap-3 sm:grid-cols-3">
-          {[
-            ["Conversas", "Responder rápido, reservar e assumir quando precisar"],
-            ["Catálogo", "Preço, estoque e compatibilidade sempre à mão"],
-            ["WhatsApp", "Canal pronto para teste e operação real"],
-          ].map(([title, copy]) => (
-            <div
-              key={title}
-              className="dashboard-card rounded-[1.35rem] p-4"
-            >
-              <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-[0.95rem] bg-[rgba(37,201,91,0.1)] text-[#2d8a4b]">
-                <OverviewIcon title={title} />
-              </span>
-              <p className="display-font text-base font-semibold text-[#1c3928]">
-                {title}
-              </p>
-              <p className="mt-2 text-sm leading-6 text-[#5c7563]">{copy}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link
-            href="/painel/conversas"
-            className="rounded-full bg-[#173424] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#214932]"
-          >
-            Abrir central de conversas
-          </Link>
-          <Link
-            href="/painel/catalogo"
-            className="dashboard-chip rounded-full px-4 py-2 text-sm font-semibold text-[#2d8a4b] transition hover:border-[#8abf93] hover:bg-white"
-          >
-            Ajustar catálogo
-          </Link>
-        </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+      <div className="grid grid-cols-2 gap-3">
         {[
+          ["Conversas", String(conversationsCount), "#00668a", "forum"],
+          ["Reservas", String(reservedConversationsCount), "#1c695f", "inventory_2"],
+          ["Produtos ativos", String(activeProductsCount), "#006d3e", "inventory"],
           [
-            "Loja pronta",
-            onboardingCompleted
-              ? "Dados mínimos preenchidos para seguir operando."
-              : "Ainda faltam dados básicos para ativar a rotina.",
-            onboardingCompleted
-              ? "border-[#bfe5c7] bg-[linear-gradient(135deg,#effcf1_0%,#e2f8e7_100%)]"
-              : "border-[#f0d9a6] bg-[linear-gradient(135deg,#fff9ec_0%,#fff3d8_100%)]",
+            "Status",
+            onboardingCompleted ? "OK" : "Pendente",
+            onboardingCompleted ? "#006d3e" : "#ba1a1a",
+            "trending_up",
           ],
-          [
-            "Uso mobile",
-            "Navegação e blocos redesenhados para leitura rápida no celular.",
-            "border-[#cae2df] bg-[linear-gradient(135deg,#f0fbfb_0%,#e8f5f4_100%)]",
-          ],
-          [
-            "Próxima meta",
-            "Responder mais rápido, deixar o catálogo confiável e ativar o canal.",
-            "border-[#cfe0d0] bg-white",
-          ],
-        ].map(([title, copy, tone]) => (
+        ].map(([title, value, color, icon]) => (
           <div
             key={title}
-            className={`rounded-[1.8rem] border p-5 shadow-[0_16px_40px_rgba(26,74,43,0.08)] ${tone}`}
+            className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4"
           >
-            <div className="mb-3 h-1.5 w-14 rounded-full bg-[rgba(37,201,91,0.18)]" />
-            <p className="display-font text-lg font-semibold text-[#173424]">{title}</p>
-            <p className="mt-3 text-sm leading-7 text-[#5f7766]">{copy}</p>
+            <div className="flex items-start justify-between">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#3c4a3f]">
+                {title}
+              </p>
+              <span className="text-sm font-semibold" style={{ color }}>
+                {icon === "forum" ? "◔" : icon === "inventory_2" ? "▣" : icon === "inventory" ? "◫" : "↗"}
+              </span>
+            </div>
+            <p className="mt-3 text-lg font-bold text-[#191c1d]">{value}</p>
           </div>
         ))}
+      </div>
+
+      <div className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
+        <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <h3 className="text-base font-bold text-[#191c1d]">Desempenho semanal</h3>
+            <span className="rounded-full bg-[#00d981]/12 px-3 py-1 text-[11px] font-semibold text-[#005931]">
+              +12% vs ontem
+            </span>
+          </div>
+          <div className="flex h-40 items-end gap-2 px-2">
+            {chartBars.map((height, index) => (
+              <div
+                key={`${height}-${index}`}
+                className={`flex-1 rounded-t-lg ${index === 4 ? "bg-[#006d3e]" : "bg-[#e6e8e9]"}`}
+                style={{ height: `${height}%` }}
+              />
+            ))}
+          </div>
+          <div className="mt-2 flex justify-between px-2 text-[11px] font-semibold text-[#6b7b6e]">
+            <span>S</span>
+            <span>T</span>
+            <span>Q</span>
+            <span>Q</span>
+            <span className="text-[#006d3e]">S</span>
+            <span>S</span>
+            <span>D</span>
+          </div>
+        </section>
+
+        <section className="dashboard-card rounded-xl border border-[#bacbbc]/30 p-4">
+          <h3 className="mb-4 text-base font-bold text-[#191c1d]">Atenção necessária</h3>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3 rounded-xl border border-[#bacbbc]/20 p-3">
+              <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[#006d3e]" />
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-[#191c1d]">Conversas com IA ativa</p>
+                <p className="text-xs leading-5 text-[#3c4a3f]">
+                  A operação já tem {conversationsCount} conversa(s) fluindo no painel.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 rounded-xl border border-[#bacbbc]/20 p-3">
+              <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[#ff9800]" />
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-[#191c1d]">Atendimento humano</p>
+                <p className="text-xs leading-5 text-[#3c4a3f]">
+                  {humanConversationsCount} conversa(s) exigem atenção manual da loja.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 rounded-xl border border-[#bacbbc]/20 p-3">
+              <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[#00d981]" />
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-[#191c1d]">Próxima ação</p>
+                <p className="text-xs leading-5 text-[#3c4a3f]">
+                  Deixe o catálogo completo e avance na ativação do canal WhatsApp.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4">
+            <Link
+              href="/painel/conversas"
+              className="inline-flex w-full items-center justify-center rounded-xl border border-[#006d3e]/20 bg-[#006d3e] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#005931]"
+            >
+              Ver todas as conversas
+            </Link>
+          </div>
+        </section>
       </div>
     </section>
   );
